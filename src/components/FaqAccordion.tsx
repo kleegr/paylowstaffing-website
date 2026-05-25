@@ -1,86 +1,90 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { ChevronDown, Search } from 'lucide-react';
-import clsx from 'clsx';
 
 export type FaqItem = { q: string; a: string };
 
 export default function FaqAccordion({
   items,
-  defaultOpen = 0,
+  defaultOpen,
   searchable = false,
 }: {
   items: FaqItem[];
-  defaultOpen?: number | null;
+  defaultOpen?: number;
   searchable?: boolean;
 }) {
-  const [open, setOpen] = useState<number | null>(defaultOpen);
-  const [query, setQuery] = useState('');
+  const baseId = useId();
+  const [open, setOpen] = useState<number | null>(defaultOpen ?? null);
+  const [q, setQ] = useState('');
 
   const filtered = useMemo(() => {
-    if (!query.trim()) return items;
-    const q = query.toLowerCase();
-    return items.filter((it) => it.q.toLowerCase().includes(q) || it.a.toLowerCase().includes(q));
-  }, [items, query]);
+    const query = q.trim().toLowerCase();
+    if (!query) return items;
+    return items.filter(
+      (i) => i.q.toLowerCase().includes(query) || i.a.toLowerCase().includes(query)
+    );
+  }, [items, q]);
 
   return (
     <div>
       {searchable && (
-        <div className="mb-7">
-          <label htmlFor="faq-search" className="sr-only">Search FAQs</label>
-          <div className="relative">
-            <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              id="faq-search"
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search FAQs"
-              className="w-full rounded-md border border-slate-200 bg-white pl-12 pr-4 py-3.5 text-sm text-ink-900 placeholder:text-slate-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 focus:outline-none"
-            />
-          </div>
+        <div className="relative mb-8 max-w-xl" data-reveal>
+          <span className="pointer-events-none absolute inset-y-0 left-4 inline-flex items-center text-ink-400">
+            <Search className="w-4 h-4" />
+          </span>
+          <input
+            type="search"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Search FAQs…"
+            className="w-full rounded-full bg-white border border-ink-200 pl-11 pr-4 py-3 text-sm text-ink-900 placeholder-ink-400 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15 outline-none transition"
+          />
         </div>
       )}
-      <div className="space-y-2.5">
-        {filtered.length === 0 && <p className="text-center text-slate-500 py-8">No questions match that search.</p>}
+
+      <ul className="divide-y divide-ink-100 rounded-3xl bg-white border border-ink-100 shadow-card overflow-hidden">
         {filtered.map((item, i) => {
           const isOpen = open === i;
-          const id = `faq-${i}`;
+          const pid = `${baseId}-panel-${i}`;
+          const bid = `${baseId}-btn-${i}`;
           return (
-            <div
-              key={i}
-              className={clsx(
-                'rounded transition-colors overflow-hidden',
-                isOpen ? 'bg-brand-600 text-white' : 'bg-cream-100 hover:bg-cream-200/70'
-              )}
-            >
-              <button
-                type="button"
-                aria-expanded={isOpen}
-                aria-controls={`${id}-panel`}
-                id={`${id}-trigger`}
-                onClick={() => setOpen(isOpen ? null : i)}
-                className="w-full flex items-center justify-between gap-4 text-left px-5 sm:px-6 py-4 sm:py-5"
-              >
-                <span className={clsx('font-semibold text-base sm:text-lg', isOpen ? 'text-white' : 'text-ink-900')}>
-                  {item.q}
-                </span>
-                <ChevronDown aria-hidden="true" className={clsx('w-5 h-5 shrink-0 transition-transform', isOpen ? 'text-white rotate-180' : 'text-ink-900')} />
-              </button>
+            <li key={item.q}>
+              <h3>
+                <button
+                  id={bid}
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={pid}
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="w-full text-left flex items-start gap-4 px-6 py-5 transition-colors hover:bg-ink-50/60 group"
+                >
+                  <span className={`mt-0.5 shrink-0 inline-flex w-9 h-9 items-center justify-center rounded-full transition-all duration-300 ${isOpen ? 'bg-gradient-brand text-white shadow-glow-sm' : 'bg-ink-50 text-ink-700 group-hover:bg-ink-100'}`}>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-500 ease-out-expo ${isOpen ? 'rotate-180' : ''}`} />
+                  </span>
+                  <span className={`flex-1 font-display font-semibold text-base md:text-lg leading-snug transition-colors ${isOpen ? 'text-ink-900' : 'text-ink-800'}`}>
+                    {item.q}
+                  </span>
+                </button>
+              </h3>
               <div
-                id={`${id}-panel`}
+                id={pid}
                 role="region"
-                aria-labelledby={`${id}-trigger`}
-                hidden={!isOpen}
-                className="px-5 sm:px-6 pb-5 sm:pb-6 -mt-1 text-white/95 leading-relaxed text-sm sm:text-base bg-brand-600"
+                aria-labelledby={bid}
+                className={`grid transition-all duration-500 ease-out-expo ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
               >
-                {item.a}
+                <div className="overflow-hidden">
+                  <p className="px-6 pl-[4.25rem] pb-6 text-ink-600 leading-relaxed text-sm md:text-[0.95rem]">{item.a}</p>
+                </div>
               </div>
-            </div>
+            </li>
           );
         })}
-      </div>
+
+        {searchable && filtered.length === 0 && (
+          <li className="px-6 py-10 text-center text-ink-500 text-sm">No matches. Try a different search.</li>
+        )}
+      </ul>
     </div>
   );
 }

@@ -1,17 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
-import { navLinks, siteConfig } from '@/lib/content';
+import { useEffect, useState } from 'react';
+import { Menu, X, Phone, Mail } from 'lucide-react';
 import Logo from './Logo';
-import clsx from 'clsx';
+import { navLinks, siteConfig } from '@/lib/content';
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -20,93 +19,113 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => { setOpen(false); }, [pathname]);
+
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    if (open) {
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = ''; };
+    }
   }, [open]);
 
-  useEffect(() => { setOpen(false); }, [pathname]);
+  const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname?.startsWith(href));
 
   return (
     <header
-      className={clsx(
-        'sticky top-0 z-50 transition-all duration-300',
-        scrolled ? 'bg-nav/95 backdrop-blur-md shadow-lg' : 'bg-nav'
-      )}
+      className={`sticky top-0 z-50 transition-all duration-500 ease-out-expo ${
+        scrolled
+          ? 'bg-white/85 backdrop-blur-xl shadow-soft border-b border-ink-100/60'
+          : 'bg-transparent border-b border-transparent'
+      }`}
     >
       <div className="container-wide flex items-center justify-between py-3 lg:py-4">
-        <Logo size={48} />
+        <Logo size="md" />
 
         <nav className="hidden lg:flex items-center gap-1" aria-label="Main">
-          {navLinks.map((link) => {
-            const active = link.href === '/' ? pathname === '/' : pathname?.startsWith(link.href);
+          {navLinks.map((l) => {
+            const active = isActive(l.href);
             return (
               <Link
-                key={link.href}
-                href={link.href}
-                className={clsx(
-                  'px-3.5 py-2 text-sm font-semibold uppercase tracking-wide rounded transition-colors',
-                  active ? 'text-brand-500' : 'text-white hover:text-brand-400'
-                )}
+                key={l.href}
+                href={l.href}
+                className={`relative px-4 py-2 text-sm font-medium rounded-full transition-colors duration-300 ${
+                  active ? 'text-ink-900' : 'text-ink-500 hover:text-ink-900'
+                }`}
               >
-                {link.label}
+                {l.label}
+                {active && (
+                  <span aria-hidden className="absolute left-3 right-3 -bottom-1 h-0.5 rounded-full bg-brand-500" />
+                )}
               </Link>
             );
           })}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <Link
-            href={siteConfig.signUpUrl}
-            className="hidden sm:inline-flex bg-ink-900 hover:bg-ink-800 text-white font-semibold text-sm px-5 py-2.5 rounded-md transition-colors"
-          >
+        <div className="flex items-center gap-2">
+          <Link href={siteConfig.signUpUrl} className="hidden md:inline-flex btn-primary">
             Get Started
           </Link>
           <button
             type="button"
-            aria-label="Toggle menu"
+            aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            onClick={() => setOpen((p) => !p)}
-            className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-md text-white hover:bg-white/10 transition"
+            onClick={() => setOpen((v) => !v)}
+            className="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-full text-ink-900 bg-white border border-ink-100 hover:bg-ink-50 transition"
           >
-            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
+      {/* Mobile drawer */}
       <div
         id="mobile-menu"
-        className={clsx(
-          'lg:hidden fixed inset-x-0 top-[68px] bottom-0 bg-nav z-40 transition-transform duration-300 ease-out',
-          open ? 'translate-x-0' : 'translate-x-full'
-        )}
+        className={`lg:hidden fixed inset-0 top-[68px] z-40 transition-all duration-500 ease-out-expo ${
+          open ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'
+        }`}
         aria-hidden={!open}
       >
-        <nav className="px-6 py-8 flex flex-col gap-1 h-full overflow-y-auto" aria-label="Mobile">
-          {navLinks.map((link) => {
-            const active = link.href === '/' ? pathname === '/' : pathname?.startsWith(link.href);
-            return (
+        <div className="absolute inset-0 bg-gradient-warm" />
+        <div className="relative h-full overflow-y-auto px-6 pt-8 pb-12">
+          <nav aria-label="Mobile" className="flex flex-col gap-1">
+            {navLinks.map((l, i) => (
               <Link
-                key={link.href}
-                href={link.href}
-                className={clsx(
-                  'block px-4 py-3.5 rounded text-base font-semibold uppercase tracking-wide border-b border-white/10',
-                  active ? 'text-brand-500' : 'text-white hover:bg-white/5'
-                )}
+                key={l.href}
+                href={l.href}
+                style={{ animationDelay: `${80 + i * 50}ms` }}
+                className={`group flex items-center justify-between rounded-2xl px-5 py-4 text-lg font-semibold transition-all duration-300 ${
+                  isActive(l.href)
+                    ? 'bg-ink-900 text-white shadow-lift'
+                    : 'bg-white/70 text-ink-900 hover:bg-white hover:shadow-card'
+                } ${open ? 'animate-fade-up' : ''}`}
               >
-                {link.label}
+                <span>{l.label}</span>
+                <span aria-hidden className={isActive(l.href) ? 'text-brand-300' : 'text-brand-500'}>→</span>
               </Link>
-            );
-          })}
-          <Link href={siteConfig.signUpUrl} className="mt-6 btn-primary self-stretch text-center">
-            Get Started
-          </Link>
-          <div className="mt-8 pt-6 border-t border-white/10 text-sm text-white/80 space-y-2">
-            <div><a href={`tel:${siteConfig.contact.phoneTel}`} className="hover:text-white">{siteConfig.contact.phone}</a></div>
-            <div><a href={`mailto:${siteConfig.contact.email}`} className="hover:text-white">{siteConfig.contact.email}</a></div>
+            ))}
+          </nav>
+
+          <div className="mt-8 grid grid-cols-1 gap-3">
+            <Link href={siteConfig.signUpUrl} className="btn-primary btn-lg w-full justify-center">
+              Get Started
+            </Link>
+            <Link href="/contact-us" className="btn-outline btn-lg w-full justify-center">
+              Talk to us
+            </Link>
           </div>
-        </nav>
+
+          <div className="mt-10 pt-6 border-t border-ink-100 space-y-3 text-sm">
+            <a href={`tel:${siteConfig.contact.phoneTel}`} className="flex items-center gap-3 text-ink-700 hover:text-ink-900">
+              <Phone className="w-4 h-4 text-brand-500" />
+              <span>{siteConfig.contact.phone}</span>
+            </a>
+            <a href={`mailto:${siteConfig.contact.email}`} className="flex items-center gap-3 text-ink-700 hover:text-ink-900">
+              <Mail className="w-4 h-4 text-brand-500" />
+              <span>{siteConfig.contact.email}</span>
+            </a>
+          </div>
+        </div>
       </div>
     </header>
   );

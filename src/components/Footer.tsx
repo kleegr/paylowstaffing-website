@@ -1,10 +1,7 @@
-'use client';
-
-import { FormEvent, useState } from 'react';
 import Link from 'next/link';
-import { Facebook, Linkedin, Youtube, MessageCircle, ChevronRight } from 'lucide-react';
-import { navLinks, siteConfig } from '@/lib/content';
+import { Facebook, Instagram, Youtube, Linkedin, MessageCircle, ArrowRight } from 'lucide-react';
 import Logo from './Logo';
+import { navLinks, siteConfig } from '@/lib/content';
 
 function XIcon({ className }: { className?: string }) {
   return (
@@ -19,138 +16,102 @@ const socials = [
   { label: 'X', href: siteConfig.social.twitter, Icon: XIcon },
   { label: 'YouTube', href: siteConfig.social.youtube, Icon: Youtube },
   { label: 'LinkedIn', href: siteConfig.social.linkedin, Icon: Linkedin },
+  { label: 'Instagram', href: '#', Icon: Instagram },
   { label: 'WhatsApp', href: siteConfig.social.whatsapp, Icon: MessageCircle },
 ];
 
 export default function Footer() {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
-
-  async function onSubscribe(e: FormEvent) {
-    e.preventDefault();
-    setStatus('sending');
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ kind: 'newsletter', email }),
-      });
-      if (!res.ok) throw new Error('Subscribe failed');
-      setStatus('done');
-      setEmail('');
-    } catch {
-      setStatus('error');
-    }
-  }
-
   return (
-    <footer className="bg-nav text-white/85">
-      <div className="container-wide pt-16 pb-10">
+    <footer className="relative bg-ink-900 text-white/85 overflow-hidden">
+      {/* Top gradient ribbon */}
+      <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent opacity-60" />
+
+      <div className="container-wide pt-16 pb-10 lg:pt-20">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <Logo size={64} />
-            <p className="mt-5 text-sm leading-relaxed text-white/70 max-w-sm">{siteConfig.tagline}</p>
-            <form onSubmit={onSubscribe} className="mt-7 max-w-sm" aria-label="Newsletter">
-              <h3 className="text-base font-semibold text-white mb-3">Subscribe Our Newsletter</h3>
-              <div className="flex items-stretch overflow-hidden rounded-md bg-white">
-                <label htmlFor="newsletter-email" className="sr-only">Email</label>
+          <div className="lg:col-span-5">
+            <Logo size="lg" />
+            <p className="mt-5 text-sm leading-relaxed text-white/65 max-w-md">
+              World-class remote talent for ambitious teams. Skilled offshore professionals from $7/hour, ready to plug into your workflow.
+            </p>
+            <form className="mt-7 max-w-md" aria-label="Newsletter">
+              <label htmlFor="footer-newsletter" className="sr-only">Email</label>
+              <div className="flex items-stretch overflow-hidden rounded-full bg-white/10 backdrop-blur-md border border-white/10 focus-within:border-white/30 transition">
                 <input
-                  id="newsletter-email"
+                  id="footer-newsletter"
                   type="email"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email"
-                  className="flex-1 bg-transparent px-4 py-2.5 text-sm text-ink-900 placeholder:text-slate-400 focus:outline-none"
+                  placeholder="you@company.com"
+                  className="flex-1 bg-transparent px-5 text-sm text-white placeholder-white/50 focus:outline-none"
                 />
                 <button
                   type="submit"
-                  disabled={status === 'sending'}
-                  className="px-5 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold disabled:opacity-60"
+                  className="inline-flex items-center gap-1.5 px-5 py-3 text-sm font-semibold text-white bg-gradient-brand hover:opacity-90 transition"
                 >
-                  {status === 'sending' ? '…' : 'Submit'}
+                  Subscribe <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
-              {status === 'done' && <p className="mt-2 text-xs text-emerald-300">Thanks — you&apos;re subscribed.</p>}
-              {status === 'error' && <p className="mt-2 text-xs text-red-300">Something went wrong. Please try again.</p>}
             </form>
           </div>
 
           <div className="lg:col-span-3">
-            <h3 className="text-base font-semibold text-white mb-5">Quick Links</h3>
+            <h3 className="text-base font-semibold text-white mb-5">Explore</h3>
             <ul className="space-y-3 text-sm">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-white/80 hover:text-brand-400 transition-colors inline-flex items-center gap-2 group"
-                  >
-                    <ChevronRight className="w-3.5 h-3.5 text-white/40 group-hover:text-brand-400" />
-                    {link.label}
+              {navLinks.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="text-white/65 hover:text-white transition-colors inline-flex items-center gap-1.5 group">
+                    <span>{l.label}</span>
+                    <ArrowRight className="w-3 h-3 -translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all" />
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="lg:col-span-5">
-            <h3 className="text-base font-semibold text-white mb-5">Contact Info</h3>
-            <ul className="space-y-4 text-sm">
-              <li>
-                <div className="text-white font-semibold mb-1">Address</div>
-                <div className="text-white/70">{siteConfig.contact.address}</div>
-              </li>
-              <li>
-                <div className="text-white font-semibold mb-1">Phone Number</div>
-                <a href={`tel:${siteConfig.contact.phoneTel}`} className="text-white/70 hover:text-brand-400">
-                  1-877-3<strong className="text-white">PAYLOW</strong>{' '}
-                  <span className="tracking-widest">{siteConfig.contact.phoneDigits}</span>
-                </a>
-              </li>
-              <li>
-                <div className="text-white font-semibold mb-1">Email</div>
-                <a href={`mailto:${siteConfig.contact.email}`} className="text-white/70 hover:text-brand-400">
-                  {siteConfig.contact.email}
-                </a>
-              </li>
+          <div className="lg:col-span-4">
+            <h3 className="text-base font-semibold text-white mb-5">Get in touch</h3>
+            <address className="not-italic space-y-3 text-sm text-white/70">
+              <div>
+                <div className="text-white/50 text-xs uppercase tracking-wider mb-0.5">Address</div>
+                {siteConfig.contact.address}
+              </div>
+              <div>
+                <div className="text-white/50 text-xs uppercase tracking-wider mb-0.5">Phone</div>
+                <a href={`tel:${siteConfig.contact.phoneTel}`} className="hover:text-brand-300">{siteConfig.contact.phone}</a>
+              </div>
+              <div>
+                <div className="text-white/50 text-xs uppercase tracking-wider mb-0.5">Email</div>
+                <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-brand-300">{siteConfig.contact.email}</a>
+              </div>
+            </address>
+
+            <ul className="mt-6 flex flex-wrap items-center gap-2.5">
+              {socials.map(({ label, href, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${label} (opens in new window)`}
+                    className="inline-flex w-9 h-9 items-center justify-center rounded-full bg-white/10 hover:bg-gradient-brand text-white transition-all duration-300 hover:-translate-y-0.5"
+                  >
+                    <Icon className="w-4 h-4" />
+                  </a>
+                </li>
+              ))}
             </ul>
-            <div className="mt-6">
-              <div className="text-white font-semibold text-sm mb-3">Find us on:</div>
-              <ul className="flex flex-wrap items-center gap-2.5">
-                {socials.map(({ label, href, Icon }) => (
-                  <li key={label}>
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${label} page opens in new window`}
-                      title={`${label} page opens in new window`}
-                      className="inline-flex w-9 h-9 items-center justify-center rounded-full bg-brand-600 text-white hover:bg-brand-700 transition-colors"
-                    >
-                      <Icon className="w-4 h-4" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
         </div>
       </div>
 
       <div className="border-t border-white/10">
-        <div className="container-wide py-5 text-xs flex flex-col md:flex-row items-center justify-center gap-2 text-white/60 text-center">
-          <span>Copyright © {new Date().getFullYear()} Pay Low</span>
-          <span aria-hidden>|</span>
-          <a href={siteConfig.termsUrl} className="hover:text-white" target="_blank" rel="noopener noreferrer">Terms</a>
-          <span aria-hidden>|</span>
-          <a href={siteConfig.privacyUrl} className="hover:text-white" target="_blank" rel="noopener noreferrer">Privacy</a>
-          <span aria-hidden>|</span>
-          <span>
-            Designed &amp; Developed by{' '}
-            <a href={siteConfig.designer.url} target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:text-brand-300">
-              {siteConfig.designer.name}
-            </a>
-          </span>
+        <div className="container-wide py-5 text-xs flex flex-col md:flex-row items-center justify-between gap-3 text-white/50">
+          <span>© {new Date().getFullYear()} PayLow Staffing. All rights reserved.</span>
+          <div className="flex items-center gap-4">
+            <a href="https://toc.paylowstaffing.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white">Terms</a>
+            <a href="https://privacy-policy.paylowstaffing.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white">Privacy</a>
+            <span>·</span>
+            <span>Designed by <a href="https://www.chaimteitelbaum.com" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:text-brand-300">Chaim Teitelbaum</a></span>
+          </div>
         </div>
       </div>
     </footer>

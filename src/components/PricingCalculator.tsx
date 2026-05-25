@@ -1,139 +1,259 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-import clsx from 'clsx';
+import { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
+import { ArrowRight, TrendingDown, Users, Minus, Plus, Sparkles } from 'lucide-react';
 
-type RateKey = 'hourly' | 'week' | 'month' | 'year';
+type Cadence = 'hour' | 'week' | 'month' | 'year';
 
-const RATES: { key: RateKey; label: string; multiplier: number; unitLabel: string }[] = [
-  { key: 'hourly', label: 'Hourly', multiplier: 1, unitLabel: 'Hourly' },
-  { key: 'week', label: 'Per Week', multiplier: 40, unitLabel: 'Per Week' },
-  { key: 'month', label: 'Per Month', multiplier: 173, unitLabel: 'Per Month' },
-  { key: 'year', label: 'Per Year', multiplier: 2080, unitLabel: 'Per Year' },
+const CADENCES: { id: Cadence; label: string; short: string; multiplier: number }[] = [
+  { id: 'hour',  label: 'Hourly',    short: '/hr',    multiplier: 1 },
+  { id: 'week',  label: 'Per Week',  short: '/wk',    multiplier: 40 },
+  { id: 'month', label: 'Per Month', short: '/mo',    multiplier: 173 },
+  { id: 'year',  label: 'Per Year',  short: '/yr',    multiplier: 2080 },
 ];
 
-const ONSHORE_RATE = 30;
-const OFFSHORE_RATE = 7;
+const ONSHORE_RATE = 30;     // USD per hour, US baseline
+const OFFSHORE_RATE = 7;     // PayLow rate
 
-const money = (n: number) =>
-  n.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+const fmt = (n: number) =>
+  new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
 
 export default function PricingCalculator() {
-  const [rate, setRate] = useState<RateKey>('hourly');
-  const [employees, setEmployees] = useState(1);
-  const [openSummary, setOpenSummary] = useState(true);
+  const [cadence, setCadence] = useState<Cadence>('month');
+  const [team, setTeam] = useState<number>(3);
 
-  const active = RATES.find((r) => r.key === rate)!;
+  // Animated counter values
+  const cad = CADENCES.find((c) => c.id === cadence)!;
+  const onshore = ONSHORE_RATE * cad.multiplier * team;
+  const offshore = OFFSHORE_RATE * cad.multiplier * team;
+  const savings = onshore - offshore;
+  const savingsPct = Math.round((savings / onshore) * 100);
 
-  const summary = useMemo(() => {
-    const onshore = ONSHORE_RATE * employees * active.multiplier;
-    const offshore = OFFSHORE_RATE * employees * active.multiplier;
-    const savings = onshore - offshore;
-    return { onshore, offshore, savings };
-  }, [active.multiplier, employees]);
+  const [animOnshore, setAnimOnshore] = useState(onshore);
+  const [animOffshore, setAnimOffshore] = useState(offshore);
+  const [animSavings, setAnimSavings] = useState(savings);
+
+  useEffect(() => {
+    const from = { o: animOnshore, p: animOffshore, s: animSavings };
+    const to = { o: onshore, p: offshore, s: savings };
+    const start = performance.now();
+    const dur = 700;
+    let raf = 0;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / dur);
+      const ease = 1 - Math.pow(1 - t, 3);
+      setAnimOnshore(from.o + (to.o - from.o) * ease);
+      setAnimOffshore(from.p + (to.p - from.p) * ease);
+      setAnimSavings(from.s + (to.s - from.s) * ease);
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onshore, offshore, savings]);
+
+  // Bar widths — PayLow bar relative to onshore (always shorter)
+  const offshoreBarPct = Math.max(8, (offshore / Math.max(onshore, 1)) * 100);
+  const sliderPct = useMemo(() => ((team - 1) / (50 - 1)) * 100, [team]);
 
   return (
-    <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
-      <div className="card p-6 sm:p-8">
-        <fieldset>
-          <legend className="block text-base font-semibold text-ink-900 mb-4">Rates</legend>
-          <div className="space-y-3">
-            {RATES.map((r) => (
-              <label
-                key={r.key}
-                className={clsx(
-                  'flex items-center gap-3 cursor-pointer rounded-md p-2 -mx-2 hover:bg-cream-50',
-                  rate === r.key && 'bg-cream-100'
-                )}
-              >
-                <input
-                  type="radio"
-                  name="rate"
-                  value={r.key}
-                  checked={rate === r.key}
-                  onChange={() => setRate(r.key)}
-                  className="appearance-none w-5 h-5 rounded-full border-2 border-slate-300 checked:border-brand-600 relative before:absolute before:inset-1 before:rounded-full before:bg-brand-600 before:scale-0 checked:before:scale-100 before:transition-transform cursor-pointer"
-                />
-                <span className="text-base font-medium text-ink-900">{r.label}</span>
+    <div className="relative">
+      {/* Decorative gradient backdrop */}
+      <div aria-hidden className="absolute -inset-x-4 -inset-y-8 -z-10 bg-mesh-2 opacity-50 rounded-[3rem] blur-2xl" />
+
+      <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
+        {/* ===== LEFT: Inputs ===== */}
+        <div className="lg:col-span-5 card p-6 sm:p-8" data-reveal>
+          {/* Cadence segmented control */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <label className="text-xs font-semibold uppercase tracking-wider text-ink-500">Billing</label>
+              <span className="text-xs text-ink-400">{cad.label}</span>
+            </div>
+            <div role="tablist" aria-label="Billing cadence" className="grid grid-cols-4 gap-1 rounded-full bg-ink-100/70 p-1">
+              {CADENCES.map((c) => {
+                const active = c.id === cadence;
+                return (
+                  <button
+                    key={c.id}
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() => setCadence(c.id)}
+                    className={`relative rounded-full px-2 py-2 text-xs sm:text-sm font-medium transition-all duration-300 ease-out-expo ${
+                      active ? 'bg-white text-ink-900 shadow-soft' : 'text-ink-500 hover:text-ink-800'
+                    }`}
+                  >
+                    <span className="hidden sm:inline">{c.label}</span>
+                    <span className="sm:hidden">{c.label.replace('Per ', '')}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Team-size slider */}
+          <div className="mt-7">
+            <div className="flex items-center justify-between mb-3">
+              <label htmlFor="team-size" className="text-xs font-semibold uppercase tracking-wider text-ink-500">
+                Team size
               </label>
-            ))}
-          </div>
-        </fieldset>
+              <div className="inline-flex items-center gap-1.5 text-ink-700">
+                <Users className="w-4 h-4 text-brand-500" />
+                <span className="font-display font-bold text-lg text-ink-900 tabular-nums">{team}</span>
+                <span className="text-sm">{team === 1 ? 'person' : 'people'}</span>
+              </div>
+            </div>
 
-        <div className="mt-8">
-          <div className="flex items-center justify-between mb-3">
-            <label htmlFor="employees" className="text-base font-semibold text-ink-900">Employees</label>
-            <output htmlFor="employees" className="text-lg font-display font-bold text-brand-700">{employees}</output>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                aria-label="Decrease team size"
+                onClick={() => setTeam((t) => Math.max(1, t - 1))}
+                className="inline-flex w-9 h-9 items-center justify-center rounded-full bg-ink-50 text-ink-700 hover:bg-ink-100 transition disabled:opacity-50"
+                disabled={team <= 1}
+              >
+                <Minus className="w-4 h-4" />
+              </button>
+              <input
+                id="team-size"
+                type="range"
+                min={1}
+                max={50}
+                step={1}
+                value={team}
+                onChange={(e) => setTeam(Number(e.target.value))}
+                className="range-brand flex-1"
+                style={{ ['--val' as never]: `${sliderPct}%` } as React.CSSProperties}
+                aria-valuenow={team}
+                aria-valuemin={1}
+                aria-valuemax={50}
+              />
+              <button
+                type="button"
+                aria-label="Increase team size"
+                onClick={() => setTeam((t) => Math.min(50, t + 1))}
+                className="inline-flex w-9 h-9 items-center justify-center rounded-full bg-ink-50 text-ink-700 hover:bg-ink-100 transition disabled:opacity-50"
+                disabled={team >= 50}
+              >
+                <Plus className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="flex justify-between text-xs text-ink-400 mt-2 px-1">
+              <span>1</span><span>10</span><span>25</span><span>50</span>
+            </div>
           </div>
-          <input
-            id="employees"
-            type="range"
-            min={1}
-            max={50}
-            step={1}
-            value={employees}
-            onChange={(e) => setEmployees(Number(e.target.value))}
-            className="range-orange"
-            aria-valuemin={1}
-            aria-valuemax={50}
-            aria-valuenow={employees}
-          />
-          <div className="mt-1 flex justify-between text-xs text-slate-500">
-            <span>1</span><span>50</span>
-          </div>
-        </div>
-      </div>
 
-      <div className="card overflow-hidden">
-        <button
-          type="button"
-          onClick={() => setOpenSummary((p) => !p)}
-          className="w-full flex items-center justify-between gap-4 px-6 sm:px-8 py-5 border-b border-slate-100"
-          aria-expanded={openSummary}
-          aria-controls="pricing-summary-body"
-        >
-          <span className="text-lg font-display font-bold text-ink-900">Total Summary</span>
-          <ChevronDown aria-hidden="true" className={clsx('w-5 h-5 text-slate-500 transition-transform', openSummary && 'rotate-180')} />
-        </button>
+          {/* Rate breakdown */}
+          <div className="mt-7 grid grid-cols-2 gap-3 text-sm">
+            <div className="rounded-2xl border border-ink-100 p-4">
+              <div className="text-xs uppercase tracking-wider text-ink-400 font-semibold">Onshore</div>
+              <div className="mt-1 font-display font-bold text-xl text-ink-900">${ONSHORE_RATE}<span className="text-ink-400 text-sm font-medium">/hr</span></div>
+              <div className="text-xs text-ink-500 mt-0.5">US baseline</div>
+            </div>
+            <div className="rounded-2xl bg-gradient-warm border border-brand-200 p-4">
+              <div className="text-xs uppercase tracking-wider text-brand-700 font-semibold">PayLow</div>
+              <div className="mt-1 font-display font-bold text-xl text-ink-900">${OFFSHORE_RATE}<span className="text-ink-400 text-sm font-medium">/hr</span></div>
+              <div className="text-xs text-brand-700 mt-0.5">Offshore talent</div>
+            </div>
+          </div>
 
-        <div id="pricing-summary-body" hidden={!openSummary} className="px-6 sm:px-8 py-6" role="region" aria-live="polite">
-          <div className="grid grid-cols-2 text-sm font-semibold text-slate-500 pb-3 border-b border-slate-100">
-            <span>Name</span>
-            <span className="text-right">Total</span>
-          </div>
-          <div className="grid grid-cols-2 items-center py-3 text-sm border-b border-slate-100">
-            <span className="text-slate-700">Rates</span>
-            <span className="text-right text-ink-900 font-medium">{active.unitLabel}</span>
-          </div>
-          <div className="grid grid-cols-2 items-center py-3 text-sm border-b border-slate-100">
-            <span className="text-slate-700">Employees</span>
-            <span className="text-right text-ink-900 font-medium">{employees}</span>
-          </div>
-          <div className="grid grid-cols-2 items-center py-3 text-sm border-b border-slate-100">
-            <span className="text-slate-500">{employees} × {active.multiplier}</span>
-            <span className="text-right text-slate-500 font-mono">{(employees * active.multiplier).toLocaleString()}</span>
-          </div>
-          <div className="grid grid-cols-2 items-center py-3 text-base border-b border-slate-100">
-            <span className="text-ink-900 font-semibold">Onshore Employee Cost</span>
-            <span className="text-right text-ink-900 font-display font-bold">{money(summary.onshore)}</span>
-          </div>
-          <div className="grid grid-cols-2 items-center py-3 text-base border-b border-slate-100">
-            <span className="text-ink-900 font-semibold">Offshore Employee Cost</span>
-            <span className="text-right text-ink-900 font-display font-bold">{money(summary.offshore)}</span>
-          </div>
-          <div className="grid grid-cols-2 items-center py-4 mt-1 rounded-md bg-brand-50 px-3">
-            <span className="text-brand-800 font-semibold">Total Savings</span>
-            <span className="text-right text-brand-700 font-display font-bold text-lg">{money(summary.savings)}</span>
-          </div>
-          <p className="mt-4 text-xs text-slate-500 leading-relaxed">
-            Onshore rate: ${ONSHORE_RATE.toFixed(2)}/hr (US average). Offshore rate: ${OFFSHORE_RATE.toFixed(2)}/hr (PayLow flat rate). Multipliers — Per Week: 40 hrs, Per Month: 173 hrs, Per Year: 2,080 hrs. High-skilled roles may be slightly higher.
+          <p className="mt-5 text-xs text-ink-400 leading-relaxed">
+            Estimates assume 40 hrs/week. Specialized roles may price differently. No payroll taxes, recruitment fees, or lock-in contracts.
           </p>
+        </div>
+
+        {/* ===== RIGHT: Results ===== */}
+        <div className="lg:col-span-7 space-y-4">
+          {/* Comparison bars */}
+          <div className="card-dark relative overflow-hidden p-6 sm:p-8" data-reveal data-reveal-delay="80">
+            <div aria-hidden className="absolute inset-0 bg-mesh-2 opacity-30 mix-blend-screen" />
+            <div className="relative">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-white/60">Cost comparison</p>
+                  <h3 className="font-display font-bold text-white text-xl sm:text-2xl mt-1">
+                    {team} {team === 1 ? 'person' : 'people'} · {cad.label}
+                  </h3>
+                </div>
+                <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/90">
+                  <Sparkles className="w-3 h-3 text-brand-300" /> Live
+                </span>
+              </div>
+
+              {/* Bars */}
+              <div className="mt-7 space-y-5">
+                {/* Onshore */}
+                <div>
+                  <div className="flex items-baseline justify-between text-sm">
+                    <span className="text-white/70">Onshore equivalent</span>
+                    <span className="font-display font-semibold text-white tabular-nums">
+                      {fmt(animOnshore)}<span className="text-white/40 text-xs ml-1">{cad.short}</span>
+                    </span>
+                  </div>
+                  <div className="mt-2 h-3 rounded-full bg-white/10 overflow-hidden">
+                    <div className="h-full bg-white/40 transition-all duration-700 ease-out-expo" style={{ width: '100%' }} />
+                  </div>
+                </div>
+
+                {/* PayLow */}
+                <div>
+                  <div className="flex items-baseline justify-between text-sm">
+                    <span className="text-white/70">PayLow</span>
+                    <span className="font-display font-semibold text-white tabular-nums">
+                      {fmt(animOffshore)}<span className="text-white/40 text-xs ml-1">{cad.short}</span>
+                    </span>
+                  </div>
+                  <div className="mt-2 h-3 rounded-full bg-white/10 overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-brand transition-all duration-700 ease-out-expo"
+                      style={{ width: `${offshoreBarPct}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Big savings number */}
+              <div className="mt-8 flex flex-wrap items-end justify-between gap-4 pt-6 border-t border-white/10">
+                <div>
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-500/15 px-3 py-1 text-xs font-semibold text-brand-300 mb-2">
+                    <TrendingDown className="w-3 h-3" /> You save
+                  </div>
+                  <div className="font-display font-bold text-white leading-none tabular-nums" style={{ fontSize: 'clamp(2.25rem, 6vw, 3.75rem)' }}>
+                    {fmt(animSavings)}
+                  </div>
+                  <p className="text-white/60 text-sm mt-2">{cad.label.toLowerCase()} · {savingsPct}% lower than onshore</p>
+                </div>
+                <Link href="/contact-us" className="btn-primary btn-lg">
+                  Lock in this rate <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Annual projection card (always shown for context) */}
+          <div className="card p-6 sm:p-8 flex flex-wrap items-center justify-between gap-4" data-reveal data-reveal-delay="160">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">Annual savings</p>
+              <p className="mt-1 font-display font-bold text-2xl text-ink-900 tabular-nums">
+                {fmt((ONSHORE_RATE - OFFSHORE_RATE) * 2080 * team)}
+              </p>
+              <p className="text-sm text-ink-500 mt-0.5">vs. hiring locally · same {team} {team === 1 ? 'role' : 'roles'}</p>
+            </div>
+            <div className="flex gap-2">
+              {[5, 10, 25].map((n) => (
+                <button
+                  key={n}
+                  onClick={() => setTeam(n)}
+                  className={`rounded-full px-4 py-2 text-xs font-semibold transition ${
+                    team === n ? 'bg-ink-900 text-white' : 'bg-ink-50 text-ink-700 hover:bg-ink-100'
+                  }`}
+                >
+                  {n} people
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

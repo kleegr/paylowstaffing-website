@@ -1,121 +1,136 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { CheckCircle2, AlertTriangle } from 'lucide-react';
-import { siteConfig } from '@/lib/content';
+import { CheckCircle2, AlertCircle, Send, Loader2 } from 'lucide-react';
+
+type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 export default function ContactForm() {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [status, setStatus] = useState<Status>('idle');
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus('sending');
-    setErrorMessage(null);
+    setStatus('submitting');
+    setErrorMsg(null);
+
     const fd = new FormData(e.currentTarget);
-    const payload = Object.fromEntries(fd.entries());
+    const payload: Record<string, string | boolean> = {
+      kind: 'contact',
+      first_name: String(fd.get('first_name') ?? ''),
+      last_name: String(fd.get('last_name') ?? ''),
+      email: String(fd.get('email') ?? ''),
+      phone: String(fd.get('phone') ?? ''),
+      message: String(fd.get('message') ?? ''),
+      sms_consent_reminders: fd.get('sms_consent_reminders') === 'on',
+      sms_consent_marketing: fd.get('sms_consent_marketing') === 'on',
+      website_url: String(fd.get('website_url') ?? ''), // honeypot
+    };
+
     try {
-      const res = await fetch('/api/contact', {
+      const r = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ kind: 'contact', ...payload }),
+        body: JSON.stringify(payload),
       });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error ?? 'Submission failed');
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok || data?.ok === false) {
+        setStatus('error');
+        setErrorMsg(data?.error || 'Submission failed. Please try again.');
+        return;
       }
-      setStatus('done');
-      (e.target as HTMLFormElement).reset();
+      setStatus('success');
+      e.currentTarget.reset();
     } catch (err) {
       setStatus('error');
-      setErrorMessage(err instanceof Error ? err.message : 'Submission failed');
+      setErrorMsg('Network error. Please try again.');
     }
+  }
+
+  if (status === 'success') {
+    return (
+      <div className="rounded-3xl bg-gradient-warm border border-brand-100 p-8 text-center">
+        <div className="mx-auto w-14 h-14 rounded-full bg-gradient-brand text-white inline-flex items-center justify-center shadow-glow-sm mb-4">
+          <CheckCircle2 className="w-7 h-7" />
+        </div>
+        <h3 className="display-3">Thanks — we got your message!</h3>
+        <p className="mt-3 text-ink-600">A PayLow team member will reach out within one business day.</p>
+        <button onClick={() => setStatus('idle')} className="btn-outline mt-6">Send another</button>
+      </div>
+    );
   }
 
   return (
     <form onSubmit={onSubmit} className="space-y-5" noValidate>
-      <input type="text" name="website_url" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] w-px h-px opacity-0" />
-      <Field label="First Name" name="first_name" required />
-      <Field label="Last Name" name="last_name" required />
-      <Field label="Phone" name="phone" type="tel" />
-      <Field label="Email" name="email" type="email" required indicator="*" />
-
-      <label className="flex items-start gap-3 text-sm leading-relaxed text-slate-700 cursor-pointer">
-        <input type="checkbox" name="sms_consent_automated" className="mt-1 w-5 h-5 rounded border-slate-300 accent-brand-600" />
-        <span>
-          I agree to receive <strong>Automated Reminders and Service-Based messages</strong> from{' '}
-          <strong>{siteConfig.fullName}</strong> at the phone number provided above. This agreement isn&apos;t a condition of any purchase.{' '}
-          <strong>Message and data rates may apply,</strong> and message frequencies vary. Text <strong>HELP</strong> to{' '}
-          <strong>+1{siteConfig.contact.phoneTel}</strong> for assistance, or reply <strong>STOP</strong> or <strong>OUT</strong> to opt out or unsubscribe at any time.
-        </span>
-      </label>
-
-      <label className="flex items-start gap-3 text-sm leading-relaxed text-slate-700 cursor-pointer">
-        <input type="checkbox" name="sms_consent_marketing" className="mt-1 w-5 h-5 rounded border-slate-300 accent-brand-600" />
-        <span>
-          I agree to receive <strong>Marketing and Promotional</strong> messages from <strong>{siteConfig.fullName}</strong> at the phone number provided above. This agreement isn&apos;t a condition of any purchase.{' '}
-          <strong>Message and data rates may apply,</strong> and message frequencies vary. Text <strong>HELP</strong> to{' '}
-          <strong>+1{siteConfig.contact.phoneTel}</strong> for assistance, or reply <strong>STOP</strong> or <strong>OUT</strong> to opt out or unsubscribe at any time.
-        </span>
-      </label>
-
-      <button
-        type="submit"
-        disabled={status === 'sending'}
-        className="w-full mt-2 bg-cream-100 hover:bg-cream-200 text-ink-900 font-semibold py-3.5 rounded-md transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-      >
-        {status === 'sending' ? 'Submitting…' : 'Submit'}
-      </button>
-
-      <div className="text-center text-sm text-slate-500">
-        <Link href={siteConfig.privacyUrl} className="text-brand-700 hover:underline">Privacy Policy</Link>
-        {' | '}
-        <Link href={siteConfig.termsUrl} className="text-brand-700 hover:underline">Terms of Service</Link>
+      {/* Honeypot */}
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="website_url">Website URL</label>
+        <input id="website_url" name="website_url" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      {status === 'done' && (
-        <div role="status" className="flex items-start gap-3 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 p-4">
-          <CheckCircle2 className="w-5 h-5 mt-0.5 shrink-0" />
-          <div>
-            <p className="font-semibold">Thanks — your message has been sent.</p>
-            <p className="text-sm">We&apos;ll be in touch shortly.</p>
-          </div>
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="field">
+          <input id="first_name" name="first_name" required placeholder="First name" className="field-input" />
+          <label htmlFor="first_name" className="field-label">First name *</label>
         </div>
-      )}
-      {status === 'error' && (
-        <div role="alert" className="flex items-start gap-3 rounded-md bg-red-50 text-red-800 border border-red-200 p-4">
-          <AlertTriangle className="w-5 h-5 mt-0.5 shrink-0" />
-          <div>
-            <p className="font-semibold">Submission failed.</p>
-            <p className="text-sm">{errorMessage ?? 'Please try again in a moment.'}</p>
-          </div>
+        <div className="field">
+          <input id="last_name" name="last_name" required placeholder="Last name" className="field-input" />
+          <label htmlFor="last_name" className="field-label">Last name *</label>
         </div>
-      )}
-    </form>
-  );
-}
+      </div>
 
-function Field({
-  label, name, type = 'text', required = false, indicator,
-}: {
-  label: string; name: string; type?: string; required?: boolean; indicator?: string;
-}) {
-  const id = `f-${name}`;
-  return (
-    <div>
-      <label htmlFor={id} className="block text-sm font-semibold text-ink-900 mb-2">
-        {label}
-        {indicator && <span className="text-brand-600 ml-1">{indicator}</span>}
-      </label>
-      <input
-        id={id}
-        name={name}
-        type={type}
-        required={required}
-        placeholder={label}
-        className="w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-slate-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 focus:outline-none transition"
-      />
-    </div>
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="field">
+          <input id="email" name="email" type="email" required placeholder="you@company.com" className="field-input" />
+          <label htmlFor="email" className="field-label">Email *</label>
+        </div>
+        <div className="field">
+          <input id="phone" name="phone" type="tel" placeholder="(555) 555-5555" className="field-input" />
+          <label htmlFor="phone" className="field-label">Phone</label>
+        </div>
+      </div>
+
+      <div className="field">
+        <textarea id="message" name="message" rows={4} placeholder="What kind of help are you looking for?" className="field-input resize-none" />
+        <label htmlFor="message" className="field-label">How can we help?</label>
+      </div>
+
+      <fieldset className="space-y-3 rounded-2xl bg-ink-50/70 border border-ink-100 p-4 text-xs text-ink-600 leading-relaxed">
+        <legend className="sr-only">SMS consent</legend>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input name="sms_consent_reminders" type="checkbox" className="mt-0.5 w-4 h-4 accent-brand-500" />
+          <span>
+            I agree to receive automated reminders by SMS from PayLow Staffing. Message &amp; data rates may apply.
+            Reply <strong>HELP</strong> for help, <strong>STOP</strong> to opt out.
+          </span>
+        </label>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input name="sms_consent_marketing" type="checkbox" className="mt-0.5 w-4 h-4 accent-brand-500" />
+          <span>
+            I agree to receive marketing &amp; promotional SMS from PayLow Staffing. Reply <strong>STOP</strong> at any time to opt out.
+          </span>
+        </label>
+      </fieldset>
+
+      {status === 'error' && (
+        <div className="flex items-start gap-2 rounded-2xl bg-red-50 border border-red-100 p-3 text-sm text-red-700">
+          <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+          <span>{errorMsg}</span>
+        </div>
+      )}
+
+      <div className="flex flex-wrap items-center gap-4">
+        <button type="submit" disabled={status === 'submitting'} className="btn-primary btn-lg">
+          {status === 'submitting' ? (<><Loader2 className="w-4 h-4 animate-spin" /> Submitting…</>) : (<>Submit <Send className="w-4 h-4" /></>)}
+        </button>
+        <p className="text-xs text-ink-500">
+          By submitting you agree to our{' '}
+          <Link href="https://privacy-policy.paylowstaffing.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-ink-700">Privacy Policy</Link>
+          {' '}and{' '}
+          <Link href="https://toc.paylowstaffing.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-ink-700">Terms of Service</Link>.
+        </p>
+      </div>
+    </form>
   );
 }
