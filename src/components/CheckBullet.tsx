@@ -1,21 +1,18 @@
 import { Check } from 'lucide-react';
+import { ReactNode } from 'react';
 
-export default function CheckBullet({
-  light = false,
-  children,
-}: {
-  light?: boolean;
-  children: React.ReactNode;
-}) {
+export default function CheckBullet({ children, tone = 'orange' }: { children: ReactNode; tone?: 'orange' | 'dark' }) {
   return (
-    <li className="flex items-start gap-3">
+    <li className="flex items-center gap-3">
       <span
+        className={`inline-flex w-5 h-5 items-center justify-center rounded-full ${
+          tone === 'orange' ? 'bg-brand-500 text-white' : 'bg-ink-900 text-white'
+        }`}
         aria-hidden="true"
-        className="mt-0.5 shrink-0 inline-flex w-5 h-5 items-center justify-center text-brand-600"
       >
-        <Check className="w-4 h-4" strokeWidth={3} />
+        <Check className="w-3 h-3" strokeWidth={3} />
       </span>
-      <span className={light ? 'text-white/90' : 'text-slate-700'}>{children}</span>
+      <span className="text-ink-700">{children}</span>
     </li>
   );
 }

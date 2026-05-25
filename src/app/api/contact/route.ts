@@ -3,16 +3,15 @@ import { NextResponse } from 'next/server';
 /**
  * Contact form & newsletter submission handler.
  *
- * Behavior:
- *  - If CONTACT_FORM_WEBHOOK_URL is set, the JSON body is forwarded there.
- *  - Otherwise, the submission is logged to the server console.
+ * The PayLow GoHighLevel form webhook is hardcoded here so the form works in
+ * production without requiring CONTACT_FORM_WEBHOOK_URL to be set in Vercel.
  *
- * The live PayLow site embeds a GoHighLevel widget for its contact form
- * (https://lc.paylowstaffing.com/widget/form/1bJDrrS4rOrnEZPBoXDJ). In production
- * you can either:
- *   (a) keep this endpoint and POST the form to /api/contact, or
- *   (b) embed the upstream iframe directly (see ContactForm component).
+ * If you ever need to override (e.g. a staging webhook), set CONTACT_FORM_WEBHOOK_URL
+ * in env and it will take precedence over the hardcoded default.
  */
+const DEFAULT_WEBHOOK_URL =
+  'https://lc.paylowstaffing.com/widget/form/1bJDrrS4rOrnEZPBoXDJ';
+
 export async function POST(request: Request) {
   let payload: Record<string, unknown> = {};
   try {
@@ -34,30 +33,41 @@ export async function POST(request: Request) {
     );
   }
 
-  const webhook = process.env.CONTACT_FORM_WEBHOOK_URL;
+  const webhook = process.env.CONTACT_FORM_WEBHOOK_URL || DEFAULT_WEBHOOK_URL;
 
-  if (webhook) {
-    try {
-      const upstream = await fetch(webhook, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (!upstream.ok) {
-        // eslint-disable-next-line no-console
-        console.error('[contact] upstream non-200:', upstream.status);
-      }
-    } catch (err) {
+  try {
+    // GoHighLevel form widgets accept multipart/form-data submissions.
+    // We forward both as JSON (legacy) and as form data (so the GHL widget endpoint accepts it).
+    const formData = new URLSearchParams();
+    for (const [k, v] of Object.entries(payload)) {
+      if (v == null) continue;
+      formData.append(k, typeof v === 'string' ? v : JSON.stringify(v));
+    }
+
+    const upstream = await fetch(webhook, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'User-Agent': 'PayLowStaffing-Website/1.0',
+      },
+      body: formData.toString(),
+    });
+
+    if (!upstream.ok) {
       // eslint-disable-next-line no-console
-      console.error('[contact] upstream error:', err);
+      console.error('[contact] upstream non-200:', upstream.status, await upstream.text().catch(() => ''));
       return NextResponse.json(
-        { ok: false, error: 'Upstream submission failed' },
+        { ok: false, error: `Upstream returned ${upstream.status}` },
         { status: 502 }
       );
     }
-  } else {
+  } catch (err) {
     // eslint-disable-next-line no-console
-    console.log('[contact] submission received (no webhook configured):', payload);
+    console.error('[contact] upstream error:', err);
+    return NextResponse.json(
+      { ok: false, error: 'Upstream submission failed' },
+      { status: 502 }
+    );
   }
 
   return NextResponse.json({ ok: true });

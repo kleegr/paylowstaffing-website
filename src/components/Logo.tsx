@@ -2,27 +2,29 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { assets } from '@/lib/content';
 
-type LogoProps = { size?: number; className?: string; href?: string };
-
-export default function Logo({ size = 50, className = '', href = '/' }: LogoProps) {
-  const inner = (
-    <span className={`inline-flex items-center ${className}`}>
+export default function Logo({
+  variant = 'light',
+  size = 'md',
+  className = '',
+}: {
+  variant?: 'light' | 'dark';
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+}) {
+  const heights = { sm: 36, md: 44, lg: 56 };
+  const widths = { sm: 110, md: 140, lg: 180 };
+  return (
+    <Link href="/" aria-label="PayLow — Home" className={`inline-flex items-center ${className}`}>
       <Image
         src={assets.logoGlow}
         alt="PayLow Staffing"
-        width={size * 3}
-        height={size}
+        width={widths[size]}
+        height={heights[size]}
         priority
-        className="h-auto w-auto"
-        style={{ maxHeight: size, width: 'auto' }}
         unoptimized
+        className={`h-auto w-auto ${variant === 'dark' ? 'brightness-0' : ''}`}
+        style={{ maxHeight: heights[size], width: 'auto' }}
       />
-    </span>
-  );
-  if (!href) return inner;
-  return (
-    <Link href={href} aria-label="PayLow — Home" className="inline-flex items-center">
-      {inner}
     </Link>
   );
 }

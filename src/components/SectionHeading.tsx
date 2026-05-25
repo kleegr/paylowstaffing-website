@@ -1,43 +1,30 @@
-import clsx from 'clsx';
-
-type Props = {
-  eyebrowLeft?: string;
-  eyebrowPill?: string;
-  eyebrow?: string;
-  title: string;
-  lead?: string;
-  align?: 'left' | 'center';
-  light?: boolean;
-  className?: string;
-};
+import { ReactNode } from 'react';
 
 export default function SectionHeading({
-  eyebrowLeft, eyebrowPill, eyebrow, title, lead,
-  align = 'center', light = false, className,
-}: Props) {
+  eyebrow,
+  title,
+  lead,
+  align = 'left',
+  className = '',
+}: {
+  eyebrow?: string;
+  title: ReactNode;
+  lead?: ReactNode;
+  align?: 'left' | 'center';
+  className?: string;
+}) {
+  const center = align === 'center';
   return (
-    <div
-      className={clsx(
-        align === 'center' ? 'text-center mx-auto max-w-3xl' : 'text-left max-w-2xl',
-        className
-      )}
-    >
-      {(eyebrow || eyebrowLeft || eyebrowPill) && (
-        <div className={clsx('eyebrow-row', align === 'center' && 'justify-center')}>
-          {eyebrowLeft && (
-            <span className={clsx('font-display font-semibold text-sm', light ? 'text-white' : 'text-ink-900')}>
-              {eyebrowLeft}
-            </span>
-          )}
-          {(eyebrow || eyebrowPill) && <span className="pill">{eyebrow ?? eyebrowPill}</span>}
-        </div>
-      )}
-      <h2 className={light ? 'h-display-light text-balance' : 'h-display text-balance'}>{title}</h2>
-      {lead && (
-        <p className={clsx('mt-5 text-base md:text-lg leading-relaxed', light ? 'text-white/80' : 'text-slate-600')}>
-          {lead}
+    <div className={`${center ? 'text-center mx-auto max-w-3xl' : 'max-w-3xl'} ${className}`} data-reveal>
+      {eyebrow && (
+        <p className="mb-5">
+          <span className="eyebrow">
+            <span className="eyebrow-dot" /> {eyebrow}
+          </span>
         </p>
       )}
+      <h2 className="display-2">{title}</h2>
+      {lead && <p className={`lead mt-5 ${center ? 'mx-auto' : ''}`}>{lead}</p>}
     </div>
   );
 }
