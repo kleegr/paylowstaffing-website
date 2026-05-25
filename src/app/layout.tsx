@@ -1,9 +1,21 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+
+// Self-hosted fonts (via @fontsource) — no external request, no CLS
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/plus-jakarta-sans/600.css';
+import '@fontsource/plus-jakarta-sans/700.css';
+import '@fontsource/plus-jakarta-sans/800.css';
+
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
 import Reveal from '@/components/Reveal';
+import { ModalProvider } from '@/components/ModalProvider';
+import GetStartedModal from '@/components/GetStartedModal';
 import { siteConfig } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -46,22 +58,20 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="min-h-screen bg-white text-ink-700 antialiased">
-        <a href="#content" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-brand-500 focus:text-white focus:px-4 focus:py-2 focus:rounded-full">
+      <body className="min-h-screen bg-white text-ink-700 antialiased font-sans">
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-brand-500 focus:text-white focus:px-4 focus:py-2 focus:rounded-full"
+        >
           Skip to content
         </a>
-        <Header />
-        <main id="content">{children}</main>
-        <Footer />
-        <ScrollToTop />
+        <ModalProvider>
+          <Header />
+          <main id="content">{children}</main>
+          <Footer />
+          <ScrollToTop />
+          <GetStartedModal />
+        </ModalProvider>
         <Reveal />
       </body>
     </html>

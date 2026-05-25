@@ -6,25 +6,25 @@ const config: Config = {
     container: { center: true, padding: '1rem' },
     extend: {
       fontFamily: {
-        display: ['var(--font-display)', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
-        // PayLow brand orange — same hue, but a full modern scale
+        // PayLow brand orange — verified hex from live logo. Single hue, full scale.
         brand: {
           50: '#FFF4EC',
           100: '#FFE3CF',
           200: '#FFC59E',
           300: '#FFA065',
           400: '#FF8242',
-          500: '#F26C2A',  // primary
+          500: '#F26C2A',   // primary brand orange (PayLow)
           600: '#D9551A',
-          700: '#B53F0E',
+          700: '#B53F0E',   // deeper red-orange (gradient end)
           800: '#8C2E07',
           900: '#5E1F04',
           950: '#3A1102',
         },
-        // Warm-tinted neutrals for a sophisticated, premium feel
+        // Warm-tinted neutrals for premium feel
         ink: {
           50: '#F8F7F5',
           100: '#EFEDE9',
@@ -35,33 +35,27 @@ const config: Config = {
           600: '#3F3A30',
           700: '#2A2620',
           800: '#1A1816',
-          900: '#0E0D0C',  // near-black, warm
+          900: '#0E0D0C',
           950: '#070605',
-        },
-        accent: {
-          rose: '#FF5A8A',
-          amber: '#FFC53D',
-          peach: '#FFD8B8',
         },
       },
       backgroundImage: {
-        'gradient-brand': 'linear-gradient(135deg, #F26C2A 0%, #FF5A8A 100%)',
-        'gradient-brand-soft': 'linear-gradient(135deg, #FFE3CF 0%, #FFD8E0 100%)',
-        'gradient-warm': 'linear-gradient(135deg, #FFF4EC 0%, #FFE3CF 50%, #FFD8E0 100%)',
-        'gradient-dark': 'linear-gradient(135deg, #1A1816 0%, #0E0D0C 100%)',
+        // Single-hue brand gradient: orange → deeper red-orange (no invented pink)
+        'gradient-brand': 'linear-gradient(135deg, #FF8242 0%, #F26C2A 50%, #D9551A 100%)',
+        'gradient-brand-soft': 'linear-gradient(135deg, #FFF4EC 0%, #FFE3CF 100%)',
+        'gradient-warm': 'linear-gradient(180deg, #FFFFFF 0%, #FFF4EC 60%, #FFE3CF 100%)',
+        'gradient-dark': 'linear-gradient(180deg, #1A1816 0%, #0E0D0C 100%)',
         'mesh-1':
-          'radial-gradient(at 0% 0%, #FFE3CF 0px, transparent 50%), radial-gradient(at 100% 0%, #FFD8E0 0px, transparent 50%), radial-gradient(at 50% 100%, #FFF4EC 0px, transparent 50%)',
+          'radial-gradient(60% 50% at 50% 0%, rgba(242,108,42,0.10) 0%, transparent 70%), radial-gradient(40% 40% at 100% 100%, rgba(217,85,26,0.08) 0%, transparent 70%)',
         'mesh-2':
-          'radial-gradient(at 15% 20%, rgba(242,108,42,0.18) 0px, transparent 45%), radial-gradient(at 85% 10%, rgba(255,90,138,0.16) 0px, transparent 45%), radial-gradient(at 50% 90%, rgba(255,197,158,0.20) 0px, transparent 50%)',
-        'grid-light':
-          'linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px)',
+          'radial-gradient(at 15% 20%, rgba(242,108,42,0.14) 0px, transparent 50%), radial-gradient(at 85% 10%, rgba(217,85,26,0.10) 0px, transparent 50%), radial-gradient(at 50% 95%, rgba(255,164,107,0.16) 0px, transparent 55%)',
       },
       boxShadow: {
         soft: '0 2px 8px rgba(15, 13, 10, 0.04), 0 12px 32px rgba(15, 13, 10, 0.06)',
-        card: '0 1px 2px rgba(15, 13, 10, 0.04), 0 8px 24px rgba(15, 13, 10, 0.06)',
+        card: '0 1px 2px rgba(15, 13, 10, 0.04), 0 6px 20px rgba(15, 13, 10, 0.05)',
         lift: '0 8px 20px rgba(15, 13, 10, 0.08), 0 24px 60px rgba(15, 13, 10, 0.10)',
-        glow: '0 8px 28px rgba(242, 108, 42, 0.32), 0 0 0 1px rgba(242, 108, 42, 0.18)',
-        'glow-sm': '0 4px 14px rgba(242, 108, 42, 0.28)',
+        glow: '0 8px 28px rgba(242, 108, 42, 0.30), 0 0 0 1px rgba(242, 108, 42, 0.18)',
+        'glow-sm': '0 4px 14px rgba(242, 108, 42, 0.25)',
         ring: '0 0 0 1px rgba(15, 13, 10, 0.06)',
       },
       borderRadius: {
@@ -79,38 +73,28 @@ const config: Config = {
         },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-8px)' },
+          '50%': { transform: 'translateY(-6px)' },
         },
         'float-slow': {
-          '0%, 100%': { transform: 'translateY(0) rotate(0)' },
-          '50%': { transform: 'translateY(-12px) rotate(0.5deg)' },
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
         },
-        'gradient-shift': {
-          '0%, 100%': { 'background-position': '0% 50%' },
-          '50%': { 'background-position': '100% 50%' },
+        'scale-in': {
+          '0%': { opacity: '0', transform: 'scale(0.96)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
         },
-        shimmer: {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' },
-        },
-        pulseGlow: {
-          '0%, 100%': { 'box-shadow': '0 0 0 0 rgba(242, 108, 42, 0.4)' },
-          '50%': { 'box-shadow': '0 0 0 12px rgba(242, 108, 42, 0)' },
-        },
-        marquee: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
+        'slide-up': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       animation: {
         'fade-up': 'fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both',
-        'fade-in': 'fade-in 0.8s ease-out both',
-        float: 'float 4s ease-in-out infinite',
-        'float-slow': 'float-slow 6s ease-in-out infinite',
-        'gradient-shift': 'gradient-shift 8s ease-in-out infinite',
-        shimmer: 'shimmer 2s linear infinite',
-        'pulse-glow': 'pulseGlow 2.4s ease-in-out infinite',
-        marquee: 'marquee 28s linear infinite',
+        'fade-in': 'fade-in 0.6s ease-out both',
+        float: 'float 5s ease-in-out infinite',
+        'float-slow': 'float-slow 7s ease-in-out infinite',
+        'scale-in': 'scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'slide-up': 'slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both',
       },
       transitionTimingFunction: {
         'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',

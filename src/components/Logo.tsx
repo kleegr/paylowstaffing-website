@@ -1,6 +1,4 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import { assets } from '@/lib/content';
 
 export default function Logo({
   variant = 'light',
@@ -11,19 +9,17 @@ export default function Logo({
   size?: 'sm' | 'md' | 'lg';
   className?: string;
 }) {
-  const heights = { sm: 36, md: 44, lg: 56 };
-  const widths = { sm: 110, md: 140, lg: 180 };
+  const heights = { sm: 28, md: 36, lg: 44 };
+  const src = variant === 'dark' ? '/logo-dark.svg' : '/logo.svg';
   return (
-    <Link href="/" aria-label="PayLow — Home" className={`inline-flex items-center ${className}`}>
-      <Image
-        src={assets.logoGlow}
+    <Link href="/" aria-label="PayLow Staffing — Home" className={`inline-flex items-center ${className}`}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
         alt="PayLow Staffing"
-        width={widths[size]}
         height={heights[size]}
-        priority
-        unoptimized
-        className={`h-auto w-auto ${variant === 'dark' ? 'brightness-0' : ''}`}
-        style={{ maxHeight: heights[size], width: 'auto' }}
+        style={{ height: heights[size], width: 'auto', display: 'block' }}
+        decoding="async"
       />
     </Link>
   );
