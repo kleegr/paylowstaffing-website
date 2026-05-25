@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="10" fill="#FBF1E5"/>
+  <text x="32" y="48" text-anchor="middle"
+        font-family="Poppins, Inter, system-ui, sans-serif"
+        font-weight="800" font-size="48" fill="#121212">P</text>
+  <g transform="translate(20 28)">
+    <path d="M0 0 L8 0 L8 12 L4 16 L0 12 Z" fill="#F26C2A"/>
+    <path d="M4 16 L4 22" stroke="#F26C2A" stroke-width="3" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>
