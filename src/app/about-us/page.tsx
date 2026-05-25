@@ -1,234 +1,140 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { ThumbsUp, Users, Globe2, Diamond, Headphones, Folder } from 'lucide-react';
+import { ArrowRight, Heart, Globe2, Sparkles, Users2 } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import SectionHeading from '@/components/SectionHeading';
-import CheckBullet from '@/components/CheckBullet';
 import CtaBanner from '@/components/CtaBanner';
 import { assets } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'About Us',
   description:
-    'PayLow Staffing was founded by Nathan to bridge the gap between businesses and skilled offshore professionals, offering a flexible, efficient staffing model.',
+    'PayLow was founded by Nathan to connect businesses with skilled offshore professionals — a flexible, efficient staffing model built from firsthand experience.',
 };
 
 export default function AboutPage() {
   return (
     <>
-      <PageHero title="About Us" bg={assets.aboutHeroBg} />
+      <PageHero
+        eyebrow="About PayLow"
+        title={<>We connect ambitious teams with <span className="text-gradient">world-class talent.</span></>}
+        lead="Born from a real hiring problem. Built to fix it for everyone."
+        actions={
+          <>
+            <Link href="/contact-us" className="btn-primary">Start hiring <ArrowRight className="w-4 h-4" /></Link>
+            <Link href="/how-it-works" className="btn-outline">How it works</Link>
+          </>
+        }
+      />
 
       {/* ===== Story ===== */}
       <section className="section bg-white">
         <div className="container-wide grid lg:grid-cols-2 gap-14 items-center">
-          {/* Photo collage */}
-          <div className="relative max-w-md mx-auto lg:mx-0 grid grid-cols-2 gap-3">
-            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden">
-              <Image
-                src={assets.about01}
-                alt="PayLow recruiter"
-                fill
-                className="object-cover"
-                sizes="280px"
-                unoptimized
-              />
-            </div>
-            <div className="space-y-3 mt-8">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
-                <Image src={assets.about02} alt="" fill className="object-cover" sizes="240px" unoptimized />
+          <div className="relative max-w-md mx-auto lg:mx-0" data-reveal>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-card">
+                <Image src={assets.about01} alt="PayLow recruiter" fill className="object-cover" sizes="280px" unoptimized />
               </div>
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
-                <Image
-                  src={assets.aboutRecruiter}
-                  alt=""
-                  fill
-                  className="object-cover"
-                  sizes="240px"
-                  unoptimized
-                />
+              <div className="space-y-4 mt-10">
+                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-card">
+                  <Image src={assets.about02} alt="" fill className="object-cover" sizes="240px" unoptimized />
+                </div>
+                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-card">
+                  <Image src={assets.aboutRecruiter} alt="" fill className="object-cover" sizes="240px" unoptimized />
+                </div>
               </div>
             </div>
-            <span
-              aria-hidden="true"
-              className="absolute -bottom-6 -left-6 w-32 h-32 rounded-2xl bg-brand-100 -z-10"
-            />
+            <span aria-hidden className="absolute -z-10 -bottom-8 -left-8 w-44 h-44 rounded-3xl bg-gradient-brand-soft" />
           </div>
 
-          <div>
-            <h2 className="h-display text-balance">Bringing Dreams and Ambitions to Life</h2>
-            <div className="mt-6 space-y-4 text-slate-700 leading-relaxed">
+          <div data-reveal data-reveal-delay="120">
+            <p className="mb-5"><span className="eyebrow"><span className="eyebrow-dot" /> Our story</span></p>
+            <h2 className="display-2">Built by people who needed it.</h2>
+            <div className="mt-6 space-y-4 text-ink-600 leading-relaxed text-pretty">
               <p>
-                At Paylow Staffing, our journey began within the walls of a large bookkeeping
-                company. As the business grew, so did the need for reliable, skilled support.
-                However, finding local employees who could deliver quality work at a sustainable
-                cost quickly became a significant challenge. The high cost of hiring locally was
-                straining the business, forcing us to reconsider how we approached staffing.
+                PayLow began inside a growing bookkeeping company that couldn&rsquo;t find affordable, qualified help. Local hiring was breaking the budget. Quality kept slipping.
               </p>
               <p>
-                This struggle was a turning point for our CEO, Nathan. Determined to find a
-                solution, Nathan explored alternative staffing options and discovered the
-                incredible talent available offshore. With this new perspective, he saw an
-                opportunity to not only help his own business but also to create a staffing
-                model that could benefit other companies facing similar challenges.
-              </p>
-              <p>
-                Driven by his firsthand experience, Nathan launched Paylow Staffing to bridge
-                the gap between businesses and skilled professionals worldwide. Today, we&apos;re
-                proud to offer a flexible, efficient staffing model that allows companies to
-                grow sustainably while ensuring talented professionals can find rewarding work
-                from anywhere.
+                Our CEO, Nathan, looked offshore — and found extraordinary talent everyone else had missed. PayLow was born to bring that talent to every team facing the same problem.
               </p>
             </div>
             <div className="mt-8">
-              <Link href="/contact-us" className="btn-primary">
-                Hire Today
-              </Link>
+              <Link href="/contact-us" className="btn-primary">Hire today <ArrowRight className="w-4 h-4" /></Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== Mission + stats (BLACK section with one ORANGE highlight card) ===== */}
-      <section className="relative bg-ink-900 text-white py-20 lg:py-24 overflow-hidden">
-        <span
-          aria-hidden="true"
-          className="absolute top-0 right-12 w-16 h-32 opacity-80"
-          style={{
-            background:
-              'linear-gradient(180deg, #F26C2A 0%, transparent 100%)',
-            clipPath: 'polygon(50% 0, 100% 100%, 0 100%)',
-          }}
-        />
-        <div className="relative container-wide grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="h-display-light text-balance">
-              Empowering Your Success with Exceptional Talent
-            </h2>
-            <p className="mt-6 text-white/80 leading-relaxed">
-              Our mission is straightforward yet powerful: to support businesses of all sizes in
-              achieving their full potential by connecting them with dedicated, expertly matched
-              remote professionals. Through flexible and cost-effective staffing solutions, we
-              strive to boost your team&apos;s productivity, adaptability, and growth, one
-              strategic hire at a time.
-            </p>
-          </div>
+      {/* ===== Mission + Stats (dark, premium) ===== */}
+      <section className="section bg-ink-900 relative overflow-hidden">
+        <div aria-hidden className="absolute inset-0 bg-mesh-2 opacity-25 mix-blend-screen" />
+        <div aria-hidden className="absolute -top-10 right-10 w-80 h-80 rounded-full bg-gradient-brand opacity-25 blur-3xl" />
 
-          <div className="grid grid-cols-3 gap-3 sm:gap-4">
-            <StatCard stat="3K+" label="Jobs Done" Icon={ThumbsUp} />
-            <StatCard stat="78+" label="Jobs For Countries" Icon={Users} />
-            <StatCard stat="12K+" label="Company Jobs" Icon={Globe2} highlight />
+        <div className="container-wide relative">
+          <div className="grid lg:grid-cols-2 gap-14 items-center">
+            <div data-reveal>
+              <p className="mb-5"><span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white/80"><span className="w-1.5 h-1.5 rounded-full bg-brand-400" /> Mission</span></p>
+              <h2 className="display-2 text-white">Empower every team to grow — without limits.</h2>
+              <p className="lead mt-6 text-white/70 max-w-xl">
+                Connect ambitious businesses with dedicated, expertly matched remote professionals. Boost productivity. Scale sustainably.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4" data-reveal data-reveal-delay="200">
+              {[
+                { stat: '3K+', label: 'Jobs done', Icon: Sparkles },
+                { stat: '78+', label: 'Countries served', Icon: Globe2 },
+                { stat: '12K+', label: 'Roles filled', Icon: Users2, primary: true },
+                { stat: '60–80%', label: 'Cost savings', Icon: Heart },
+              ].map((s, i) => (
+                <div
+                  key={s.label}
+                  className={`rounded-3xl p-6 sm:p-7 ${
+                    s.primary
+                      ? 'bg-gradient-brand text-white shadow-lift'
+                      : 'bg-white/5 border border-white/10 text-white'
+                  }`}
+                  data-reveal
+                  data-reveal-delay={i * 80}
+                >
+                  <s.Icon className={`w-6 h-6 mb-4 ${s.primary ? 'text-white' : 'text-brand-400'}`} />
+                  <div className="font-display font-bold text-3xl sm:text-4xl">{s.stat}</div>
+                  <div className="mt-1 text-sm opacity-80">{s.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ===== Benefits cards ===== */}
-      <section className="section bg-cream-50">
+      {/* ===== Values cards ===== */}
+      <section className="section bg-white">
         <div className="container-wide">
-          <SectionHeading title="Our Benefits: Going Beyond Traditional Staffing" />
-          <div className="mt-12 grid md:grid-cols-3 gap-6">
+          <SectionHeading
+            eyebrow="What sets us apart"
+            title={<>More than staffing. <span className="text-gradient">A partnership.</span></>}
+            align="center"
+          />
+          <div className="mt-14 grid md:grid-cols-3 gap-6">
             {[
-              {
-                title: 'Exceptional Talent',
-                body:
-                  'Access a pool of highly skilled, experienced professionals at a fraction of the cost of traditional in-house hires. Scale your team seamlessly while maintaining top-tier quality.',
-                Icon: Diamond,
-              },
-              {
-                title: 'Reliable Support',
-                body:
-                  'Our remote professionals offer extended availability across multiple time zones, so your operations continue smoothly without time-zone constraints.',
-                Icon: Headphones,
-              },
-              {
-                title: 'Dedicated Workforce',
-                body:
-                  'Our team members approach every task with enthusiasm and commitment, fostering a positive and dynamic work environment that supports your goals.',
-                Icon: Folder,
-              },
-            ].map((b) => (
-              <article key={b.title} className="card p-7">
-                <div className="inline-flex w-12 h-12 items-center justify-center rounded-md bg-brand-600 text-white mb-5">
-                  <b.Icon className="w-6 h-6" />
+              { t: 'Exceptional Talent', d: 'Highly skilled professionals at a fraction of in-house costs. Scale without sacrificing quality.', emoji: '✦' },
+              { t: 'Reliable Support', d: 'Round-the-clock availability across every time zone — your operations never sleep.', emoji: '◎' },
+              { t: 'Dedicated Workforce', d: 'Energetic, committed team members who treat your business like their own.', emoji: '✺' },
+            ].map((b, i) => (
+              <article key={b.t} className="card-hover p-8" data-reveal data-reveal-delay={i * 100}>
+                <div className="inline-flex w-14 h-14 items-center justify-center rounded-2xl bg-gradient-brand text-white font-display font-bold text-2xl mb-5 shadow-glow-sm">
+                  {b.emoji}
                 </div>
-                <h3 className="font-display font-bold text-lg text-ink-900">{b.title}</h3>
-                <p className="mt-2 text-slate-600 leading-relaxed text-sm">{b.body}</p>
+                <h3 className="display-3">{b.t}</h3>
+                <p className="mt-3 text-ink-500 leading-relaxed text-sm">{b.d}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ===== Customized Hiring — list left, orange-bordered photo right ===== */}
-      <section className="section bg-white">
-        <div className="container-wide grid lg:grid-cols-2 gap-14 items-center">
-          <div>
-            <h2 className="h-display text-balance">
-              Customized Hiring to Fit Your Business Needs
-            </h2>
-            <p className="mt-5 text-slate-700 leading-relaxed">
-              At PayLow, we follow a structured approach to find the ideal fit for your team. Our
-              refined process is designed to understand your unique requirements and provide
-              skilled professionals who integrate smoothly into your operations.
-            </p>
-            <ul className="mt-7 space-y-3.5">
-              <CheckBullet>Gain insight into your company&apos;s goals and culture for an optimal match.</CheckBullet>
-              <CheckBullet>Source top talent aligned with your specific needs and values.</CheckBullet>
-              <CheckBullet>Conduct rigorous screening to ensure quality and compatibility.</CheckBullet>
-              <CheckBullet>Present a shortlist of candidates for your final selection.</CheckBullet>
-              <CheckBullet>Prepare new hires to be productive from day one.</CheckBullet>
-              <CheckBullet>
-                Conduct regular check-ins to keep your team engaged and aligned with your objectives.
-              </CheckBullet>
-            </ul>
-          </div>
-          <div className="relative max-w-md mx-auto w-full">
-            {/* Orange-bordered rounded rectangle around photo */}
-            <div className="relative bg-brand-600 rounded-[2rem] p-2 shadow-soft">
-              <div className="relative aspect-[4/3] rounded-[1.7rem] overflow-hidden bg-white">
-                <Image
-                  src={assets.about03}
-                  alt="PayLow recruiter consulting with a client"
-                  fill
-                  sizes="(max-width: 1024px) 80vw, 400px"
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <CtaBanner />
     </>
-  );
-}
-
-function StatCard({
-  stat,
-  label,
-  Icon,
-  highlight = false,
-}: {
-  stat: string;
-  label: string;
-  Icon: React.ComponentType<{ className?: string }>;
-  highlight?: boolean;
-}) {
-  return (
-    <div
-      className={
-        highlight
-          ? 'rounded-md p-5 sm:p-6 bg-brand-600 text-white shadow-soft'
-          : 'rounded-md p-5 sm:p-6 bg-ink-800 text-white border border-white/10'
-      }
-    >
-      <Icon className={highlight ? 'w-7 h-7 text-white mb-3' : 'w-7 h-7 text-brand-500 mb-3'} />
-      <div className="font-display font-bold text-3xl sm:text-4xl">{stat}</div>
-      <div className={highlight ? 'mt-1 text-sm text-white/90' : 'mt-1 text-sm text-white/70'}>
-        {label}
-      </div>
-    </div>
   );
 }

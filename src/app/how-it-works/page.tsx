@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { ClipboardCheck, MessageSquare, Briefcase } from 'lucide-react';
+import { ArrowRight, ClipboardCheck, MessageSquare, Briefcase, Sparkles, Headphones, UserCheck, Zap, ShieldCheck } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import SectionHeading from '@/components/SectionHeading';
 import CtaBanner from '@/components/CtaBanner';
@@ -9,167 +9,138 @@ import { assets } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'How It Works',
-  description:
-    'At PayLow, we make hiring skilled, committed remote staff a straightforward experience that enhances your business from day one.',
+  description: 'A streamlined hiring process. Skilled offshore staff matched to your team in as little as one week.',
 };
 
 const processSteps = [
-  {
-    title: 'Select Your Preferences',
-    body:
-      'Choose the option that best suits your needs, whether you’re looking for part-time support or a full team of specialists. Our flexible options make it easy to adjust your staffing as your business grows.',
-  },
-  {
-    title: 'Get Paired with Your Assistant',
-    body:
-      'We match you with a carefully selected assistant whose expertise aligns with your industry. PayLow ensures every professional is prepared to integrate smoothly into your workflow.',
-  },
-  {
-    title: 'Kickoff Meeting',
-    body:
-      'In a startup meeting, you and your assistant align on goals and expectations. This session provides an overview of your processes, setting the stage for immediate productivity and smooth collaboration.',
-  },
-  {
-    title: 'Focus on Growth',
-    body:
-      'With your new team member in place, you can concentrate on expanding your business while we handle the support. Enjoy reliable assistance without the hassle of HR management.',
-  },
+  { n: '01', title: 'Tell us your needs', d: 'A 15-minute call to scope the role, skills, and timezone you need.', Icon: Headphones },
+  { n: '02', title: 'We match talent',  d: 'Carefully vetted candidates aligned to your industry and culture.', Icon: ShieldCheck },
+  { n: '03', title: 'You interview',     d: 'Meet the shortlist. You choose who joins your team.', Icon: UserCheck },
+  { n: '04', title: 'They start fast',   d: 'Kickoff meeting. Smooth onboarding. Immediate productivity.', Icon: Zap },
 ];
 
 const applicationSteps = [
-  {
-    title: 'Comprehensive Screening',
-    body:
-      'Each candidate goes through a detailed screening to verify their skills, experience, and commitment, ensuring they are well-suited for the role.',
-    Icon: ClipboardCheck,
-  },
-  {
-    title: 'Client Interview',
-    body:
-      'Qualified candidates are introduced to clients for a direct interview, allowing both parties to confirm compatibility and set clear expectations.',
-    Icon: MessageSquare,
-  },
-  {
-    title: 'Job Offer Acceptance',
-    body:
-      'Once the interview process is complete, successful candidates receive an offer and officially become part of the client’s team. Start the journey today for a brighter future.',
-    Icon: Briefcase,
-  },
+  { title: 'Comprehensive Screening', d: 'Skills, experience, and commitment verified before you ever meet a candidate.', Icon: ClipboardCheck },
+  { title: 'Client Interview', d: 'Direct conversations to confirm fit and set clear expectations.', Icon: MessageSquare },
+  { title: 'Offer & Onboarding', d: 'You hire. We handle paperwork, onboarding, and culture integration.', Icon: Briefcase },
 ];
 
 export default function HowItWorksPage() {
   return (
     <>
-      <PageHero title="How It Works" bg={assets.howItWorksHeroBg} />
+      <PageHero
+        eyebrow="How it works"
+        title={<>Hire skilled remote staff — <span className="text-gradient">without the headache.</span></>}
+        lead="A clear, fast, simple process. From first call to first hire in days."
+        actions={
+          <>
+            <Link href="/contact-us" className="btn-primary">Get started <ArrowRight className="w-4 h-4" /></Link>
+            <Link href="/pricing" className="btn-outline">See pricing</Link>
+          </>
+        }
+      />
 
-      {/* ===== Intro ===== */}
+      {/* Intro split */}
       <section className="section bg-white">
         <div className="container-wide grid lg:grid-cols-2 gap-14 items-center">
-          <div>
-            <h2 className="h-display text-balance">Effortless Hiring Made Simple With PayLow</h2>
-            <p className="mt-5 text-slate-700 leading-relaxed">
-              At PayLow, we make hiring skilled, committed remote staff a straightforward
-              experience that enhances your business from day one. As an offshore staffing
-              agency, we connect you with top global talent that integrates smoothly into your
-              team, providing reliable support to help you achieve your goals. Our approach
-              emphasizes clarity and ease, enabling you to find the right match without the
-              typical complications. With PayLow, you gain a strategic partner who understands
-              your unique needs and offers a solution that is both efficient and affordable.
+          <div data-reveal>
+            <p className="mb-5"><span className="eyebrow"><span className="eyebrow-dot" /> Why PayLow</span></p>
+            <h2 className="display-2">Built for clarity, speed, and quality.</h2>
+            <p className="lead mt-5">
+              No drawn-out RFPs. No vague resume piles. Just a refined matching process that gets the right people into your workflow.
             </p>
-            <div className="mt-7">
-              <Link href="/about-us" className="btn-primary">
-                About Us
-              </Link>
-            </div>
+            <ul className="mt-8 space-y-3">
+              {['One contact. Real humans, no chatbots.', 'Talent vetted before you see them.', 'Hire in days — not weeks.'].map((s) => (
+                <li key={s} className="flex items-center gap-3 text-ink-700">
+                  <Sparkles className="w-4 h-4 text-brand-500" /> <span>{s}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="relative max-w-md mx-auto w-full">
-            <div className="relative bg-brand-600 rounded-[2rem] p-2 shadow-soft">
-              <div className="relative aspect-[4/3] rounded-[1.7rem] overflow-hidden bg-white">
-                <Image
-                  src={assets.howIntro}
-                  alt="PayLow professional shaking hands"
-                  fill
-                  sizes="(max-width: 1024px) 90vw, 480px"
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
+          <div className="relative" data-reveal data-reveal-delay="150">
+            <div className="relative aspect-[4/3] rounded-4xl overflow-hidden shadow-lift">
+              <Image src={assets.howIntro} alt="PayLow team handshake" fill sizes="(max-width: 1024px) 90vw, 500px" className="object-cover" unoptimized />
+            </div>
+            <span aria-hidden className="absolute -z-10 -top-6 -left-6 w-32 h-32 rounded-3xl bg-gradient-brand-soft" />
+            <span aria-hidden className="absolute -z-10 -bottom-6 -right-6 w-40 h-40 rounded-3xl bg-accent-peach/60" />
+          </div>
+        </div>
+      </section>
+
+      {/* Process — 4 step cards with connecting line */}
+      <section className="section bg-ink-50/50 relative">
+        <div aria-hidden className="absolute inset-0 grid-backdrop opacity-30" />
+        <div className="container-wide relative">
+          <SectionHeading
+            eyebrow="The process"
+            title={<>From hello to hired in <span className="text-gradient">4 simple steps.</span></>}
+            align="center"
+          />
+
+          <div className="mt-14 relative">
+            {/* connecting dotted line for desktop */}
+            <div aria-hidden className="hidden lg:block absolute top-16 left-12 right-12 border-t-2 border-dashed border-brand-200" />
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+              {processSteps.map((s, i) => (
+                <article key={s.n} className="card-hover p-7 text-center group" data-reveal data-reveal-delay={i * 90}>
+                  <div className="mx-auto w-20 h-20 rounded-full bg-gradient-brand text-white inline-flex items-center justify-center shadow-glow-sm group-hover:scale-105 transition-transform duration-500 ease-out-expo">
+                    <s.Icon className="w-7 h-7" />
+                  </div>
+                  <div className="mt-5 inline-flex rounded-full bg-ink-50 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-ink-500">{s.n}</div>
+                  <h3 className="mt-3 display-3">{s.title}</h3>
+                  <p className="mt-2 text-ink-500 text-sm leading-relaxed">{s.d}</p>
+                </article>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== Process steps ===== */}
-      <section className="section bg-cream-50">
-        <div className="container-wide">
-          <SectionHeading title="How the Process Works" />
-          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {processSteps.map((s, i) => (
-              <article
-                key={s.title}
-                className="relative bg-white rounded-md shadow-card overflow-hidden p-7 pt-12"
-              >
-                <span className="absolute -top-7 left-1/2 -translate-x-1/2 inline-flex w-14 h-14 items-center justify-center rounded-full bg-brand-600 text-white font-display font-bold text-xl shadow-soft">
-                  {i + 1}
-                </span>
-                <h3 className="font-display font-bold text-lg text-ink-900 text-center">
-                  {s.title}
-                </h3>
-                <p className="mt-3 text-slate-600 text-sm leading-relaxed text-center">{s.body}</p>
-                <span className="absolute inset-x-0 bottom-0 h-1 bg-brand-600 rounded-b-md" />
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== Video placeholder ===== */}
+      {/* Video */}
       <section className="section bg-white">
-        <div className="container-wide">
-          <div className="rounded-xl overflow-hidden shadow-card bg-slate-100 aspect-video max-w-4xl mx-auto">
-            <video
-              controls
-              preload="metadata"
-              className="w-full h-full"
-              poster={assets.howIntro}
-            >
-              <source
-                src="https://paylowstaffing.com/wp-content/uploads/2024/11/D003-1.mp4"
-                type="video/mp4"
-              />
+        <div className="container-wide max-w-5xl" data-reveal>
+          <div className="relative rounded-4xl overflow-hidden shadow-lift aspect-video bg-ink-100">
+            <video controls preload="metadata" className="w-full h-full" poster={assets.howIntro}>
+              <source src="https://paylowstaffing.com/wp-content/uploads/2024/11/D003-1.mp4" type="video/mp4" />
               Your browser does not support HTML5 video.
             </video>
           </div>
         </div>
       </section>
 
-      {/* ===== Application process ===== */}
-      <section className="section bg-cream-50">
-        <div className="container-wide grid lg:grid-cols-2 gap-14 items-start">
-          <div className="grid grid-cols-2 gap-5 max-w-md mx-auto w-full">
-            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden">
-              <Image src={assets.howApply1} alt="" fill className="object-cover" sizes="240px" unoptimized />
-            </div>
-            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden translate-y-10">
-              <Image src={assets.howApply2} alt="" fill className="object-cover" sizes="240px" unoptimized />
-            </div>
-          </div>
-
-          <div>
-            <h2 className="h-display text-balance">Application Process</h2>
-            <div className="mt-10 space-y-4">
-              {applicationSteps.map((s) => (
-                <article key={s.title} className="card p-6 flex gap-5 items-start">
-                  <div className="shrink-0 inline-flex w-12 h-12 items-center justify-center rounded-md bg-brand-600 text-white">
-                    <s.Icon className="w-6 h-6" />
+      {/* Application process — 3 cards */}
+      <section className="section bg-ink-50/50">
+        <div className="container-wide grid lg:grid-cols-2 gap-14 items-center">
+          <div data-reveal>
+            <SectionHeading
+              eyebrow="Application"
+              title={<>How we vet every <span className="text-gradient">candidate.</span></>}
+              lead="A rigorous screen so you only meet talent who&apos;s ready to perform."
+            />
+            <div className="mt-8 space-y-4">
+              {applicationSteps.map((s, i) => (
+                <article key={s.title} className="card p-5 flex gap-4 items-start" data-reveal data-reveal-delay={i * 100}>
+                  <div className="shrink-0 inline-flex w-12 h-12 items-center justify-center rounded-2xl bg-gradient-brand text-white shadow-glow-sm">
+                    <s.Icon className="w-5 h-5" />
                   </div>
                   <div>
                     <h3 className="font-display font-bold text-lg text-ink-900">{s.title}</h3>
-                    <p className="mt-2 text-slate-600 leading-relaxed text-sm">{s.body}</p>
+                    <p className="mt-1 text-ink-500 text-sm leading-relaxed">{s.d}</p>
                   </div>
                 </article>
               ))}
             </div>
+          </div>
+
+          <div className="relative grid grid-cols-2 gap-5 max-w-md mx-auto" data-reveal data-reveal-delay="200">
+            <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-card">
+              <Image src={assets.howApply1} alt="" fill className="object-cover" sizes="240px" unoptimized />
+            </div>
+            <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-card translate-y-12">
+              <Image src={assets.howApply2} alt="" fill className="object-cover" sizes="240px" unoptimized />
+            </div>
+            <span aria-hidden className="absolute -z-10 inset-0 rounded-4xl bg-gradient-brand-soft scale-90 blur-2xl opacity-70" />
           </div>
         </div>
       </section>
