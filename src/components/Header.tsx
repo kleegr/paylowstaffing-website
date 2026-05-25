@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Menu, X, Phone, Mail } from 'lucide-react';
 import Logo from './Logo';
+import GetStartedButton from './GetStartedButton';
 import { navLinks, siteConfig } from '@/lib/content';
 
 export default function Header() {
@@ -32,23 +33,23 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-500 ease-out-expo ${
+      className={`sticky top-0 z-50 transition-[background-color,box-shadow,border-color] duration-300 ${
         scrolled
-          ? 'bg-white/85 backdrop-blur-xl shadow-soft border-b border-ink-100/60'
+          ? 'bg-white/80 backdrop-blur-xl shadow-[0_1px_0_rgba(15,13,10,0.04),0_8px_24px_rgba(15,13,10,0.04)] border-b border-ink-100/60'
           : 'bg-transparent border-b border-transparent'
       }`}
     >
       <div className="container-wide flex items-center justify-between py-3 lg:py-4">
         <Logo size="md" />
 
-        <nav className="hidden lg:flex items-center gap-1" aria-label="Main">
+        <nav className="hidden lg:flex items-center gap-0.5" aria-label="Main">
           {navLinks.map((l) => {
             const active = isActive(l.href);
             return (
               <Link
                 key={l.href}
                 href={l.href}
-                className={`relative px-4 py-2 text-sm font-medium rounded-full transition-colors duration-300 ${
+                className={`relative px-3.5 py-2 text-sm font-medium rounded-full transition-colors duration-300 ${
                   active ? 'text-ink-900' : 'text-ink-500 hover:text-ink-900'
                 }`}
               >
@@ -62,9 +63,7 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link href={siteConfig.signUpUrl} className="hidden md:inline-flex btn-primary">
-            Get Started
-          </Link>
+          <GetStartedButton className="hidden md:inline-flex">Get Started</GetStartedButton>
           <button
             type="button"
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -81,23 +80,23 @@ export default function Header() {
       {/* Mobile drawer */}
       <div
         id="mobile-menu"
-        className={`lg:hidden fixed inset-0 top-[68px] z-40 transition-all duration-500 ease-out-expo ${
+        className={`lg:hidden fixed inset-0 top-[68px] z-40 transition-[transform,opacity] duration-500 ease-out ${
           open ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'
         }`}
         aria-hidden={!open}
       >
         <div className="absolute inset-0 bg-gradient-warm" />
         <div className="relative h-full overflow-y-auto px-6 pt-8 pb-12">
-          <nav aria-label="Mobile" className="flex flex-col gap-1">
+          <nav aria-label="Mobile" className="flex flex-col gap-1.5">
             {navLinks.map((l, i) => (
               <Link
                 key={l.href}
                 href={l.href}
-                style={{ animationDelay: `${80 + i * 50}ms` }}
-                className={`group flex items-center justify-between rounded-2xl px-5 py-4 text-lg font-semibold transition-all duration-300 ${
+                style={{ animationDelay: `${60 + i * 40}ms` }}
+                className={`group flex items-center justify-between rounded-2xl px-5 py-3.5 text-base font-semibold transition-colors duration-200 ${
                   isActive(l.href)
                     ? 'bg-ink-900 text-white shadow-lift'
-                    : 'bg-white/70 text-ink-900 hover:bg-white hover:shadow-card'
+                    : 'bg-white/70 text-ink-900 hover:bg-white'
                 } ${open ? 'animate-fade-up' : ''}`}
               >
                 <span>{l.label}</span>
@@ -107,12 +106,8 @@ export default function Header() {
           </nav>
 
           <div className="mt-8 grid grid-cols-1 gap-3">
-            <Link href={siteConfig.signUpUrl} className="btn-primary btn-lg w-full justify-center">
-              Get Started
-            </Link>
-            <Link href="/contact-us" className="btn-outline btn-lg w-full justify-center">
-              Talk to us
-            </Link>
+            <GetStartedButton size="lg" className="w-full justify-center">Get Started</GetStartedButton>
+            <Link href="/contact-us" className="btn-outline btn-lg w-full justify-center">Talk to us</Link>
           </div>
 
           <div className="mt-10 pt-6 border-t border-ink-100 space-y-3 text-sm">

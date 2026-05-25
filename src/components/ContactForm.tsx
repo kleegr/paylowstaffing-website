@@ -25,7 +25,7 @@ export default function ContactForm() {
       message: String(fd.get('message') ?? ''),
       sms_consent_reminders: fd.get('sms_consent_reminders') === 'on',
       sms_consent_marketing: fd.get('sms_consent_marketing') === 'on',
-      website_url: String(fd.get('website_url') ?? ''), // honeypot
+      website_url: String(fd.get('website_url') ?? ''),
     };
 
     try {
@@ -42,7 +42,7 @@ export default function ContactForm() {
       }
       setStatus('success');
       e.currentTarget.reset();
-    } catch (err) {
+    } catch {
       setStatus('error');
       setErrorMsg('Network error. Please try again.');
     }
@@ -50,7 +50,7 @@ export default function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="rounded-3xl bg-gradient-warm border border-brand-100 p-8 text-center">
+      <div className="rounded-3xl bg-gradient-brand-soft border border-brand-100 p-8 text-center">
         <div className="mx-auto w-14 h-14 rounded-full bg-gradient-brand text-white inline-flex items-center justify-center shadow-glow-sm mb-4">
           <CheckCircle2 className="w-7 h-7" />
         </div>
@@ -62,31 +62,29 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5" noValidate>
-      {/* Honeypot */}
+    <form onSubmit={onSubmit} className="space-y-4" noValidate>
       <div className="hidden" aria-hidden="true">
-        <label htmlFor="website_url">Website URL</label>
-        <input id="website_url" name="website_url" type="text" tabIndex={-1} autoComplete="off" />
+        <input name="website_url" tabIndex={-1} autoComplete="off" />
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
         <div className="field">
-          <input id="first_name" name="first_name" required placeholder="First name" className="field-input" />
+          <input id="first_name" name="first_name" required placeholder="First name" className="field-input" autoComplete="given-name" />
           <label htmlFor="first_name" className="field-label">First name *</label>
         </div>
         <div className="field">
-          <input id="last_name" name="last_name" required placeholder="Last name" className="field-input" />
+          <input id="last_name" name="last_name" required placeholder="Last name" className="field-input" autoComplete="family-name" />
           <label htmlFor="last_name" className="field-label">Last name *</label>
         </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
         <div className="field">
-          <input id="email" name="email" type="email" required placeholder="you@company.com" className="field-input" />
+          <input id="email" name="email" type="email" required placeholder="you@company.com" className="field-input" autoComplete="email" />
           <label htmlFor="email" className="field-label">Email *</label>
         </div>
         <div className="field">
-          <input id="phone" name="phone" type="tel" placeholder="(555) 555-5555" className="field-input" />
+          <input id="phone" name="phone" type="tel" placeholder="(555) 555-5555" className="field-input" autoComplete="tel" />
           <label htmlFor="phone" className="field-label">Phone</label>
         </div>
       </div>
@@ -108,7 +106,7 @@ export default function ContactForm() {
         <label className="flex items-start gap-3 cursor-pointer">
           <input name="sms_consent_marketing" type="checkbox" className="mt-0.5 w-4 h-4 accent-brand-500" />
           <span>
-            I agree to receive marketing &amp; promotional SMS from PayLow Staffing. Reply <strong>STOP</strong> at any time to opt out.
+            I agree to receive marketing &amp; promotional SMS. Reply <strong>STOP</strong> to opt out.
           </span>
         </label>
       </fieldset>
@@ -120,15 +118,17 @@ export default function ContactForm() {
         </div>
       )}
 
-      <div className="flex flex-wrap items-center gap-4">
+      <div className="flex flex-wrap items-center gap-4 pt-1">
         <button type="submit" disabled={status === 'submitting'} className="btn-primary btn-lg">
-          {status === 'submitting' ? (<><Loader2 className="w-4 h-4 animate-spin" /> Submitting…</>) : (<>Submit <Send className="w-4 h-4" /></>)}
+          {status === 'submitting'
+            ? (<><Loader2 className="w-4 h-4 animate-spin" /> Submitting…</>)
+            : (<>Submit <Send className="w-4 h-4" /></>)}
         </button>
         <p className="text-xs text-ink-500">
           By submitting you agree to our{' '}
           <Link href="https://privacy-policy.paylowstaffing.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-ink-700">Privacy Policy</Link>
-          {' '}and{' '}
-          <Link href="https://toc.paylowstaffing.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-ink-700">Terms of Service</Link>.
+          {' '}&amp;{' '}
+          <Link href="https://toc.paylowstaffing.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-ink-700">Terms</Link>.
         </p>
       </div>
     </form>
