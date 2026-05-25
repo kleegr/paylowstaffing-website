@@ -1,19 +1,19 @@
-import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowRight, Check, X } from 'lucide-react';
 import SectionHeading from '@/components/SectionHeading';
 import PricingCalculator from '@/components/PricingCalculator';
 import CtaBanner from '@/components/CtaBanner';
+import GetStartedButton from '@/components/GetStartedButton';
 
 export const metadata: Metadata = {
   title: 'Pricing',
-  description: 'Skilled offshore talent from $7/hour. No hidden fees. Use our interactive calculator to see your savings.',
+  description: 'Skilled offshore talent from $7/hour. Use our interactive calculator to see your savings.',
 };
 
 const onshoreCons = [
-  '$30/hr (+ payroll taxes)',
+  '$30/hr + payroll taxes',
   'Recruitment fees up to 20%',
-  'Slow hiring (weeks-months)',
+  'Slow hiring (weeks–months)',
   'Long-term contracts',
 ];
 const paylowPros = [
@@ -26,14 +26,14 @@ const paylowPros = [
 export default function PricingPage() {
   return (
     <>
-      {/* Hero — big $7 */}
+      {/* Hero */}
       <section className="relative isolate overflow-hidden">
         <div aria-hidden className="absolute inset-0 -z-20 bg-gradient-warm" />
         <div aria-hidden className="absolute inset-0 -z-10 bg-mesh-2" />
         <div aria-hidden className="absolute inset-0 -z-10 grid-backdrop opacity-50" />
-        <div aria-hidden className="absolute -top-32 left-1/3 w-[28rem] h-[28rem] rounded-full bg-gradient-brand opacity-20 blur-3xl animate-float-slow" />
+        <div aria-hidden className="absolute -top-32 left-1/3 w-[28rem] h-[28rem] rounded-full bg-gradient-brand opacity-15 blur-3xl animate-float-slow" />
 
-        <div className="container-wide pt-24 pb-20 lg:pt-32 lg:pb-24 text-center max-w-4xl">
+        <div className="container-wide pt-24 pb-16 lg:pt-32 lg:pb-20 text-center max-w-4xl">
           <div data-reveal>
             <p className="mb-5"><span className="eyebrow"><span className="eyebrow-dot" /> Pricing</span></p>
             <h1 className="display-1">
@@ -41,12 +41,11 @@ export default function PricingPage() {
               <span className="text-gradient">Massive savings.</span>
             </h1>
             <p className="lead mt-6 max-w-2xl mx-auto">
-              Hire skilled remote professionals from $7/hour. Use the calculator to see exactly how much you save.
+              Hire skilled remote professionals from $7/hour. Use the calculator below to see exactly how much you save.
             </p>
           </div>
 
-          {/* Giant $7 hero number */}
-          <div className="mt-12 flex items-end justify-center gap-2 lg:gap-3" data-reveal data-reveal-delay="100">
+          <div className="mt-10 flex items-end justify-center gap-2 lg:gap-3" data-reveal data-reveal-delay="100">
             <span className="font-display font-bold text-ink-900 self-start mt-4" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>$</span>
             <span
               className="font-display font-black text-gradient leading-none"
@@ -66,7 +65,7 @@ export default function PricingPage() {
           <SectionHeading
             eyebrow="Cost calculator"
             title={<>See your <span className="text-gradient">real savings.</span></>}
-            lead="Adjust team size and billing period. Watch the math in real time."
+            lead="Adjust team size and billing period. Watch the math update in real time."
             align="center"
           />
           <div className="mt-12">
@@ -75,7 +74,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Comparison table */}
+      {/* Side-by-side comparison */}
       <section className="section bg-ink-50/50">
         <div className="container-wide max-w-5xl">
           <SectionHeading
@@ -84,7 +83,7 @@ export default function PricingPage() {
             align="center"
           />
           <div className="mt-12 grid md:grid-cols-2 gap-5">
-            <article className="card p-7 border-ink-100" data-reveal>
+            <article className="card p-7" data-reveal>
               <div className="flex items-center gap-3 mb-5">
                 <span className="inline-flex w-10 h-10 rounded-full bg-ink-100 text-ink-700 items-center justify-center font-bold">A</span>
                 <div>
@@ -102,7 +101,7 @@ export default function PricingPage() {
             </article>
 
             <article className="card-hover p-7 border-brand-200 bg-gradient-to-br from-white to-brand-50/40 relative overflow-hidden" data-reveal data-reveal-delay="120">
-              <span className="absolute top-4 right-4 inline-flex rounded-full bg-gradient-brand text-white text-[11px] font-semibold px-3 py-1 shadow-glow-sm">Recommended</span>
+              <span className="absolute top-4 right-4 inline-flex rounded-full bg-gradient-brand text-white text-[10px] font-semibold px-2.5 py-1 shadow-glow-sm">Recommended</span>
               <div className="flex items-center gap-3 mb-5">
                 <span className="inline-flex w-10 h-10 rounded-full bg-gradient-brand text-white items-center justify-center font-bold shadow-glow-sm">P</span>
                 <div>
@@ -118,9 +117,9 @@ export default function PricingPage() {
                 ))}
               </ul>
               <div className="mt-6">
-                <Link href="/contact-us" className="btn-primary w-full sm:w-auto justify-center">
+                <GetStartedButton className="w-full sm:w-auto justify-center">
                   Hire today <ArrowRight className="w-4 h-4" />
-                </Link>
+                </GetStartedButton>
               </div>
             </article>
           </div>

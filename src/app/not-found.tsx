@@ -5,8 +5,8 @@ export default function NotFound() {
   return (
     <section className="relative isolate overflow-hidden">
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-warm" />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-mesh-2 opacity-80" />
-      <div aria-hidden className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-gradient-brand opacity-20 blur-3xl animate-float-slow" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-mesh-1 opacity-80" />
+      <div aria-hidden className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-gradient-brand opacity-15 blur-3xl animate-float-slow" />
 
       <div className="container-wide min-h-[70vh] flex items-center">
         <div className="text-center max-w-xl mx-auto" data-reveal>

@@ -1,6 +1,5 @@
-import Link from 'next/link';
 import type { Metadata } from 'next';
-import { Mail, Phone, MapPin, ArrowRight, Facebook, Instagram, Youtube, Linkedin, MessageCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Youtube, Linkedin, MessageCircle } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import ContactForm from '@/components/ContactForm';
 import { siteConfig } from '@/lib/content';
@@ -19,11 +18,10 @@ function XIcon({ className }: { className?: string }) {
 }
 
 const socials = [
-  { label: 'Facebook', href: siteConfig.social.facebook, Icon: Facebook },
+  { label: 'LinkedIn', href: siteConfig.social.linkedin, Icon: Linkedin },
   { label: 'X', href: siteConfig.social.twitter, Icon: XIcon },
   { label: 'YouTube', href: siteConfig.social.youtube, Icon: Youtube },
-  { label: 'LinkedIn', href: siteConfig.social.linkedin, Icon: Linkedin },
-  { label: 'Instagram', href: '#', Icon: Instagram },
+  { label: 'Facebook', href: siteConfig.social.facebook, Icon: Facebook },
   { label: 'WhatsApp', href: siteConfig.social.whatsapp, Icon: MessageCircle },
 ];
 
@@ -34,12 +32,12 @@ export default function ContactPage() {
         eyebrow="Contact"
         title={<>Let&apos;s build your <span className="text-gradient">remote team.</span></>}
         lead="Tell us about your project. A human replies within one business day."
+        compact
       />
 
       <section className="section bg-white">
         <div className="container-wide max-w-6xl">
           <div className="grid lg:grid-cols-5 gap-8">
-            {/* Left — contact info */}
             <aside className="lg:col-span-2 space-y-4" data-reveal>
               <div className="card p-7">
                 <h3 className="font-display font-bold text-lg text-ink-900 mb-5">Contact info</h3>
@@ -49,7 +47,7 @@ export default function ContactPage() {
                       <MapPin className="w-4 h-4" />
                     </span>
                     <div>
-                      <div className="text-xs uppercase tracking-wider text-ink-400 font-semibold">Address</div>
+                      <div className="text-[10px] uppercase tracking-wider text-ink-400 font-semibold">Address</div>
                       <div className="mt-0.5 text-ink-700">{siteConfig.contact.address}</div>
                     </div>
                   </li>
@@ -58,7 +56,7 @@ export default function ContactPage() {
                       <Phone className="w-4 h-4" />
                     </span>
                     <div>
-                      <div className="text-xs uppercase tracking-wider text-ink-400 font-semibold">Phone</div>
+                      <div className="text-[10px] uppercase tracking-wider text-ink-400 font-semibold">Phone</div>
                       <a href={`tel:${siteConfig.contact.phoneTel}`} className="mt-0.5 text-ink-700 hover:text-brand-700 transition block">
                         {siteConfig.contact.phone}
                       </a>
@@ -69,7 +67,7 @@ export default function ContactPage() {
                       <Mail className="w-4 h-4" />
                     </span>
                     <div>
-                      <div className="text-xs uppercase tracking-wider text-ink-400 font-semibold">Email</div>
+                      <div className="text-[10px] uppercase tracking-wider text-ink-400 font-semibold">Email</div>
                       <a href={`mailto:${siteConfig.contact.email}`} className="mt-0.5 text-ink-700 hover:text-brand-700 transition block break-all">
                         {siteConfig.contact.email}
                       </a>
@@ -78,8 +76,8 @@ export default function ContactPage() {
                 </ul>
 
                 <div className="mt-7 pt-6 border-t border-ink-100">
-                  <div className="text-xs uppercase tracking-wider text-ink-400 font-semibold mb-3">Follow us</div>
-                  <ul className="flex flex-wrap items-center gap-2.5">
+                  <div className="text-[10px] uppercase tracking-wider text-ink-400 font-semibold mb-3">Follow us</div>
+                  <ul className="flex flex-wrap items-center gap-2">
                     {socials.map(({ label, href, Icon }) => (
                       <li key={label}>
                         <a
@@ -87,7 +85,7 @@ export default function ContactPage() {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={label}
-                          className="inline-flex w-10 h-10 items-center justify-center rounded-full bg-ink-50 text-ink-700 hover:bg-gradient-brand hover:text-white transition-all duration-300 hover:-translate-y-0.5"
+                          className="inline-flex w-9 h-9 items-center justify-center rounded-full bg-ink-50 text-ink-700 hover:bg-gradient-brand hover:text-white transition-all duration-300 hover:-translate-y-0.5"
                         >
                           <Icon className="w-4 h-4" />
                         </a>
@@ -99,16 +97,12 @@ export default function ContactPage() {
 
               <div className="card-dark p-7 relative overflow-hidden">
                 <div aria-hidden className="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-gradient-brand opacity-30 blur-3xl" />
-                <p className="text-xs uppercase tracking-wider font-semibold text-white/60">Average response</p>
+                <p className="text-[10px] uppercase tracking-wider font-semibold text-white/55">Average response</p>
                 <p className="mt-1 font-display font-bold text-white text-2xl">&lt; 24 hours</p>
-                <p className="mt-2 text-white/65 text-sm">We&apos;re a small, human team. Real people, real fast.</p>
-                <Link href={siteConfig.signUpUrl} className="btn-primary mt-5 w-full justify-center">
-                  Or sign up directly <ArrowRight className="w-4 h-4" />
-                </Link>
+                <p className="mt-2 text-white/65 text-sm">A small, human team. Real people, real fast.</p>
               </div>
             </aside>
 
-            {/* Right — form */}
             <div className="lg:col-span-3" data-reveal data-reveal-delay="120">
               <div className="card p-7 sm:p-9">
                 <h2 className="display-3">Get in touch</h2>

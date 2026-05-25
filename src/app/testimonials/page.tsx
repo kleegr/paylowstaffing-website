@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { Star, Quote } from 'lucide-react';
+import { Star, Quote, ArrowRight } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import SectionHeading from '@/components/SectionHeading';
-import CtaBanner from '@/components/CtaBanner';
+import GetStartedButton from '@/components/GetStartedButton';
 import { assets, reviews, videoReviews } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -27,6 +27,7 @@ export default function TestimonialsPage() {
         eyebrow="Testimonials"
         title={<>Real teams. <span className="text-gradient">Real results.</span></>}
         lead="Stories from PayLow clients across industries and time zones."
+        compact
       />
 
       {/* Video reviews */}
@@ -38,11 +39,11 @@ export default function TestimonialsPage() {
             align="center"
           />
 
-          <div className="mt-14 grid md:grid-cols-3 gap-6">
+          <div className="mt-14 grid md:grid-cols-3 gap-5">
             {videoReviews.map((v, i) => (
               <article
                 key={v.youtubeId}
-                className="card-hover overflow-hidden group"
+                className="card-hover overflow-hidden"
                 data-reveal
                 data-reveal-delay={i * 100}
               >
@@ -66,7 +67,7 @@ export default function TestimonialsPage() {
         </div>
       </section>
 
-      {/* Written reviews — bento/grid */}
+      {/* Written reviews — bento */}
       <section className="section bg-ink-50/50 relative">
         <div aria-hidden className="absolute inset-0 grid-backdrop opacity-30" />
         <div className="container-wide relative">
@@ -77,26 +78,26 @@ export default function TestimonialsPage() {
           />
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {reviews.map((r, i) => {
-              const featured = i === 0; // Make first one feature card spanning 2 cols on lg
+              const featured = i === 0;
               return (
                 <article
                   key={r.name}
-                  className={`card-hover p-7 flex flex-col relative overflow-hidden ${
+                  className={`card-hover p-6 flex flex-col relative overflow-hidden ${
                     featured ? 'lg:col-span-2 bg-ink-900 text-white border-ink-900 shadow-lift' : ''
                   }`}
                   data-reveal
                   data-reveal-delay={i * 60}
                 >
                   {featured && (
-                    <div aria-hidden className="absolute -top-10 -right-10 w-60 h-60 rounded-full bg-gradient-brand opacity-30 blur-3xl" />
+                    <div aria-hidden className="absolute -top-10 -right-10 w-60 h-60 rounded-full bg-gradient-brand opacity-25 blur-3xl" />
                   )}
                   <Quote className={`w-7 h-7 ${featured ? 'text-brand-400' : 'text-brand-300'} mb-4`} />
                   <p className={`text-[0.95rem] leading-relaxed flex-1 relative ${featured ? 'text-white/90 md:text-lg' : 'text-ink-700'}`}>
                     &ldquo;{r.quote}&rdquo;
                   </p>
-                  <div className={`mt-6 pt-5 border-t ${featured ? 'border-white/10' : 'border-ink-100'} flex items-center gap-3 relative`}>
+                  <div className={`mt-5 pt-5 border-t ${featured ? 'border-white/10' : 'border-ink-100'} flex items-center gap-3 relative`}>
                     <div className="relative w-11 h-11 rounded-full overflow-hidden bg-ink-200 shrink-0">
-                      <Image src={avatarMap[r.image] ?? assets.tColleagues} alt={r.name} fill sizes="44px" className="object-cover" unoptimized />
+                      <Image src={avatarMap[r.image] ?? assets.tColleagues} alt={r.name} fill sizes="44px" className="object-cover" unoptimized loading="lazy" />
                     </div>
                     <div className="flex-1">
                       <div className={`font-display font-semibold ${featured ? 'text-white' : 'text-ink-900'}`}>{r.name}</div>
@@ -110,10 +111,12 @@ export default function TestimonialsPage() {
               );
             })}
           </div>
+
+          <div className="mt-14 flex justify-center" data-reveal>
+            <GetStartedButton size="lg">Join them <ArrowRight className="w-4 h-4" /></GetStartedButton>
+          </div>
         </div>
       </section>
-
-      <CtaBanner />
     </>
   );
 }

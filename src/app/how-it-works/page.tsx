@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { ArrowRight, ClipboardCheck, MessageSquare, Briefcase, Sparkles, Headphones, UserCheck, Zap, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Sparkles, Headphones, UserCheck, Zap, ShieldCheck } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import SectionHeading from '@/components/SectionHeading';
-import CtaBanner from '@/components/CtaBanner';
+import GetStartedButton from '@/components/GetStartedButton';
 import { assets } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -13,16 +13,10 @@ export const metadata: Metadata = {
 };
 
 const processSteps = [
-  { n: '01', title: 'Tell us your needs', d: 'A 15-minute call to scope the role, skills, and timezone you need.', Icon: Headphones },
-  { n: '02', title: 'We match talent',  d: 'Carefully vetted candidates aligned to your industry and culture.', Icon: ShieldCheck },
+  { n: '01', title: 'Tell us your needs', d: 'A 15-minute call to scope role, skills, and timezone.', Icon: Headphones },
+  { n: '02', title: 'We match talent',  d: 'Vetted candidates aligned to your industry and culture.', Icon: ShieldCheck },
   { n: '03', title: 'You interview',     d: 'Meet the shortlist. You choose who joins your team.', Icon: UserCheck },
   { n: '04', title: 'They start fast',   d: 'Kickoff meeting. Smooth onboarding. Immediate productivity.', Icon: Zap },
-];
-
-const applicationSteps = [
-  { title: 'Comprehensive Screening', d: 'Skills, experience, and commitment verified before you ever meet a candidate.', Icon: ClipboardCheck },
-  { title: 'Client Interview', d: 'Direct conversations to confirm fit and set clear expectations.', Icon: MessageSquare },
-  { title: 'Offer & Onboarding', d: 'You hire. We handle paperwork, onboarding, and culture integration.', Icon: Briefcase },
 ];
 
 export default function HowItWorksPage() {
@@ -34,7 +28,7 @@ export default function HowItWorksPage() {
         lead="A clear, fast, simple process. From first call to first hire in days."
         actions={
           <>
-            <Link href="/contact-us" className="btn-primary">Get started <ArrowRight className="w-4 h-4" /></Link>
+            <GetStartedButton>Get started <ArrowRight className="w-4 h-4" /></GetStartedButton>
             <Link href="/pricing" className="btn-outline">See pricing</Link>
           </>
         }
@@ -47,27 +41,26 @@ export default function HowItWorksPage() {
             <p className="mb-5"><span className="eyebrow"><span className="eyebrow-dot" /> Why PayLow</span></p>
             <h2 className="display-2">Built for clarity, speed, and quality.</h2>
             <p className="lead mt-5">
-              No drawn-out RFPs. No vague resume piles. Just a refined matching process that gets the right people into your workflow.
+              No drawn-out RFPs. No vague resume piles. A refined matching process that gets the right people into your workflow.
             </p>
-            <ul className="mt-8 space-y-3">
+            <ul className="mt-7 space-y-3">
               {['One contact. Real humans, no chatbots.', 'Talent vetted before you see them.', 'Hire in days — not weeks.'].map((s) => (
                 <li key={s} className="flex items-center gap-3 text-ink-700">
-                  <Sparkles className="w-4 h-4 text-brand-500" /> <span>{s}</span>
+                  <Sparkles className="w-4 h-4 text-brand-500 shrink-0" /> <span>{s}</span>
                 </li>
               ))}
             </ul>
           </div>
           <div className="relative" data-reveal data-reveal-delay="150">
             <div className="relative aspect-[4/3] rounded-4xl overflow-hidden shadow-lift">
-              <Image src={assets.howIntro} alt="PayLow team handshake" fill sizes="(max-width: 1024px) 90vw, 500px" className="object-cover" unoptimized />
+              <Image src={assets.howIntro} alt="PayLow team" fill sizes="(max-width: 1024px) 90vw, 500px" className="object-cover" unoptimized loading="lazy" />
             </div>
             <span aria-hidden className="absolute -z-10 -top-6 -left-6 w-32 h-32 rounded-3xl bg-gradient-brand-soft" />
-            <span aria-hidden className="absolute -z-10 -bottom-6 -right-6 w-40 h-40 rounded-3xl bg-accent-peach/60" />
           </div>
         </div>
       </section>
 
-      {/* Process — 4 step cards with connecting line */}
+      {/* Process — 4 step cards */}
       <section className="section bg-ink-50/50 relative">
         <div aria-hidden className="absolute inset-0 grid-backdrop opacity-30" />
         <div className="container-wide relative">
@@ -78,74 +71,27 @@ export default function HowItWorksPage() {
           />
 
           <div className="mt-14 relative">
-            {/* connecting dotted line for desktop */}
             <div aria-hidden className="hidden lg:block absolute top-16 left-12 right-12 border-t-2 border-dashed border-brand-200" />
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 relative">
               {processSteps.map((s, i) => (
-                <article key={s.n} className="card-hover p-7 text-center group" data-reveal data-reveal-delay={i * 90}>
-                  <div className="mx-auto w-20 h-20 rounded-full bg-gradient-brand text-white inline-flex items-center justify-center shadow-glow-sm group-hover:scale-105 transition-transform duration-500 ease-out-expo">
-                    <s.Icon className="w-7 h-7" />
+                <article key={s.n} className="card-hover p-6 text-center group bg-white" data-reveal data-reveal-delay={i * 90}>
+                  <div className="mx-auto w-16 h-16 rounded-full bg-gradient-brand text-white inline-flex items-center justify-center shadow-glow-sm group-hover:scale-105 transition-transform duration-500">
+                    <s.Icon className="w-6 h-6" />
                   </div>
-                  <div className="mt-5 inline-flex rounded-full bg-ink-50 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-ink-500">{s.n}</div>
-                  <h3 className="mt-3 display-3">{s.title}</h3>
+                  <div className="mt-5 inline-flex rounded-full bg-ink-50 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-ink-500">{s.n}</div>
+                  <h3 className="mt-3 font-display font-bold text-lg text-ink-900">{s.title}</h3>
                   <p className="mt-2 text-ink-500 text-sm leading-relaxed">{s.d}</p>
                 </article>
               ))}
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Video */}
-      <section className="section bg-white">
-        <div className="container-wide max-w-5xl" data-reveal>
-          <div className="relative rounded-4xl overflow-hidden shadow-lift aspect-video bg-ink-100">
-            <video controls preload="metadata" className="w-full h-full" poster={assets.howIntro}>
-              <source src="https://paylowstaffing.com/wp-content/uploads/2024/11/D003-1.mp4" type="video/mp4" />
-              Your browser does not support HTML5 video.
-            </video>
+          <div className="mt-12 flex justify-center" data-reveal>
+            <GetStartedButton size="lg">Start your hire today <ArrowRight className="w-4 h-4" /></GetStartedButton>
           </div>
         </div>
       </section>
-
-      {/* Application process — 3 cards */}
-      <section className="section bg-ink-50/50">
-        <div className="container-wide grid lg:grid-cols-2 gap-14 items-center">
-          <div data-reveal>
-            <SectionHeading
-              eyebrow="Application"
-              title={<>How we vet every <span className="text-gradient">candidate.</span></>}
-              lead="A rigorous screen so you only meet talent who&apos;s ready to perform."
-            />
-            <div className="mt-8 space-y-4">
-              {applicationSteps.map((s, i) => (
-                <article key={s.title} className="card p-5 flex gap-4 items-start" data-reveal data-reveal-delay={i * 100}>
-                  <div className="shrink-0 inline-flex w-12 h-12 items-center justify-center rounded-2xl bg-gradient-brand text-white shadow-glow-sm">
-                    <s.Icon className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-display font-bold text-lg text-ink-900">{s.title}</h3>
-                    <p className="mt-1 text-ink-500 text-sm leading-relaxed">{s.d}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-
-          <div className="relative grid grid-cols-2 gap-5 max-w-md mx-auto" data-reveal data-reveal-delay="200">
-            <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-card">
-              <Image src={assets.howApply1} alt="" fill className="object-cover" sizes="240px" unoptimized />
-            </div>
-            <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-card translate-y-12">
-              <Image src={assets.howApply2} alt="" fill className="object-cover" sizes="240px" unoptimized />
-            </div>
-            <span aria-hidden className="absolute -z-10 inset-0 rounded-4xl bg-gradient-brand-soft scale-90 blur-2xl opacity-70" />
-          </div>
-        </div>
-      </section>
-
-      <CtaBanner />
     </>
   );
 }
