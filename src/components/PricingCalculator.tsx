@@ -29,7 +29,6 @@ export default function PricingCalculator() {
   const savings = onshore - offshore;
   const savingsPct = Math.round((savings / onshore) * 100);
 
-  // Animated counters (ease-out cubic)
   const [animOnshore, setAnimOnshore] = useState(onshore);
   const [animOffshore, setAnimOffshore] = useState(offshore);
   const [animSavings, setAnimSavings] = useState(savings);
@@ -63,7 +62,6 @@ export default function PricingCalculator() {
       <div className="grid lg:grid-cols-12 gap-5 lg:gap-6">
         {/* ===== LEFT: Inputs ===== */}
         <div className="lg:col-span-5 card p-6 sm:p-7 self-start">
-          {/* Cadence */}
           <div>
             <label className="label-meta">Billing period</label>
             <div
@@ -91,7 +89,6 @@ export default function PricingCalculator() {
             </div>
           </div>
 
-          {/* Team size */}
           <div className="mt-7">
             <div className="flex items-center justify-between">
               <label htmlFor="team-size" className="label-meta">Team size</label>
@@ -142,7 +139,6 @@ export default function PricingCalculator() {
             </div>
           </div>
 
-          {/* Rate breakdown */}
           <div className="mt-7 grid grid-cols-2 gap-3">
             <div className="rounded-2xl border border-ink-100 bg-white p-4">
               <div className="label-meta">Onshore</div>
@@ -184,7 +180,6 @@ export default function PricingCalculator() {
                 </span>
               </div>
 
-              {/* Bars */}
               <div className="mt-7 space-y-5">
                 <div>
                   <div className="flex items-baseline justify-between gap-3">
@@ -214,7 +209,6 @@ export default function PricingCalculator() {
                 </div>
               </div>
 
-              {/* Big savings */}
               <div className="mt-8 pt-7 border-t border-white/10">
                 <div className="flex flex-wrap items-end justify-between gap-5">
                   <div>
@@ -238,7 +232,6 @@ export default function PricingCalculator() {
             </div>
           </div>
 
-          {/* Annual + quick presets */}
           <div className="card p-5 sm:p-6 flex flex-wrap items-center justify-between gap-4" data-reveal data-reveal-delay="140">
             <div>
               <p className="label-meta">Annual savings</p>
@@ -262,7 +255,7 @@ export default function PricingCalculator() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
