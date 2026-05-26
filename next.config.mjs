@@ -8,10 +8,12 @@ const nextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    // All site images are now local SVGs in /public/images/.
-    // i.ytimg.com kept for YouTube thumbnails on /testimonials.
+    // remotePatterns lets Next.js's image optimizer fetch + cache + convert
+    // these to AVIF/WebP. First request hits Unsplash; subsequent requests
+    // are served from Vercel's edge cache.
     remotePatterns: [
       { protocol: 'https', hostname: 'i.ytimg.com', pathname: '/**' },
+      { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
     ],
   },
   async redirects() {

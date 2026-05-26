@@ -8,16 +8,9 @@ const config: Config = {
       fontFamily: {
         display: ['var(--font-display)', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
-        // Tabular Inter for prices, calculator counters, etc.
         numeric: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
+        script: ['var(--font-script)', 'Caveat', 'cursive'],
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
-      },
-      fontSize: {
-        // Refined display scale with paired line-heights
-        'display-xl': ['clamp(3rem, 6vw, 5.25rem)', { lineHeight: '1.02', letterSpacing: '-0.028em' }],
-        'display-lg': ['clamp(2.5rem, 5vw, 4.25rem)', { lineHeight: '1.04', letterSpacing: '-0.025em' }],
-        'display-md': ['clamp(2rem, 4vw, 3.25rem)', { lineHeight: '1.08', letterSpacing: '-0.022em' }],
-        'display-sm': ['clamp(1.5rem, 2.4vw, 2rem)', { lineHeight: '1.16', letterSpacing: '-0.018em' }],
       },
       colors: {
         brand: {
@@ -96,15 +89,15 @@ const config: Config = {
         },
       },
       animation: {
-        'fade-up': 'fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'fade-up': 'fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both',
         'fade-in': 'fade-in 0.6s ease-out both',
         float: 'float 5s ease-in-out infinite',
         'float-slow': 'float-slow 7s ease-in-out infinite',
-        'scale-in': 'scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both',
-        'slide-up': 'slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'scale-in': 'scale-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both',
+        'slide-up': 'slide-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both',
       },
       transitionTimingFunction: {
-        'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
+        'out-expo': 'cubic-bezier(0.22, 1, 0.36, 1)',
         spring: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
       },
     },

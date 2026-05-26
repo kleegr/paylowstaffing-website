@@ -1,8 +1,7 @@
 export const siteConfig = {
   name: 'PayLow',
   fullName: 'PayLow Staffing',
-  tagline:
-    'At PayLow, we tailor our hiring process to align skilled talent with your unique business needs for optimal success.',
+  tagline: 'Brilliant remote staff. Matched in days. Starting at $7/hour.',
   url: 'https://paylowstaffing.com',
   signUpUrl: 'https://signup.paylowstaffing.com/sign-up',
   termsUrl: 'https://toc.paylowstaffing.com/',
@@ -37,22 +36,43 @@ export const navLinks = [
 ] as const;
 
 /**
- * Every asset is now local under /public/images/.
- * Total weight ~50KB for the entire site (vs. ~2-3MB of WP photos before).
+ * Image assets.
  *
- * Legacy keys are kept (mapped to local SVGs) so existing pages render
- * without any code changes. New keys (heroHome, visualAbout, etc.)
- * are the canonical names for new code.
+ * - People-focused photography is served from Unsplash CDN. Next.js's image
+ *   optimizer caches them through Vercel's edge as AVIF/WebP, so first-request
+ *   latency is the only cost — subsequent loads are local-fast.
+ * - Industry icons + diagrams stay as local SVGs in /public/images/ (kept as
+ *   resilient fallbacks too).
  */
 export const assets = {
-  // ---- New canonical names ----
-  heroHome: '/images/hero-home.svg',
-  visualAbout: '/images/visual-about.svg',
-  visualHowItWorks: '/images/visual-how-it-works.svg',
-  visualContact: '/images/visual-contact.svg',
-  visualPricing: '/images/visual-pricing.svg',
+  // ---- People photography (Unsplash CDN, auto-optimized via Next/Image) ----
+  heroPerson:
+    'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=900&auto=format&fit=crop&q=80',
+  visualAbout:
+    'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1000&auto=format&fit=crop&q=80',
+  visualHowItWorks:
+    'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1000&auto=format&fit=crop&q=80',
+  visualContact:
+    'https://images.unsplash.com/photo-1573164574572-cb89e39749b4?w=1000&auto=format&fit=crop&q=80',
+  visualPricing:
+    'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1000&auto=format&fit=crop&q=80',
 
-  // Industry illustrations (consistent geometric set, all local)
+  // Testimonial portraits — Unsplash editorial portraits
+  avatarJessica:
+    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80',
+  avatarDavid:
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+  avatarSarah:
+    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&auto=format&fit=crop&q=80',
+  avatarJohnDoe:
+    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
+  avatarJohnP:
+    'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&auto=format&fit=crop&q=80',
+  avatarEmily:
+    'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80',
+
+  // ---- Local SVG illustrations (kept for industry tiles + as fallbacks) ----
+  heroHome: '/images/hero-home.svg',
   industryRealEstate: '/images/industry-real-estate.svg',
   industryEcommerce: '/images/industry-ecommerce.svg',
   industryHealthcare: '/images/industry-healthcare.svg',
@@ -67,19 +87,9 @@ export const assets = {
   industryEngineering: '/images/industry-engineering.svg',
   industrySpecialized: '/images/industry-specialized.svg',
 
-  // Testimonial avatars
-  avatarJessica: '/images/avatar-jessica.svg',
-  avatarDavid: '/images/avatar-david.svg',
-  avatarSarah: '/images/avatar-sarah.svg',
-  avatarJohnDoe: '/images/avatar-john-doe.svg',
-  avatarJohnP: '/images/avatar-john-p.svg',
-  avatarEmily: '/images/avatar-emily.svg',
-
-  // ---- Legacy aliases (mapped to local SVGs) ----
-  // Keeps existing pages working without rewriting every <Image src=...>.
+  // ---- Legacy aliases (keep existing pages rendering without rewrites) ----
   logoGlow: '/logo.svg',
   logoFull: '/logo.svg',
-  homeHero: '/images/hero-home.svg',
   homeHeroGroup94: '/images/hero-home.svg',
   homeHeroGroup93: '/images/hero-home.svg',
   homeHeroGroup95: '/images/hero-home.svg',
@@ -115,12 +125,48 @@ export const assets = {
 } as const;
 
 export const reviews = [
-  { quote: 'Incredible service and quality. From start to finish \u2014 professional, timely, and beyond expectations. Highly recommend.', name: 'Jessica M.', role: 'Designer', image: 'tColleagues' },
-  { quote: 'Exceeded all expectations. The detail and care put into every aspect was incredible. Responsive, talented, easy to work with.', name: 'David L.', role: 'Web Designer', image: 'tFinancial' },
-  { quote: 'Excellent service. Worked quickly without cutting corners. Communication was great and I always felt informed.', name: 'Sarah', role: 'Architect', image: 'tProperty' },
-  { quote: 'Great work. The final product was excellent. Transparent communication and professional throughout.', name: 'John Doe', role: 'IT Expert', image: 'tManSlider' },
-  { quote: 'Fantastic experience. Exceptional quality, seamless from start to finish, top-notch results.', name: 'John P.', role: 'Software Engineer', image: 'tAbout04' },
-  { quote: 'Hiring them was the best choice. They understood exactly what we wanted and delivered more than expected.', name: 'Emily T.', role: 'Trainer', image: 'tHomeImg7' },
+  {
+    quote:
+      'We had a marketing coordinator on board in 6 days. She runs circles around the agency we used to pay 4x for.',
+    name: 'Jessica M.',
+    role: 'Marketing Director, e-commerce',
+    image: 'avatarJessica',
+  },
+  {
+    quote:
+      'Replaced two contractors with one PayLow developer. He builds twice as fast and costs a third of what we were paying.',
+    name: 'David L.',
+    role: 'Founder, SaaS startup',
+    image: 'avatarDavid',
+  },
+  {
+    quote:
+      'I needed a property coordinator who could juggle 14 listings. PayLow sent me three. I hired all three.',
+    name: 'Sarah K.',
+    role: 'Broker, real estate',
+    image: 'avatarSarah',
+  },
+  {
+    quote:
+      'They scoped the role on a Tuesday call. By Friday I was interviewing. We hired on Monday. Honestly didn\u2019t expect it to be this easy.',
+    name: 'John D.',
+    role: 'COO, logistics firm',
+    image: 'avatarJohnDoe',
+  },
+  {
+    quote:
+      'Skeptical going in, completely converted now. The shortlist was tight, the interviews were sharp, the hire was excellent.',
+    name: 'John P.',
+    role: 'Engineering Lead',
+    image: 'avatarJohnP',
+  },
+  {
+    quote:
+      'Our customer-support team doubled overnight without doubling our payroll. Couldn\u2019t recommend higher.',
+    name: 'Emily T.',
+    role: 'Operations, training co.',
+    image: 'avatarEmily',
+  },
 ] as const;
 
 export const videoReviews = [

@@ -2,7 +2,7 @@
   "name": "paylowstaffing-website",
   "version": "1.0.0",
   "private": true,
-  "description": "PayLow Staffing — production-ready Next.js 14 replica of paylowstaffing.com",
+  "description": "PayLow Staffing — production-ready Next.js 14 site",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,6 +11,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@fontsource/caveat": "^5.2.8",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/plus-jakarta-sans": "^5.2.8",
     "clsx": "^2.1.1",

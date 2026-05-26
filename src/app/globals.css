@@ -5,6 +5,7 @@
 :root {
   --font-display: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-script: 'Caveat', ui-rounded, system-ui, cursive;
 }
 
 @layer base {
@@ -15,17 +16,14 @@
   }
   html {
     scroll-behavior: smooth;
-    /* tweak default body line-height for breathable reading */
     line-height: 1.6;
   }
   body {
     @apply bg-white text-ink-700;
     font-family: var(--font-sans);
-    /* Inter stylistic sets: cv01 = open-form a, cv11 = curved tail, ss01 = single-storey g */
     font-feature-settings: 'cv11', 'ss01', 'cv02';
     font-variant-ligatures: contextual;
   }
-  /* Display headings — Plus Jakarta Sans, tight & confident */
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     @apply text-ink-900;
@@ -42,7 +40,9 @@
   [data-reveal] {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: opacity, transform;
   }
   [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
@@ -54,13 +54,11 @@
 }
 
 @layer components {
-  /* ---- Layout ---- */
   .container-wide { @apply mx-auto px-4 sm:px-6 lg:px-10; max-width: 1280px; }
   .container-narrow { @apply mx-auto px-4 sm:px-6 lg:px-10; max-width: 960px; }
   .section { @apply py-20 lg:py-28; }
   .section-tight { @apply py-14 lg:py-20; }
 
-  /* ---- Display typography (Plus Jakarta Sans) ---- */
   .display-1 {
     font-family: var(--font-display);
     @apply font-extrabold text-ink-900;
@@ -86,7 +84,6 @@
     text-wrap: balance;
   }
 
-  /* ---- Body lead (Inter) ---- */
   .lead {
     @apply text-ink-500;
     font-size: clamp(1rem, 1.2vw, 1.125rem);
@@ -95,7 +92,6 @@
     max-width: 60ch;
   }
 
-  /* ---- Brand gradient text ---- */
   .text-gradient {
     background-image: linear-gradient(135deg, #FF8242 0%, #F26C2A 50%, #D9551A 100%);
     -webkit-background-clip: text;
@@ -103,7 +99,21 @@
     color: transparent;
   }
 
-  /* ---- Eyebrow label ---- */
+  /* Handwritten Caveat accents — used sparingly to add personality */
+  .handwritten {
+    font-family: var(--font-script);
+    font-weight: 500;
+    display: inline-block;
+  }
+  .handwritten-accent {
+    font-family: var(--font-script);
+    font-weight: 700;
+    color: #F26C2A;
+    transform: rotate(-3deg);
+    display: inline-block;
+    letter-spacing: 0;
+  }
+
   .eyebrow {
     @apply inline-flex items-center gap-2 rounded-full px-3 py-1 font-semibold uppercase;
     font-size: 11px;
@@ -114,14 +124,12 @@
   }
   .eyebrow-dot { @apply inline-block w-1.5 h-1.5 rounded-full bg-brand-500; }
 
-  /* Section meta labels (above stats etc.) */
   .label-meta {
     @apply font-semibold uppercase text-ink-400;
     font-size: 10px;
     letter-spacing: 0.18em;
   }
 
-  /* Stat number — Inter tabular, heavy, tight */
   .stat-number {
     font-family: var(--font-display);
     @apply font-extrabold text-ink-900 tabular-nums;
@@ -129,11 +137,10 @@
     line-height: 0.95;
   }
 
-  /* ---- Buttons ---- */
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold whitespace-nowrap;
     letter-spacing: -0.005em;
-    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1), background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s cubic-bezier(0.22,1,0.36,1), background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   }
   .btn-primary {
     @apply btn text-white shadow-glow-sm;
@@ -145,19 +152,17 @@
   .btn-ghost { @apply btn text-ink-700 hover:text-ink-900 hover:bg-ink-50; }
   .btn-lg { @apply px-7 py-3.5 text-base; }
 
-  /* ---- Cards ---- */
   .card {
     @apply bg-white rounded-3xl border border-ink-100 shadow-card;
-    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease;
+    transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.5s cubic-bezier(0.22,1,0.36,1), border-color 0.3s ease;
   }
   .card-hover { @apply card; }
   .card-hover:hover { @apply shadow-lift -translate-y-1 border-ink-200; }
   .card-glass {
-    @apply rounded-2xl border border-white/60 bg-white/75 backdrop-blur-xl shadow-soft;
+    @apply rounded-2xl border border-white/60 bg-white/80 backdrop-blur-xl shadow-soft;
   }
   .card-dark { @apply rounded-3xl bg-ink-900 text-white shadow-lift; }
 
-  /* ---- Forms ---- */
   .field { @apply relative; }
   .field-input {
     @apply w-full rounded-2xl border border-ink-200 bg-white px-4 pt-6 pb-2 text-ink-900 outline-none;
@@ -180,7 +185,6 @@
   }
   .field-input:focus + .field-label { @apply text-brand-600; }
 
-  /* ---- Range slider ---- */
   .range-brand {
     -webkit-appearance: none; appearance: none;
     width: 100%; height: 6px;
@@ -204,7 +208,6 @@
     cursor: grab;
   }
 
-  /* ---- Subtle dot grid backdrop ---- */
   .grid-backdrop {
     background-image: linear-gradient(to right, rgba(15,13,12,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(15,13,12,0.04) 1px, transparent 1px);
     background-size: 48px 48px;

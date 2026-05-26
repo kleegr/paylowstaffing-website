@@ -9,23 +9,26 @@ import '@fontsource/inter/700.css';
 import '@fontsource/plus-jakarta-sans/600.css';
 import '@fontsource/plus-jakarta-sans/700.css';
 import '@fontsource/plus-jakarta-sans/800.css';
+// Handwritten accent — used sparingly for personality
+import '@fontsource/caveat/500.css';
+import '@fontsource/caveat/700.css';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
 import Reveal from '@/components/Reveal';
 import { ModalProvider } from '@/components/ModalProvider';
-import GetStartedModal from '@/components/GetStartedModal';
+import SignUpModal from '@/components/SignUpModal';
 import { siteConfig } from '@/lib/content';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — Hire skilled remote talent from $7/hr`,
+    default: `${siteConfig.name} — Hire brilliant remote staff from $7/hr`,
     template: `%s | ${siteConfig.fullName}`,
   },
   description:
-    'PayLow connects you with world-class offshore professionals from $7/hr. Cut payroll costs by 60–80% — no hidden fees, no lock-in contracts.',
+    'PayLow matches you with vetted remote pros in days, not months. Save 60–80% on payroll. No contracts, no payroll taxes, no setup fees.',
   keywords: ['remote staffing', 'offshore staffing', 'virtual assistants', 'hire remote', 'PayLow Staffing'],
   authors: [{ name: 'PayLow Staffing' }],
   creator: 'PayLow Staffing',
@@ -36,14 +39,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} — Hire skilled remote talent from $7/hr`,
-    description: 'World-class offshore talent. From $7/hr. No payroll taxes, no lock-in contracts.',
+    title: `${siteConfig.name} — Hire brilliant remote staff from $7/hr`,
+    description: 'Vetted remote pros, matched in days. Save 60–80%. No contracts.',
   },
   twitter: {
     card: 'summary_large_image',
     site: '@Paylowstaffing',
     title: siteConfig.fullName,
-    description: 'Hire skilled remote talent from $7/hr.',
+    description: 'Hire brilliant remote staff from $7/hr.',
   },
   robots: { index: true, follow: true },
   icons: { icon: '/favicon.svg', apple: '/favicon.svg' },
@@ -70,7 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main id="content">{children}</main>
           <Footer />
           <ScrollToTop />
-          <GetStartedModal />
+          <SignUpModal />
         </ModalProvider>
         <Reveal />
       </body>
