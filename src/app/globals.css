@@ -22,12 +22,13 @@
     @apply bg-white text-ink-700;
     font-family: var(--font-sans);
     font-feature-settings: 'cv11', 'ss01', 'cv02';
-    font-variant-ligatures: contextual;
+    font-variant-ligatures: contextual common-ligatures;
+    font-optical-sizing: auto;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     @apply text-ink-900;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.022em;
     text-wrap: balance;
   }
   h1 { line-height: 1.04; }
@@ -59,37 +60,41 @@
   .section { @apply py-20 lg:py-28; }
   .section-tight { @apply py-14 lg:py-20; }
 
+  /* ============================================================
+     Display headings — hero, page heros, big section titles.
+     Sizes scale fluidly via clamp(); letter-spacing tightens with size.
+     ============================================================ */
   .display-1 {
     font-family: var(--font-display);
     @apply font-extrabold text-ink-900;
-    font-size: clamp(2.625rem, 5.4vw, 4.75rem);
+    font-size: clamp(2.75rem, 5.6vw, 5rem);
     line-height: 1.02;
-    letter-spacing: -0.028em;
+    letter-spacing: -0.032em;
     text-wrap: balance;
   }
   .display-2 {
     font-family: var(--font-display);
     @apply font-extrabold text-ink-900;
-    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-size: clamp(2.125rem, 4.2vw, 3.5rem);
     line-height: 1.06;
-    letter-spacing: -0.024em;
+    letter-spacing: -0.028em;
     text-wrap: balance;
   }
   .display-3 {
     font-family: var(--font-display);
     @apply font-bold text-ink-900;
-    font-size: clamp(1.5rem, 2.4vw, 2rem);
-    line-height: 1.16;
-    letter-spacing: -0.018em;
+    font-size: clamp(1.5rem, 2.5vw, 2.125rem);
+    line-height: 1.18;
+    letter-spacing: -0.020em;
     text-wrap: balance;
   }
 
   .lead {
     @apply text-ink-500;
-    font-size: clamp(1rem, 1.2vw, 1.125rem);
-    line-height: 1.65;
-    letter-spacing: -0.005em;
-    max-width: 60ch;
+    font-size: clamp(1.0625rem, 1.25vw, 1.1875rem);
+    line-height: 1.6;
+    letter-spacing: -0.008em;
+    max-width: 58ch;
   }
 
   .text-gradient {
@@ -117,7 +122,7 @@
   .eyebrow {
     @apply inline-flex items-center gap-2 rounded-full px-3 py-1 font-semibold uppercase;
     font-size: 11px;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.18em;
     background: rgba(242, 108, 42, 0.10);
     color: #B53F0E;
     border: 1px solid rgba(242, 108, 42, 0.18);
@@ -127,19 +132,37 @@
   .label-meta {
     @apply font-semibold uppercase text-ink-400;
     font-size: 10px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.20em;
   }
 
+  /* Standard stat number — for medium-sized numeric content */
   .stat-number {
     font-family: var(--font-display);
     @apply font-extrabold text-ink-900 tabular-nums;
-    letter-spacing: -0.03em;
-    line-height: 0.95;
+    letter-spacing: -0.028em;
+    line-height: 0.96;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  /* numeric-xl — dedicated helper for HUGE numbers (e.g. calculator savings,
+     pricing headlines). Solves the background-clip:text rendering issue that
+     happens when tabular-nums + extreme negative tracking + clamp() large
+     sizes are combined inside an overflow-hidden parent: gradient fill
+     clipped at edges, characters appearing to ghost/double-print. */
+  .numeric-xl {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums lining-nums;
+    font-size: clamp(2.25rem, 5.8vw, 3.75rem);
+    letter-spacing: -0.022em;
+    line-height: 1;
+    display: inline-block;
+    padding-bottom: 0.08em; /* prevent gradient text bottom edge being clipped */
   }
 
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold whitespace-nowrap;
-    letter-spacing: -0.005em;
+    letter-spacing: -0.01em;
     transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s cubic-bezier(0.22,1,0.36,1), background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   }
   .btn-primary {
@@ -167,7 +190,7 @@
   .field-input {
     @apply w-full rounded-2xl border border-ink-200 bg-white px-4 pt-6 pb-2 text-ink-900 outline-none;
     font-size: 15px;
-    letter-spacing: -0.005em;
+    letter-spacing: -0.008em;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
     @apply placeholder-transparent;
   }

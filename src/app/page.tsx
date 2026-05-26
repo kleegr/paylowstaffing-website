@@ -15,7 +15,8 @@ import {
 import SectionHeading from '@/components/SectionHeading';
 import CtaBanner from '@/components/CtaBanner';
 import GetStartedButton from '@/components/GetStartedButton';
-import { assets, reviews } from '@/lib/content';
+import VideoCard from '@/components/VideoCard';
+import { assets, reviews, videoReviews } from '@/lib/content';
 
 export default function HomePage() {
   return (
@@ -398,7 +399,8 @@ export default function HomePage() {
       </section>
 
       {/* ====================================================================
-         TESTIMONIALS — expanded, anchored for /testimonials redirect
+         TESTIMONIALS — written bento + video stories
+         Anchor #testimonials catches the /testimonials → /#testimonials redirect.
       ==================================================================== */}
       <section
         id="testimonials"
@@ -492,6 +494,38 @@ export default function HomePage() {
                 </article>
               );
             })}
+          </div>
+
+          {/* Video stories — lazy-loaded YouTube thumbnails, click to play */}
+          <div className="mt-20 pt-14 border-t border-ink-100/70">
+            <div className="text-center mb-10" data-reveal>
+              <p className="mb-3">
+                <span className="eyebrow">
+                  <span className="eyebrow-dot" /> See &amp; hear it
+                </span>
+              </p>
+              <h3
+                className="font-display font-bold text-ink-900 text-2xl sm:text-3xl tracking-tight"
+                style={{ letterSpacing: '-0.022em' }}
+              >
+                Customer stories, <span className="text-gradient">in their words.</span>
+              </h3>
+              <p className="text-ink-500 text-sm mt-3 max-w-md mx-auto">
+                Three teams. Three reasons they made the switch. Tap any card to watch.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {videoReviews.map((v, i) => (
+                <div
+                  key={v.youtubeId}
+                  data-reveal
+                  data-reveal-delay={i * 80}
+                >
+                  <VideoCard youtubeId={v.youtubeId} title={v.title} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

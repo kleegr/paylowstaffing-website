@@ -211,15 +211,14 @@ export default function PricingCalculator() {
 
               <div className="mt-8 pt-7 border-t border-white/10">
                 <div className="flex flex-wrap items-end justify-between gap-5">
-                  <div>
+                  <div className="min-w-0">
                     <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-500/15 border border-brand-500/20 px-2.5 py-1 text-[11px] font-bold text-brand-300 mb-3 tabular-nums">
                       <TrendingDown className="w-3 h-3" /> {savingsPct}% less
                     </div>
                     <div className="label-meta text-white/55 mb-2">You keep</div>
-                    <div
-                      className="stat-number text-gradient leading-none"
-                      style={{ fontSize: 'clamp(2.5rem, 6.5vw, 4.25rem)', letterSpacing: '-0.035em' }}
-                    >
+                    {/* numeric-xl: dedicated helper for huge numbers — prevents gradient-text
+                        clipping/overlap that happens with extreme negative tracking. */}
+                    <div className="numeric-xl text-gradient">
                       {fmt(animSavings)}
                     </div>
                     <p className="text-white/55 text-xs mt-3">{cad.label.toLowerCase()} · across {team} {team === 1 ? 'role' : 'roles'}</p>

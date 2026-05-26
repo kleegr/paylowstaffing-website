@@ -8,7 +8,16 @@ import SectionHeading from '@/components/SectionHeading';
 import GetStartedButton from '@/components/GetStartedButton';
 import { assets } from '@/lib/content';
 
-const categories = [
+type Category = {
+  title: string;
+  Icon: React.ComponentType<{ className?: string }>;
+  image: string | null;
+  sample: string;
+};
+
+// Specialized uses `image: null` — page renders it as a gradient card.
+// (The previous specialistTools photo turned out to be a woman silhouette.)
+const categories: Category[] = [
   { title: 'IT & Tech',             Icon: Cpu,             image: assets.industryIT,              sample: 'Devs, QA, devops, AI engineers.' },
   { title: 'Professional Services', Icon: Briefcase,       image: assets.industryServices,        sample: 'PMs, ops, recruiting, legal support.' },
   { title: 'Admin & Data',          Icon: ClipboardList,   image: assets.industryAdmin,           sample: 'EAs, data entry, transcription.' },
@@ -19,7 +28,7 @@ const categories = [
   { title: 'Marketing',             Icon: Megaphone,       image: assets.industryMarketing,       sample: 'SEO, social, content, email, analytics.' },
   { title: 'Finance',               Icon: Calculator,      image: assets.industryFinance,         sample: 'Bookkeeping, AP/AR, payroll, FP&A.' },
   { title: 'Healthcare',            Icon: HeartPulse,      image: assets.industryHealthcare,      sample: 'Medical billing, claims, telehealth.' },
-  { title: 'Specialized',           Icon: Settings,        image: assets.industrySpecialized,     sample: 'Procurement, compliance, actuarial.' },
+  { title: 'Specialized',           Icon: Settings,        image: null,                            sample: 'Procurement, compliance, actuarial.' },
 ];
 
 export default function IndustriesPage() {
@@ -48,6 +57,8 @@ export default function IndustriesPage() {
           <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {categories.map((c, i) => {
               const isOpen = active === i;
+              const hasImage = c.image !== null;
+
               return (
                 <button
                   key={c.title}
@@ -58,15 +69,51 @@ export default function IndustriesPage() {
                   }`}
                 >
                   <div className="relative aspect-[5/4]">
-                    <Image
-                      src={c.image}
-                      alt={c.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 25vw"
-                      className={`object-cover transition-transform duration-700 ease-out ${isOpen ? 'scale-105' : 'group-hover:scale-105'}`}
-                      loading="lazy"
-                    />
-                    <div aria-hidden className={`absolute inset-0 transition-opacity duration-500 ${isOpen ? 'bg-gradient-to-t from-brand-900/85 via-brand-700/40 to-transparent' : 'bg-gradient-to-t from-ink-900/85 via-ink-900/30 to-transparent'}`} />
+                    {hasImage ? (
+                      <>
+                        <Image
+                          src={c.image as string}
+                          alt={c.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 25vw"
+                          className={`object-cover transition-transform duration-700 ease-out ${isOpen ? 'scale-105' : 'group-hover:scale-105'}`}
+                          loading="lazy"
+                        />
+                        <div
+                          aria-hidden
+                          className={`absolute inset-0 transition-opacity duration-500 ${
+                            isOpen
+                              ? 'bg-gradient-to-t from-brand-900/90 via-brand-700/40 to-transparent'
+                              : 'bg-gradient-to-t from-ink-900/85 via-ink-900/30 to-transparent'
+                          }`}
+                        />
+                      </>
+                    ) : (
+                      // Gradient-only card for Specialized — no photo, just brand-aware design.
+                      <>
+                        <div
+                          aria-hidden
+                          className="absolute inset-0 bg-gradient-to-br from-ink-900 via-ink-800 to-brand-700"
+                        />
+                        <div
+                          aria-hidden
+                          className="absolute inset-0 bg-mesh-2 opacity-40 mix-blend-screen"
+                        />
+                        <div
+                          aria-hidden
+                          className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-gradient-brand opacity-30 blur-3xl"
+                        />
+                        <div
+                          aria-hidden
+                          className={`absolute inset-0 transition-opacity duration-500 ${
+                            isOpen
+                              ? 'bg-gradient-to-t from-brand-900/60 via-transparent to-transparent'
+                              : 'bg-gradient-to-t from-ink-900/40 via-transparent to-transparent'
+                          }`}
+                        />
+                      </>
+                    )}
+
                     <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                       <c.Icon className="w-5 h-5 mb-2 text-brand-300" />
                       <h3 className="font-display font-bold text-base">{c.title}</h3>

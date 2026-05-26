@@ -62,13 +62,13 @@ const P = {
   // Portraits
   heroDistel: 'photo-1519085360753-af0119f7cbe7',     // Young pro at laptop, headphones (iconic remote-work shot)
   proLaptop: 'photo-1556157382-97eda2d62296',         // Male at laptop in modern lit office
-  friendlySmile: 'photo-1573496359142-b8d87734a5a2',  // Friendly young male, candid
+  friendlySmile: 'photo-1573496359142-b8d87734a5a2',  // NOTE: turned out to be a woman — no longer used on active hero (see industriesHeroBg)
   confidentPro: 'photo-1492562080023-ab3db95bfbce',   // Confident professional male
   suitedPro: 'photo-1564564321837-a57b7070ac4f',      // Male in suit, blurred bg
   beardedPro: 'photo-1472099645785-5658abf4ff4e',     // Bearded male, natural light
   glassesSmile: 'photo-1599566150163-29194dcaad36',   // Smiling male with glasses
   warmSmile: 'photo-1560250097-0b93528c311a',         // Warmly smiling male
-  cleanCut: 'photo-1507003211169-0a1dd7228f2d',       // Clean-cut male (reviewer)
+  cleanCut: 'photo-1507003211169-0a1dd7228f2d',       // Clean-cut male (reviewer + now industries hero)
   confident2: 'photo-1500648767791-00dcc994a43e',     // Confident male portrait (reviewer)
   asianPro: 'photo-1531123897727-8f129e1688ce',       // Asian male professional (reviewer)
   glassesPro: 'photo-1542178243-bc20204b769f',        // Male with glasses (reviewer)
@@ -82,11 +82,12 @@ const P = {
   callCenter: 'photo-1556745757-8d76bdb6984b',        // Customer service
   designerDesk: 'photo-1542744173-8e7e53415bb0',      // Creative / design
   marketingDesk: 'photo-1432888622747-4eb9a8efeb07',  // Marketing
-  officeDesk: 'photo-1497019985829-7e1ea7d2c6a4',     // Admin / data
+  officeDesk: 'photo-1497019985829-7e1ea7d2c6a4',     // Admin / data (legacy — was rendering washed out)
+  cleanDesk: 'photo-1486312338219-ce68d2c6f44d',      // MacBook + notebook on white desk (Glenn Carstens-Peters) — Admin & Data
   consultingRoom: 'photo-1521791136064-7986c2920216', // Professional services
   learningSetup: 'photo-1503676260728-1c00da094a0b',  // Education
   engineerSite: 'photo-1581094794329-c8112a89af12',   // Engineering
-  specialistTools: 'photo-1581090700227-1e37b190418e', // Specialized roles
+  specialistTools: 'photo-1581090700227-1e37b190418e', // (no longer used — industries page renders Specialized as a gradient card)
 };
 
 export const assets = {
@@ -101,7 +102,7 @@ export const assets = {
 
   // ─── Page-hero background portraits (passed to PageHero `bgImage`) ────────
   aboutHeroBg: u(P.confidentPro, 900),
-  industriesHeroBg: u(P.friendlySmile, 900),
+  industriesHeroBg: u(P.cleanCut, 900),               // SWAPPED — was friendlySmile (woman). cleanCut is verified male.
   howItWorksHeroBg: u(P.proLaptop, 900),
   testimonialsHeroBg: u(P.suitedPro, 900),
   contactHeroBg: u(P.confident2, 900),
@@ -124,11 +125,11 @@ export const assets = {
   industryCustomerService: u(P.callCenter, 800),
   industryCreative: u(P.designerDesk, 800),
   industryMarketing: u(P.marketingDesk, 800),
-  industryAdmin: u(P.officeDesk, 800),
+  industryAdmin: u(P.cleanDesk, 800),                 // SWAPPED — was officeDesk (rendered washed out). cleanDesk is iconic + reliable.
   industryServices: u(P.consultingRoom, 800),
   industryEducation: u(P.learningSetup, 800),
   industryEngineering: u(P.engineerSite, 800),
-  industrySpecialized: u(P.specialistTools, 800),
+  industrySpecialized: u(P.specialistTools, 800),     // Kept for backward compat; industries/page.tsx renders Specialized as a gradient card now.
 
   // ─── Testimonial avatars — all male ───────────────────────────────────────
   avatarJacob: u(P.beardedPro, 200),
@@ -143,7 +144,6 @@ export const assets = {
   logoFull: '/logo.svg',
 
   // ─── Backward-compatible aliases (old keys → new male photos) ─────────────
-  // Kept so older code paths don't break; safe to remove later.
   avatarJessica: u(P.beardedPro, 200),       // → now Jacob
   avatarSarah: u(P.warmSmile, 200),          // → now Sam
   avatarEmily: u(P.glassesPro, 200),         // → now Ethan
@@ -156,7 +156,7 @@ export const assets = {
   ctaWomen: u(P.confident2, 1000),
   rectangleAccent: u(P.confidentPro, 800),
   about03: u(P.suitedPro, 500),
-  about04: u(P.friendlySmile, 500),
+  about04: u(P.cleanCut, 500),               // was friendlySmile (woman) — swapped to cleanCut
   howApply1: u(P.proLaptop, 800),
   howApply2: u(P.confidentPro, 800),
   pricing7: u(P.cleanCut, 800),
