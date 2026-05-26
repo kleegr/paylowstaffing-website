@@ -47,7 +47,7 @@ export default function CtaBanner() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </section>
   );
 }
