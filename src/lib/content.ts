@@ -3,7 +3,11 @@ export const siteConfig = {
   fullName: 'PayLow Staffing',
   tagline: 'Brilliant remote staff. Matched in days. Starting at $7/hour.',
   url: 'https://paylowstaffing.com',
-  signUpUrl: 'https://signup.paylowstaffing.com/sign-up',
+  // Live Zoho sign-up form ("Hire Your Virtual Assistant!") — Zoho's
+  // formperma URLs are designed for iframe embedding, so the in-page modal
+  // loads this directly. Update here to repoint the Get Started CTA.
+  signUpUrl:
+    'https://forms.zohopublic.com/xcellentstaffing1/form/HireYourVirtualAssistant/formperma/0_XQf1KHayeo9Mv8BuadjeqD4Jwu_mB59Hr1czMuALE',
   termsUrl: 'https://toc.paylowstaffing.com/',
   privacyUrl: 'https://privacy-policy.paylowstaffing.com/',
   contactFormEmbedUrl: 'https://lc.paylowstaffing.com/widget/form/1bJDrrS4rOrnEZPBoXDJ',
@@ -45,7 +49,6 @@ export const navLinks = [
  *   resilient fallbacks too).
  */
 export const assets = {
-  // ---- People photography (Unsplash CDN, auto-optimized via Next/Image) ----
   heroPerson:
     'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=900&auto=format&fit=crop&q=80',
   visualAbout:
@@ -56,8 +59,6 @@ export const assets = {
     'https://images.unsplash.com/photo-1573164574572-cb89e39749b4?w=1000&auto=format&fit=crop&q=80',
   visualPricing:
     'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1000&auto=format&fit=crop&q=80',
-
-  // Testimonial portraits — Unsplash editorial portraits
   avatarJessica:
     'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80',
   avatarDavid:
@@ -70,8 +71,6 @@ export const assets = {
     'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&auto=format&fit=crop&q=80',
   avatarEmily:
     'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80',
-
-  // ---- Local SVG illustrations (kept for industry tiles + as fallbacks) ----
   heroHome: '/images/hero-home.svg',
   industryRealEstate: '/images/industry-real-estate.svg',
   industryEcommerce: '/images/industry-ecommerce.svg',
@@ -86,8 +85,6 @@ export const assets = {
   industryEducation: '/images/industry-education.svg',
   industryEngineering: '/images/industry-engineering.svg',
   industrySpecialized: '/images/industry-specialized.svg',
-
-  // ---- Legacy aliases (keep existing pages rendering without rewrites) ----
   logoGlow: '/logo.svg',
   logoFull: '/logo.svg',
   homeHeroGroup94: '/images/hero-home.svg',
