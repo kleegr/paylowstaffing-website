@@ -21,6 +21,9 @@ const nextConfig = {
       { source: '/home', destination: '/', permanent: true },
       { source: '/about', destination: '/about-us', permanent: true },
       { source: '/contact', destination: '/contact-us', permanent: true },
+      // Testimonials page removed — social proof now lives on the homepage.
+      // 308 permanent so search engines update their index.
+      { source: '/testimonials', destination: '/#testimonials', permanent: true },
     ];
   },
   async headers() {

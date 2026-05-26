@@ -43,15 +43,15 @@ export default function HomePage() {
             <div className="lg:col-span-6" data-reveal>
               <p className="mb-6">
                 <span className="eyebrow">
-                  <span className="eyebrow-dot animate-pulse" /> Built for fast-moving teams
+                  <span className="eyebrow-dot animate-pulse" /> Brilliant remote staff
                 </span>
               </p>
 
               <h1 className="display-1">
-                Brilliant remote staff.
+                Hire your next teammate.
                 <br />
                 <span className="relative inline-block">
-                  <span className="text-gradient">From $7 an hour.</span>
+                  <span className="text-gradient">From $7/hour.</span>
                   <span
                     aria-hidden="true"
                     className="hidden md:inline-block handwritten-accent absolute -top-6 -right-6 text-2xl whitespace-nowrap"
@@ -62,22 +62,22 @@ export default function HomePage() {
               </h1>
 
               <p className="lead mt-6">
-                We match you with vetted remote pros in days &mdash; not months. Cut payroll
-                costs by 60&ndash;80%. Skip the contracts, the taxes, the agency markup.
+                We do the screening. You meet three pre-vetted pros. You hire on the call.
+                Save 60&ndash;80%. No payroll, no agency, no contracts.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <GetStartedButton size="lg">
-                  Get matched <ArrowRight className="w-4 h-4" />
+                  Find my match <ArrowRight className="w-4 h-4" />
                 </GetStartedButton>
                 <Link href="/pricing" className="btn-outline btn-lg">
-                  Run the numbers
+                  See the math
                 </Link>
               </div>
 
               <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-3 max-w-xl text-sm text-ink-600">
                 {[
-                  'Fluent English',
+                  'Vetted talent',
                   'Your time zone',
                   'No payroll tax',
                   'Hire this week',
@@ -92,7 +92,6 @@ export default function HomePage() {
             {/* RIGHT — real photo + floating glass cards */}
             <div className="lg:col-span-6 relative" data-reveal data-reveal-delay="200">
               <div className="relative max-w-[480px] mx-auto aspect-[4/5]">
-                {/* Brand orb behind */}
                 <div
                   aria-hidden
                   className="absolute -top-6 -right-6 w-40 h-40 rounded-full bg-gradient-brand opacity-30 blur-2xl -z-10"
@@ -102,7 +101,6 @@ export default function HomePage() {
                   className="absolute -bottom-6 -left-6 w-40 h-40 rounded-full bg-brand-300 opacity-30 blur-2xl -z-10"
                 />
 
-                {/* Main photo */}
                 <div className="absolute inset-0 rounded-[2rem] overflow-hidden shadow-lift">
                   <Image
                     src={assets.heroPerson}
@@ -112,14 +110,12 @@ export default function HomePage() {
                     className="object-cover"
                     priority
                   />
-                  {/* Subtle warm overlay */}
                   <div
                     aria-hidden
                     className="absolute inset-0 bg-gradient-to-t from-ink-900/30 via-transparent to-transparent"
                   />
                 </div>
 
-                {/* Floating card 1 — top left */}
                 <div
                   className="absolute -top-4 -left-4 sm:-left-8 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float"
                   style={{ animationDelay: '0.4s' }}
@@ -135,7 +131,6 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Floating card 2 — middle right */}
                 <div
                   className="absolute top-1/3 -right-4 sm:-right-8 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float"
                   style={{ animationDelay: '1.2s' }}
@@ -151,7 +146,6 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Floating card 3 — bottom left */}
                 <div
                   className="absolute -bottom-4 left-6 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float"
                   style={{ animationDelay: '2s' }}
@@ -192,29 +186,29 @@ export default function HomePage() {
             eyebrow="How it works"
             title={
               <>
-                From inquiry to <span className="text-gradient">hired in a week.</span>
+                Hello to hired in <span className="text-gradient">a week.</span>
               </>
             }
-            lead="Four steps. Mostly handled by us. You spend about 30 minutes total."
+            lead="Four steps. We do most of them. You spend about 30 minutes total."
           />
           <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               {
                 n: '01',
-                t: 'Tell us what you need',
-                d: 'A 15-minute call to scope the role and your team\u2019s style.',
+                t: 'Tell us the role',
+                d: 'A 15-minute call. We scope skills, style, and timezone together.',
                 icon: Headphones,
               },
               {
                 n: '02',
-                t: 'We do the heavy lifting',
-                d: 'We screen hundreds. You see the top 3 candidates.',
+                t: 'We screen the world',
+                d: 'We review hundreds. You see the top three.',
                 icon: ShieldCheck,
               },
               {
                 n: '03',
-                t: 'Interview your shortlist',
-                d: 'Meet the ones you like. Decide on the call.',
+                t: 'Meet the shortlist',
+                d: 'Interview the ones you like. Pick on the call.',
                 icon: Briefcase,
               },
               {
@@ -253,9 +247,9 @@ export default function HomePage() {
         <div aria-hidden className="absolute inset-0 grid-backdrop opacity-30" />
         <div className="container-wide relative">
           <SectionHeading
-            eyebrow="Roles we fill"
-            title="Pre-vetted pros across every team."
-            lead="Whatever you need &mdash; admin, support, dev, sales &mdash; we\u2019ve placed dozens of them."
+            eyebrow="What we fill"
+            title={<>Pros for every <span className="text-gradient">corner of your business.</span></>}
+            lead="Admin. Support. Dev. Sales. Whatever the role &mdash; we&rsquo;ve placed dozens of them."
           />
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
@@ -345,14 +339,13 @@ export default function HomePage() {
                 </span>
               </h2>
               <p className="lead mt-5">
-                No setup fee. No payroll taxes. No long-term contract. Just elite talent at a
-                fraction of what onshore costs you.
+                No setup. No payroll. No long-term anything. Just elite talent at a fraction of what you&rsquo;re paying now.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link href="/pricing" className="btn-primary">
                   Try the calculator <ArrowRight className="w-4 h-4" />
                 </Link>
-                <GetStartedButton variant="ghost">Get matched</GetStartedButton>
+                <GetStartedButton variant="ghost">Find my match</GetStartedButton>
               </div>
             </div>
 
@@ -362,7 +355,7 @@ export default function HomePage() {
                   aria-hidden
                   className="absolute -top-12 -right-12 w-56 h-56 rounded-full bg-gradient-brand opacity-40 blur-3xl"
                 />
-                <p className="label-meta text-white/60">PayLow average</p>
+                <p className="label-meta text-white/60">PayLow rate</p>
                 <div className="mt-3 flex items-end gap-1 leading-none tabular-nums">
                   <span
                     className="font-display font-extrabold text-white tracking-tight"
@@ -405,10 +398,17 @@ export default function HomePage() {
       </section>
 
       {/* ====================================================================
-         TESTIMONIALS
+         TESTIMONIALS — expanded, anchored for /testimonials redirect
       ==================================================================== */}
-      <section className="section bg-white">
-        <div className="container-wide">
+      <section
+        id="testimonials"
+        className="section bg-white relative overflow-hidden scroll-mt-24"
+      >
+        <div
+          aria-hidden
+          className="absolute -top-20 right-1/4 w-96 h-96 rounded-full bg-brand-300/15 blur-3xl"
+        />
+        <div className="container-wide relative">
           <SectionHeading
             eyebrow="What teams say"
             title={
@@ -417,43 +417,81 @@ export default function HomePage() {
                 <span className="text-gradient">Real results.</span>
               </>
             }
+            align="center"
           />
-          <div className="mt-14 grid md:grid-cols-3 gap-5">
-            {reviews.slice(0, 3).map((t, i) => (
-              <article
-                key={t.name}
-                className="card-hover p-6 flex flex-col"
-                data-reveal
-                data-reveal-delay={i * 100}
-              >
-                <Quote className="w-5 h-5 text-brand-400 mb-4" />
-                <p className="text-ink-700 text-[0.95rem] leading-relaxed flex-1">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <div className="mt-5 pt-5 border-t border-ink-100 flex items-center gap-3">
-                  <div className="relative w-10 h-10 rounded-full overflow-hidden bg-ink-100 shrink-0">
-                    <Image
-                      src={assets[t.image as keyof typeof assets]}
-                      alt={t.name}
-                      fill
-                      sizes="40px"
-                      className="object-cover"
+
+          {/* Bento: first card is dark-featured, others are normal — clean 3-col grid */}
+          <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {reviews.map((t, i) => {
+              const featured = i === 0;
+              const avatarSrc = assets[t.image as keyof typeof assets] as string;
+              return (
+                <article
+                  key={t.name}
+                  className={`p-6 sm:p-7 flex flex-col relative overflow-hidden rounded-3xl ${
+                    featured
+                      ? 'bg-ink-900 text-white shadow-lift'
+                      : 'bg-white border border-ink-100/60 shadow-card hover:shadow-lift hover:-translate-y-1 transition-all duration-500 ease-out'
+                  }`}
+                  data-reveal
+                  data-reveal-delay={i * 60}
+                >
+                  {featured && (
+                    <div
+                      aria-hidden
+                      className="absolute -top-14 -right-14 w-56 h-56 rounded-full bg-gradient-brand opacity-30 blur-3xl"
                     />
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-display font-semibold text-ink-900 text-[0.95rem]">
-                      {t.name}
+                  )}
+                  <Quote
+                    className={`w-6 h-6 mb-4 relative ${featured ? 'text-brand-300' : 'text-brand-400'}`}
+                    strokeWidth={2}
+                  />
+                  <p
+                    className={`leading-relaxed flex-1 relative ${
+                      featured
+                        ? 'text-white/95 text-[1.05rem] font-display font-medium'
+                        : 'text-ink-700 text-[0.95rem]'
+                    }`}
+                  >
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+                  <div
+                    className={`mt-6 pt-5 border-t flex items-center gap-3 relative ${
+                      featured ? 'border-white/10' : 'border-ink-100'
+                    }`}
+                  >
+                    <div className="relative w-11 h-11 rounded-full overflow-hidden bg-ink-200 shrink-0">
+                      <Image src={avatarSrc} alt={t.name} fill sizes="44px" className="object-cover" />
                     </div>
-                    <div className="text-xs text-ink-500">{t.role}</div>
+                    <div className="flex-1 min-w-0">
+                      <div
+                        className={`font-display font-semibold text-sm ${
+                          featured ? 'text-white' : 'text-ink-900'
+                        }`}
+                      >
+                        {t.name}
+                      </div>
+                      <div
+                        className={`text-xs truncate ${
+                          featured ? 'text-white/55' : 'text-ink-500'
+                        }`}
+                      >
+                        {t.role}
+                      </div>
+                    </div>
+                    <div
+                      className={`flex gap-0.5 shrink-0 ${
+                        featured ? 'text-brand-300' : 'text-brand-500'
+                      }`}
+                    >
+                      {Array.from({ length: 5 }).map((_, k) => (
+                        <Star key={k} className="w-3.5 h-3.5 fill-current" />
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex gap-0.5 text-brand-500">
-                    {Array.from({ length: 5 }).map((_, k) => (
-                      <Star key={k} className="w-3 h-3 fill-current" />
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

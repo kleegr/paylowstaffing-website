@@ -9,17 +9,17 @@ import GetStartedButton from '@/components/GetStartedButton';
 import { assets } from '@/lib/content';
 
 const categories = [
-  { title: 'IT & Tech',             Icon: Cpu,             image: assets.industryIT,              sample: 'Web/mobile devs, QA, devops, support, AI engineers' },
-  { title: 'Professional Services', Icon: Briefcase,       image: assets.industryServices,        sample: 'PMs, ops, recruiting, legal support, BPO' },
-  { title: 'Admin & Data',          Icon: ClipboardList,   image: assets.industryAdmin,           sample: 'EAs, data entry, transcription, document control' },
-  { title: 'Education',             Icon: GraduationCap,   image: assets.industryEducation,       sample: 'Tutors, LMS admins, instructional design' },
-  { title: 'Engineering',           Icon: Hammer,          image: assets.industryEngineering,     sample: 'CAD, structural, electrical, technical writing' },
-  { title: 'Customer Service',      Icon: Headphones,      image: assets.industryCustomerService, sample: 'CX reps, live chat, telemarketing' },
-  { title: 'Creative & Design',     Icon: Palette,         image: assets.industryCreative,        sample: 'UI/UX, graphic, animation, video editing' },
-  { title: 'Marketing',             Icon: Megaphone,       image: assets.industryMarketing,       sample: 'SEO/SEM, social, content, email, analytics' },
-  { title: 'Finance',               Icon: Calculator,      image: assets.industryFinance,         sample: 'Bookkeeping, AP/AR, payroll, financial analysis' },
-  { title: 'Healthcare',            Icon: HeartPulse,      image: assets.industryHealthcare,      sample: 'Medical billing, claims, telehealth support' },
-  { title: 'Specialized',           Icon: Settings,        image: assets.industrySpecialized,     sample: 'Procurement, compliance, actuary, geology' },
+  { title: 'IT & Tech',             Icon: Cpu,             image: assets.industryIT,              sample: 'Devs, QA, devops, AI engineers.' },
+  { title: 'Professional Services', Icon: Briefcase,       image: assets.industryServices,        sample: 'PMs, ops, recruiting, legal support.' },
+  { title: 'Admin & Data',          Icon: ClipboardList,   image: assets.industryAdmin,           sample: 'EAs, data entry, transcription.' },
+  { title: 'Education',             Icon: GraduationCap,   image: assets.industryEducation,       sample: 'Tutors, LMS admins, instructional designers.' },
+  { title: 'Engineering',           Icon: Hammer,          image: assets.industryEngineering,     sample: 'CAD, structural, electrical, tech writing.' },
+  { title: 'Customer Service',      Icon: Headphones,      image: assets.industryCustomerService, sample: 'CX reps, live chat, telesupport.' },
+  { title: 'Creative & Design',     Icon: Palette,         image: assets.industryCreative,        sample: 'UI/UX, graphic, animation, video.' },
+  { title: 'Marketing',             Icon: Megaphone,       image: assets.industryMarketing,       sample: 'SEO, social, content, email, analytics.' },
+  { title: 'Finance',               Icon: Calculator,      image: assets.industryFinance,         sample: 'Bookkeeping, AP/AR, payroll, FP&A.' },
+  { title: 'Healthcare',            Icon: HeartPulse,      image: assets.industryHealthcare,      sample: 'Medical billing, claims, telehealth.' },
+  { title: 'Specialized',           Icon: Settings,        image: assets.industrySpecialized,     sample: 'Procurement, compliance, actuarial.' },
 ];
 
 export default function IndustriesPage() {
@@ -29,11 +29,11 @@ export default function IndustriesPage() {
     <>
       <PageHero
         eyebrow="Industries"
-        title={<>Skilled professionals for every <span className="text-gradient">industry.</span></>}
-        lead="Pre-vetted offshore talent across the roles your team actually needs."
+        title={<>Pros for every <span className="text-gradient">corner of your business.</span></>}
+        lead="Pre-vetted remote talent across the roles your team actually needs."
         bgImage={assets.industriesHeroBg}
         imageAlt="A PayLow specialist"
-        actions={<GetStartedButton>Talk to us <ArrowRight className="w-4 h-4" /></GetStartedButton>}
+        actions={<GetStartedButton>Find my match <ArrowRight className="w-4 h-4" /></GetStartedButton>}
       />
 
       <section className="section bg-white">
@@ -41,7 +41,7 @@ export default function IndustriesPage() {
           <SectionHeading
             eyebrow="Specialties"
             title={<>Find your <span className="text-gradient">perfect hire.</span></>}
-            lead="Tap any category to see the most-requested roles we fill."
+            lead="Tap any category. See the roles we fill."
             align="center"
           />
 

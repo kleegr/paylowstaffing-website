@@ -63,18 +63,18 @@ export default function SignUpModal() {
         {/* Header */}
         <div className="px-5 py-4 sm:px-6 border-b border-ink-100 flex items-center justify-between bg-white">
           <div>
-            <p className="label-meta">PayLow · Sign up</p>
+            <p className="label-meta">PayLow · Get started</p>
             <p
               id="signup-modal-title"
               className="font-display font-bold text-ink-900 text-base mt-0.5"
             >
-              Start hiring in minutes
+              Tell us about the role.
             </p>
           </div>
           <button
             type="button"
             onClick={close}
-            aria-label="Close sign-up"
+            aria-label="Close"
             className="w-10 h-10 rounded-full bg-ink-50 hover:bg-ink-100 inline-flex items-center justify-center transition"
           >
             <X className="w-5 h-5 text-ink-700" />
@@ -86,13 +86,13 @@ export default function SignUpModal() {
           {!iframeLoaded && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 z-10 pointer-events-none">
               <Loader2 className="w-7 h-7 text-brand-500 animate-spin" />
-              <p className="text-sm text-ink-500">Loading sign-up…</p>
+              <p className="text-sm text-ink-500">Loading\u2026</p>
             </div>
           )}
           <iframe
             key={isOpen ? 'open' : 'closed'}
             src={siteConfig.signUpUrl}
-            title="PayLow Staffing — Sign up"
+            title="PayLow Staffing — Get started"
             className="absolute inset-0 w-full h-full border-0"
             referrerPolicy="origin-when-cross-origin"
             onLoad={() => setIframeLoaded(true)}
@@ -103,7 +103,7 @@ export default function SignUpModal() {
         {/* Footer — fallback link is always visible */}
         <div className="px-5 py-3 sm:px-6 border-t border-ink-100 bg-white flex items-center justify-between gap-3 flex-wrap">
           <p className="text-xs text-ink-500">
-            Not loading? Open the form directly.
+            Trouble loading?
           </p>
           <a
             href={siteConfig.signUpUrl}
@@ -111,7 +111,7 @@ export default function SignUpModal() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700 hover:text-brand-600 transition"
           >
-            Open in a new tab <ExternalLink className="w-3 h-3" />
+            Open it in a new tab <ExternalLink className="w-3 h-3" />
           </a>
         </div>
       </div>

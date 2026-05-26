@@ -63,7 +63,7 @@ export default function PricingCalculator() {
         {/* ===== LEFT: Inputs ===== */}
         <div className="lg:col-span-5 card p-6 sm:p-7 self-start">
           <div>
-            <label className="label-meta">Billing period</label>
+            <label className="label-meta">Show me</label>
             <div
               role="tablist"
               aria-label="Billing period"
@@ -141,7 +141,7 @@ export default function PricingCalculator() {
 
           <div className="mt-7 grid grid-cols-2 gap-3">
             <div className="rounded-2xl border border-ink-100 bg-white p-4">
-              <div className="label-meta">Onshore</div>
+              <div className="label-meta">Local rate</div>
               <div className="mt-1 stat-number text-ink-900 text-xl">
                 ${ONSHORE_RATE}<span className="text-ink-400 text-sm font-medium ml-0.5">/hr</span>
               </div>
@@ -152,12 +152,12 @@ export default function PricingCalculator() {
               <div className="mt-1 stat-number text-ink-900 text-xl">
                 ${OFFSHORE_RATE}<span className="text-ink-400 text-sm font-medium ml-0.5">/hr</span>
               </div>
-              <div className="text-[11px] text-brand-700 mt-1 font-medium">All-in rate</div>
+              <div className="text-[11px] text-brand-700 mt-1 font-medium">All-in. No extras.</div>
             </div>
           </div>
 
           <p className="mt-5 text-[11px] text-ink-400 leading-relaxed">
-            Estimates assume 40 hrs/week. Specialized roles may price differently. No payroll taxes, recruitment fees, or lock-in contracts.
+            40 hrs/week assumed. Specialized roles can run higher. No payroll tax, recruitment fees, or lock-in contracts.
           </p>
         </div>
 
@@ -170,7 +170,7 @@ export default function PricingCalculator() {
             <div className="relative">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="label-meta text-white/55">Cost comparison</p>
+                  <p className="label-meta text-white/55">Side by side</p>
                   <h3 className="font-display font-bold text-white text-xl sm:text-2xl mt-1 tracking-tight" style={{ letterSpacing: '-0.02em' }}>
                     {team} {team === 1 ? 'person' : 'people'} · {cad.label.replace('Per ', '')}
                   </h3>
@@ -183,7 +183,7 @@ export default function PricingCalculator() {
               <div className="mt-7 space-y-5">
                 <div>
                   <div className="flex items-baseline justify-between gap-3">
-                    <span className="text-sm text-white/65">Onshore equivalent</span>
+                    <span className="text-sm text-white/65">Hiring locally</span>
                     <span className="stat-number text-white text-base sm:text-lg">
                       {fmt(animOnshore)}<span className="text-white/35 text-xs font-medium ml-1">{cad.short}</span>
                     </span>
@@ -195,7 +195,7 @@ export default function PricingCalculator() {
 
                 <div>
                   <div className="flex items-baseline justify-between gap-3">
-                    <span className="text-sm text-white/65">PayLow</span>
+                    <span className="text-sm text-white/65">With PayLow</span>
                     <span className="stat-number text-white text-base sm:text-lg">
                       {fmt(animOffshore)}<span className="text-white/35 text-xs font-medium ml-1">{cad.short}</span>
                     </span>
@@ -213,9 +213,9 @@ export default function PricingCalculator() {
                 <div className="flex flex-wrap items-end justify-between gap-5">
                   <div>
                     <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-500/15 border border-brand-500/20 px-2.5 py-1 text-[11px] font-bold text-brand-300 mb-3 tabular-nums">
-                      <TrendingDown className="w-3 h-3" /> {savingsPct}% lower
+                      <TrendingDown className="w-3 h-3" /> {savingsPct}% less
                     </div>
-                    <div className="label-meta text-white/55 mb-2">You save</div>
+                    <div className="label-meta text-white/55 mb-2">You keep</div>
                     <div
                       className="stat-number text-gradient leading-none"
                       style={{ fontSize: 'clamp(2.5rem, 6.5vw, 4.25rem)', letterSpacing: '-0.035em' }}
@@ -225,7 +225,7 @@ export default function PricingCalculator() {
                     <p className="text-white/55 text-xs mt-3">{cad.label.toLowerCase()} · across {team} {team === 1 ? 'role' : 'roles'}</p>
                   </div>
                   <GetStartedButton size="lg" className="shrink-0">
-                    Get started <ArrowRight className="w-4 h-4" />
+                    Find my match <ArrowRight className="w-4 h-4" />
                   </GetStartedButton>
                 </div>
               </div>

@@ -7,20 +7,20 @@ import GetStartedButton from '@/components/GetStartedButton';
 
 export const metadata: Metadata = {
   title: 'Pricing',
-  description: 'Skilled offshore talent from $7/hour. Use our interactive calculator to see your savings.',
+  description: 'Pre-vetted remote pros from $7/hour. Run the calculator. See what you save.',
 };
 
 const onshoreCons = [
-  '$30/hr + payroll taxes',
+  '$30/hr + payroll tax',
   'Recruitment fees up to 20%',
-  'Slow hiring (weeks–months)',
+  'Weeks to months to hire',
   'Long-term contracts',
 ];
 const paylowPros = [
-  '$7/hr — all-in',
-  'No recruitment fees',
-  '7-day average time to hire',
-  'No lock-in contracts',
+  '$7/hr \u2014 all-in',
+  'No recruitment fee',
+  '7-day average to hire',
+  'No lock-in. Ever.',
 ];
 
 export default function PricingPage() {
@@ -37,11 +37,11 @@ export default function PricingPage() {
           <div data-reveal>
             <p className="mb-5"><span className="eyebrow"><span className="eyebrow-dot" /> Pricing</span></p>
             <h1 className="display-1">
-              One simple rate.<br />
+              One rate.<br />
               <span className="text-gradient">Massive savings.</span>
             </h1>
             <p className="lead mt-6 max-w-2xl mx-auto">
-              Hire skilled remote professionals from $7/hour. Use the calculator below to see exactly how much you save.
+              Pre-vetted remote pros from $7/hour. Run the calculator. See what you save.
             </p>
           </div>
 
@@ -55,7 +55,7 @@ export default function PricingPage() {
             </span>
             <span className="font-display font-semibold text-ink-700 pb-4" style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)' }}>/hour</span>
           </div>
-          <p className="text-ink-500 mt-4 text-sm">Specialized roles may be slightly higher. No hidden fees, ever.</p>
+          <p className="text-ink-500 mt-4 text-sm">Specialized roles can run higher. No hidden fees. Ever.</p>
         </div>
       </section>
 
@@ -65,7 +65,7 @@ export default function PricingPage() {
           <SectionHeading
             eyebrow="Cost calculator"
             title={<>See your <span className="text-gradient">real savings.</span></>}
-            lead="Adjust team size and billing period. Watch the math update in real time."
+            lead="Move the dials. Watch the math update in real time."
             align="center"
           />
           <div className="mt-12">
@@ -118,7 +118,7 @@ export default function PricingPage() {
               </ul>
               <div className="mt-6">
                 <GetStartedButton className="w-full sm:w-auto justify-center">
-                  Hire today <ArrowRight className="w-4 h-4" />
+                  Find my match <ArrowRight className="w-4 h-4" />
                 </GetStartedButton>
               </div>
             </article>

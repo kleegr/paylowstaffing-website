@@ -27,16 +27,16 @@ export default function CtaBanner() {
                 Ready when you are
               </p>
               <h2 className="display-2 text-white">
-                Let&rsquo;s find your{' '}
-                <span className="text-gradient">next great hire.</span>
+                Ready to find{' '}
+                <span className="text-gradient">your match?</span>
               </h2>
               <p className="lead mt-4 text-white/75 max-w-xl">
-                Tell us what you need. We&rsquo;ll have a shortlist on your desk this week.
+                Tell us the role. We&rsquo;ll have a shortlist on your desk this week.
               </p>
             </div>
             <div className="lg:col-span-2 flex flex-col gap-3 lg:items-end">
               <GetStartedButton size="lg" className="w-full lg:w-auto justify-center">
-                Get matched <ArrowRight className="w-4 h-4" />
+                Find my match <ArrowRight className="w-4 h-4" />
               </GetStartedButton>
               <Link
                 href={`tel:${siteConfig.contact.phoneTel}`}

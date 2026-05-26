@@ -10,7 +10,7 @@ import { assets } from '@/lib/content';
 export const metadata: Metadata = {
   title: 'About Us',
   description:
-    'PayLow was founded to connect businesses with skilled offshore professionals — flexible, efficient staffing built from firsthand experience.',
+    'PayLow connects ambitious teams with skilled remote pros \u2014 born from a real hiring problem, built to fix it for everyone.',
 };
 
 export default function AboutPage() {
@@ -18,13 +18,13 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About PayLow"
-        title={<>We connect ambitious teams with <span className="text-gradient">world-class talent.</span></>}
-        lead="Born from a real hiring problem. Built to fix it for everyone."
+        title={<>Built by people who <span className="text-gradient">needed it.</span></>}
+        lead="We couldn\u2019t find affordable, qualified help. So we found it. Then we built the company that finds it for you."
         bgImage={assets.aboutHeroBg}
         imageAlt="A PayLow professional"
         actions={
           <>
-            <GetStartedButton>Start hiring <ArrowRight className="w-4 h-4" /></GetStartedButton>
+            <GetStartedButton>Find my match <ArrowRight className="w-4 h-4" /></GetStartedButton>
             <Link href="/how-it-works" className="btn-outline">How it works</Link>
           </>
         }
@@ -52,17 +52,17 @@ export default function AboutPage() {
 
           <div data-reveal data-reveal-delay="120">
             <p className="mb-5"><span className="eyebrow"><span className="eyebrow-dot" /> Our story</span></p>
-            <h2 className="display-2">Built by people who needed it.</h2>
+            <h2 className="display-2">We were the <span className="text-gradient">first client.</span></h2>
             <div className="mt-6 space-y-4 text-ink-600 leading-relaxed text-pretty">
               <p>
-                PayLow began inside a growing bookkeeping company that couldn&rsquo;t find affordable, qualified help. Local hiring broke the budget. Quality slipped.
+                It started inside a bookkeeping company growing faster than its budget. Local hires broke the budget. Quality slipped. Something had to give.
               </p>
               <p>
-                Our CEO, Nathan, looked offshore — and found extraordinary talent everyone else had missed. PayLow exists to bring that talent to every team facing the same problem.
+                Nathan looked offshore and found brilliant people the rest of the market had missed. PayLow exists to put that talent on every team facing the same problem.
               </p>
             </div>
             <div className="mt-8">
-              <GetStartedButton>Hire today <ArrowRight className="w-4 h-4" /></GetStartedButton>
+              <GetStartedButton>Find my match <ArrowRight className="w-4 h-4" /></GetStartedButton>
             </div>
           </div>
         </div>
@@ -81,9 +81,9 @@ export default function AboutPage() {
                   <span className="w-1.5 h-1.5 rounded-full bg-brand-400" /> Mission
                 </span>
               </p>
-              <h2 className="display-2 text-white">Empower every team to grow — without limits.</h2>
+              <h2 className="display-2 text-white">Help every team grow &mdash; <span className="text-gradient">without limits.</span></h2>
               <p className="lead mt-6 text-white/70 max-w-xl">
-                Connect ambitious businesses with dedicated, expertly matched remote professionals. Boost productivity. Scale sustainably.
+                Match ambitious businesses with dedicated, vetted remote pros. Scale without burning out &mdash; or burning cash.
               </p>
             </div>
 
@@ -92,7 +92,7 @@ export default function AboutPage() {
                 { stat: '3K+', label: 'Jobs done', Icon: Sparkles },
                 { stat: '78+', label: 'Countries served', Icon: Globe2 },
                 { stat: '12K+', label: 'Roles filled', Icon: Users2, primary: true },
-                { stat: '60–80%', label: 'Cost savings', Icon: Heart },
+                { stat: '60\u201380%', label: 'Cost savings', Icon: Heart },
               ].map((s) => (
                 <div
                   key={s.label}

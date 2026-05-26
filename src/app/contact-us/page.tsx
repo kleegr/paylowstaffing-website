@@ -6,7 +6,7 @@ import { siteConfig, assets } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Contact Us',
-  description: 'Tell us what you need. We&apos;ll match you with the right offshore talent within days.',
+  description: 'Tell us the role. A real human replies within one business day.',
 };
 
 function XIcon({ className }: { className?: string }) {
@@ -30,8 +30,8 @@ export default function ContactPage() {
     <>
       <PageHero
         eyebrow="Contact"
-        title={<>Let&apos;s build your <span className="text-gradient">remote team.</span></>}
-        lead="Tell us about your project. A human replies within one business day."
+        title={<>Let&apos;s find your <span className="text-gradient">teammate.</span></>}
+        lead="Tell us the role. A real human replies within one business day."
         bgImage={assets.contactHeroBg}
         imageAlt="A PayLow team member"
         compact
@@ -42,7 +42,7 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-5 gap-8">
             <aside className="lg:col-span-2 space-y-4" data-reveal>
               <div className="card p-7">
-                <h3 className="font-display font-bold text-lg text-ink-900 mb-5">Contact info</h3>
+                <h3 className="font-display font-bold text-lg text-ink-900 mb-5">Get in touch</h3>
                 <ul className="space-y-5 text-sm">
                   <li className="flex gap-4">
                     <span className="shrink-0 inline-flex w-10 h-10 items-center justify-center rounded-2xl bg-gradient-brand text-white">
@@ -99,7 +99,7 @@ export default function ContactPage() {
 
               <div className="card-dark p-7 relative overflow-hidden">
                 <div aria-hidden className="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-gradient-brand opacity-30 blur-3xl" />
-                <p className="text-[10px] uppercase tracking-wider font-semibold text-white/55">Average response</p>
+                <p className="text-[10px] uppercase tracking-wider font-semibold text-white/55">Average reply</p>
                 <p className="mt-1 font-display font-bold text-white text-2xl">&lt; 24 hours</p>
                 <p className="mt-2 text-white/65 text-sm">A small, human team. Real people, real fast.</p>
               </div>
@@ -107,9 +107,9 @@ export default function ContactPage() {
 
             <div className="lg:col-span-3" data-reveal data-reveal-delay="120">
               <div className="card p-7 sm:p-9">
-                <h2 className="display-3">Get in touch</h2>
+                <h2 className="display-3">Tell us about it.</h2>
                 <p className="text-ink-500 text-sm mt-2 mb-7">
-                  Tell us what you&apos;re looking for. We&apos;ll respond fast.
+                  A few details. A fast reply. That&apos;s it.
                 </p>
                 <ContactForm />
               </div>

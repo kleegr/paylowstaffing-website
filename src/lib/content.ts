@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: 'PayLow',
   fullName: 'PayLow Staffing',
-  tagline: 'Brilliant remote staff. Matched in days. Starting at $7/hour.',
+  tagline: 'Hire skilled remote staff. Matched in days. From $7/hour.',
   url: 'https://paylowstaffing.com',
   // Live Zoho sign-up form ("Hire Your Virtual Assistant!") — Zoho's
   // formperma URLs are designed for iframe embedding, so the in-page modal
@@ -28,13 +28,14 @@ export const siteConfig = {
   },
 } as const;
 
+// Testimonials section now lives on the homepage at /#testimonials —
+// /testimonials is 308'd to that anchor via next.config.mjs.
 export const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about-us' },
   { label: 'How It Works', href: '/how-it-works' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Industries', href: '/industries' },
-  { label: 'Testimonials', href: '/testimonials' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Contact Us', href: '/contact-us' },
 ] as const;
@@ -152,7 +153,7 @@ export const assets = {
   homeHeroGroup95: u(P.heroDistel, 900),
   whyImage: u(P.proLaptop, 1000),
   advantageImage: u(P.consultingRoom, 800),
-  ctaWomen: u(P.confident2, 1000),           // renamed-purpose: now a male portrait
+  ctaWomen: u(P.confident2, 1000),
   rectangleAccent: u(P.confidentPro, 800),
   about03: u(P.suitedPro, 500),
   about04: u(P.friendlySmile, 500),
@@ -171,28 +172,9 @@ export const assets = {
   tManSlider: u(P.confident2, 200),
 } as const;
 
+// Reviews are ordered with the strongest narrative (story arc) first —
+// the homepage testimonials section renders #0 as a dark-featured card.
 export const reviews = [
-  {
-    quote:
-      'We had a marketing coordinator on board in 6 days. He runs circles around the agency we used to pay 4x for.',
-    name: 'Jacob M.',
-    role: 'Marketing Director, e-commerce',
-    image: 'avatarJacob',
-  },
-  {
-    quote:
-      'Replaced two contractors with one PayLow developer. He builds twice as fast and costs a third of what we were paying.',
-    name: 'David L.',
-    role: 'Founder, SaaS startup',
-    image: 'avatarDavid',
-  },
-  {
-    quote:
-      'I needed a property coordinator who could juggle 14 listings. PayLow sent me three. I hired all three.',
-    name: 'Sam K.',
-    role: 'Broker, real estate',
-    image: 'avatarSam',
-  },
   {
     quote:
       'They scoped the role on a Tuesday call. By Friday I was interviewing. We hired on Monday. Honestly didn\u2019t expect it to be this easy.',
@@ -202,14 +184,35 @@ export const reviews = [
   },
   {
     quote:
-      'Skeptical going in, completely converted now. The shortlist was tight, the interviews were sharp, the hire was excellent.',
+      'A marketing coordinator on board in 6 days. He runs circles around the agency we used to pay 4x for.',
+    name: 'Jacob M.',
+    role: 'Marketing Director, e-commerce',
+    image: 'avatarJacob',
+  },
+  {
+    quote:
+      'I needed someone to juggle 14 listings. They sent me three. I hired all three.',
+    name: 'Sam K.',
+    role: 'Broker, real estate',
+    image: 'avatarSam',
+  },
+  {
+    quote:
+      'Replaced two contractors with one PayLow developer. Twice as fast. A third of the cost.',
+    name: 'David L.',
+    role: 'Founder, SaaS startup',
+    image: 'avatarDavid',
+  },
+  {
+    quote:
+      'Skeptical going in. Converted now. Tight shortlist, sharp interviews, excellent hire.',
     name: 'John P.',
     role: 'Engineering Lead',
     image: 'avatarJohnP',
   },
   {
     quote:
-      'Our customer-support team doubled overnight without doubling our payroll. Couldn\u2019t recommend higher.',
+      'Our support team doubled overnight. Our payroll barely moved.',
     name: 'Ethan T.',
     role: 'Operations, training co.',
     image: 'avatarEthan',
