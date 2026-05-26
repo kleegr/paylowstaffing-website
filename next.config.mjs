@@ -19,10 +19,20 @@ const nextConfig = {
   async redirects() {
     return [
       { source: '/home', destination: '/', permanent: true },
-      { source: '/about', destination: '/about-us', permanent: true },
+
+      // About Us page removed — the hero already covers the founder/value story.
+      // Old shortcut /about now goes straight to the homepage too.
+      { source: '/about', destination: '/', permanent: true },
+      { source: '/about-us', destination: '/', permanent: true },
+
+      // FAQ page removed — a compact FAQ accordion now lives on the homepage at #faq.
+      // Next.js carries hash fragments through 308 redirects: the browser receives
+      // Location: /#faq and scrolls to the section on landing.
+      { source: '/faq', destination: '/#faq', permanent: true },
+
       { source: '/contact', destination: '/contact-us', permanent: true },
+
       // Testimonials page removed — social proof now lives on the homepage.
-      // 308 permanent so search engines update their index.
       { source: '/testimonials', destination: '/#testimonials', permanent: true },
     ];
   },

@@ -17,13 +17,14 @@ import CtaBanner from '@/components/CtaBanner';
 import GetStartedButton from '@/components/GetStartedButton';
 import VideoCard from '@/components/VideoCard';
 import CountUp from '@/components/CountUp';
+import FaqSection from '@/components/FaqSection';
 import { assets, reviews, videoReviews } from '@/lib/content';
 
 export default function HomePage() {
   return (
     <>
       {/* ====================================================================
-         HERO — with subtle noise overlay for tactile premium feel
+         HERO
       ==================================================================== */}
       <section className="relative isolate overflow-hidden noise">
         <div aria-hidden className="absolute inset-0 -z-20 bg-gradient-warm" />
@@ -41,7 +42,6 @@ export default function HomePage() {
 
         <div className="container-wide pt-20 pb-24 lg:pt-28 lg:pb-32">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* LEFT — copy */}
             <div className="lg:col-span-6" data-reveal>
               <p className="mb-6">
                 <span className="eyebrow">
@@ -91,7 +91,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* RIGHT — real photo + floating glass cards with animated counters */}
             <div className="lg:col-span-6 relative" data-reveal data-reveal-delay="200">
               <div className="relative max-w-[480px] mx-auto aspect-[4/5]">
                 <div
@@ -118,7 +117,6 @@ export default function HomePage() {
                   />
                 </div>
 
-                {/* Stat card 1 — "Hired in 7 days" */}
                 <div
                   className="absolute -top-4 -left-4 sm:-left-8 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float"
                   style={{ animationDelay: '0.4s' }}
@@ -134,7 +132,6 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Stat card 2 — "77% lower cost" */}
                 <div
                   className="absolute top-1/3 -right-4 sm:-right-8 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float"
                   style={{ animationDelay: '1.2s' }}
@@ -150,7 +147,6 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Stat card 3 — "3,000+ hires" */}
                 <div
                   className="absolute -bottom-4 left-6 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float"
                   style={{ animationDelay: '2s' }}
@@ -297,11 +293,11 @@ export default function HomePage() {
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-ink-900/85 via-ink-900/30 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/40 to-transparent"
                   />
                   <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                     <h3 className="font-display font-bold text-lg">{c.title}</h3>
-                    <p className="text-xs text-white/75 mt-1">{c.sub}</p>
+                    <p className="text-xs text-white/80 mt-1">{c.sub}</p>
                   </div>
                   <div className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur inline-flex items-center justify-center group-hover:bg-gradient-brand group-hover:text-white transition-all">
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -404,7 +400,6 @@ export default function HomePage() {
 
       {/* ====================================================================
          TESTIMONIALS — written bento + video stories
-         Anchor #testimonials catches the /testimonials → /#testimonials redirect.
       ==================================================================== */}
       <section
         id="testimonials"
@@ -426,7 +421,6 @@ export default function HomePage() {
             align="center"
           />
 
-          {/* Bento: first card is dark-featured, others are normal */}
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {reviews.map((t, i) => {
               const featured = i === 0;
@@ -500,7 +494,6 @@ export default function HomePage() {
             })}
           </div>
 
-          {/* Video stories */}
           <div className="mt-20 pt-14 border-t border-ink-100/70">
             <div className="text-center mb-10" data-reveal>
               <p className="mb-3">
@@ -533,6 +526,11 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ====================================================================
+         FAQ — 5-item accordion. Replaces the standalone /faq page.
+      ==================================================================== */}
+      <FaqSection />
 
       <CtaBanner />
     </>
