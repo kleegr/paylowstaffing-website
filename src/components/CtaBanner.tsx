@@ -8,7 +8,7 @@ export default function CtaBanner() {
     <section className="section">
       <div className="container-wide">
         <div
-          className="relative overflow-hidden rounded-4xl bg-ink-900 text-white p-8 sm:p-12 lg:p-14 shadow-lift"
+          className="relative overflow-hidden rounded-4xl bg-ink-900 text-white p-8 sm:p-12 lg:p-14 shadow-lift noise noise-strong"
           data-reveal
         >
           <div
@@ -47,7 +47,7 @@ export default function CtaBanner() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </section>
   );
 }

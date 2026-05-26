@@ -38,6 +38,28 @@
 
   ::selection { background: rgba(242, 108, 42, 0.22); color: #0E0D0C; }
 
+  /* ============================================================
+     Standardized focus-visible rings — brand orange, generous offset.
+     Replaces inconsistent browser defaults with a polished, on-brand
+     keyboard indicator. Only fires on keyboard navigation (not click).
+     ============================================================ */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid #F26C2A;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  /* On dark buttons, switch the ring to translucent white for contrast */
+  .btn-primary:focus-visible,
+  .btn-dark:focus-visible {
+    outline-color: rgba(255, 255, 255, 0.65);
+    outline-offset: 2px;
+  }
+
   [data-reveal] {
     opacity: 0;
     transform: translateY(20px);
@@ -61,8 +83,7 @@
   .section-tight { @apply py-14 lg:py-20; }
 
   /* ============================================================
-     Display headings — hero, page heros, big section titles.
-     Sizes scale fluidly via clamp(); letter-spacing tightens with size.
+     Display headings
      ============================================================ */
   .display-1 {
     font-family: var(--font-display);
@@ -135,7 +156,6 @@
     letter-spacing: 0.20em;
   }
 
-  /* Standard stat number — for medium-sized numeric content */
   .stat-number {
     font-family: var(--font-display);
     @apply font-extrabold text-ink-900 tabular-nums;
@@ -144,11 +164,6 @@
     font-variant-numeric: tabular-nums lining-nums;
   }
 
-  /* numeric-xl — dedicated helper for HUGE numbers (e.g. calculator savings,
-     pricing headlines). Solves the background-clip:text rendering issue that
-     happens when tabular-nums + extreme negative tracking + clamp() large
-     sizes are combined inside an overflow-hidden parent: gradient fill
-     clipped at edges, characters appearing to ghost/double-print. */
   .numeric-xl {
     font-family: var(--font-display);
     font-weight: 800;
@@ -157,30 +172,79 @@
     letter-spacing: -0.022em;
     line-height: 1;
     display: inline-block;
-    padding-bottom: 0.08em; /* prevent gradient text bottom edge being clipped */
+    padding-bottom: 0.08em;
   }
 
+  /* ============================================================
+     Buttons — with hover shine sweep + arrow micro-interaction
+     ============================================================ */
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold whitespace-nowrap;
     letter-spacing: -0.01em;
     transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s cubic-bezier(0.22,1,0.36,1), background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   }
+
   .btn-primary {
     @apply btn text-white shadow-glow-sm;
     background-image: linear-gradient(135deg, #FF8242 0%, #F26C2A 50%, #D9551A 100%);
+    position: relative;
+    overflow: hidden;
   }
   .btn-primary:hover { @apply shadow-glow -translate-y-0.5; }
+
+  /* Shine sweep — soft white gradient passes across the button on hover.
+     mix-blend-mode: overlay brightens the orange gradient underneath
+     instead of dimming the white text. */
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 25%, rgba(255, 255, 255, 0.35) 50%, transparent 75%);
+    transform: translateX(-120%);
+    transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+  .btn-primary:hover::after { transform: translateX(120%); }
+
   .btn-dark { @apply btn text-white bg-ink-900 hover:bg-ink-800 shadow-soft hover:-translate-y-0.5; }
   .btn-outline { @apply btn text-ink-900 bg-white border border-ink-200 hover:border-ink-900 hover:-translate-y-0.5; }
   .btn-ghost { @apply btn text-ink-700 hover:text-ink-900 hover:bg-ink-50; }
   .btn-lg { @apply px-7 py-3.5 text-base; }
 
+  /* Arrow micro-interaction — every lucide-arrow-right inside any button
+     translates 3px to the right on parent hover. Adds directional momentum
+     to every CTA on the site. */
+  .btn-primary .lucide-arrow-right,
+  .btn-outline .lucide-arrow-right,
+  .btn-dark .lucide-arrow-right,
+  .btn-ghost .lucide-arrow-right {
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn-primary:hover .lucide-arrow-right,
+  .btn-outline:hover .lucide-arrow-right,
+  .btn-dark:hover .lucide-arrow-right,
+  .btn-ghost:hover .lucide-arrow-right {
+    transform: translateX(3px);
+  }
+
+  /* ============================================================
+     Cards — with subtle hover depth
+     ============================================================ */
   .card {
     @apply bg-white rounded-3xl border border-ink-100 shadow-card;
     transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.5s cubic-bezier(0.22,1,0.36,1), border-color 0.3s ease;
   }
   .card-hover { @apply card; }
-  .card-hover:hover { @apply shadow-lift -translate-y-1 border-ink-200; }
+  .card-hover:hover {
+    @apply -translate-y-1 border-ink-200;
+    /* Subtle brand-tinted ring on hover — 0.04 alpha is barely visible
+       but adds warmth and depth to the lift effect. */
+    box-shadow:
+      0 0 0 1px rgba(242, 108, 42, 0.05),
+      0 8px 20px rgba(15, 13, 10, 0.08),
+      0 24px 60px rgba(15, 13, 10, 0.10);
+  }
   .card-glass {
     @apply rounded-2xl border border-white/60 bg-white/80 backdrop-blur-xl shadow-soft;
   }
@@ -236,6 +300,54 @@
     background-size: 48px 48px;
     mask-image: radial-gradient(ellipse 70% 50% at center, black 30%, transparent 80%);
     -webkit-mask-image: radial-gradient(ellipse 70% 50% at center, black 30%, transparent 80%);
+  }
+
+  /* ============================================================
+     Tactile noise overlay — the single biggest "premium feel" upgrade.
+
+     Inline SVG <feTurbulence> generated noise as a tileable background,
+     ~280 bytes, served as a data URI in CSS — no HTTP request.
+     Apply `.noise` to any surface to add filmic grain.
+     The `.noise-strong` modifier dials it up for dark surfaces.
+
+     Implementation notes:
+       - The element gets `position: relative` + `isolation: isolate`
+         so the ::after is contained inside its stacking context.
+       - z-index: -1 puts noise behind text content but above the
+         element's own background and any -z-* layered backdrops.
+       - opacity is intentionally tiny (4%) — you should feel it,
+         not see it. mix-blend-mode: overlay lets the noise modulate
+         lightness without dimming colors.
+     ============================================================ */
+  .noise {
+    position: relative;
+    isolation: isolate;
+  }
+  .noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' seed='5'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.7 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 220px 220px;
+    background-repeat: repeat;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+  }
+  .noise-strong::after {
+    opacity: 0.10;
+    mix-blend-mode: soft-light;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Disable the shine sweep for users who don't want motion */
+    .btn-primary::after { transition: none; transform: translateX(-200%); }
+    .btn-primary:hover::after { transform: translateX(-200%); }
+    .btn-primary .lucide-arrow-right,
+    .btn-outline .lucide-arrow-right,
+    .btn-dark .lucide-arrow-right,
+    .btn-ghost .lucide-arrow-right { transition: none; }
   }
 }
 

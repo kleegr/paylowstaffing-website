@@ -75,19 +75,20 @@ const P = {
 
   // Industry-context shots — clean, premium environment photography
   homeInterior: 'photo-1560518883-ce09059eeffa',      // Real estate
-  warehouse: 'photo-1556742049-0a6b21adf8a4',         // E-commerce / logistics
+  warehouse: 'photo-1556742049-0a6b21adf8a4',         // Logistics (legacy — was previously used for e-commerce, read as too generic)
+  ecommercePackages: 'photo-1607082348824-0a96f2a4b9da', // E-commerce — shipping packages / fulfillment (real, premium, recognizable)
   medicalSpace: 'photo-1576091160399-112ba8d25d1d',   // Healthcare
   devSetup: 'photo-1517694712202-14dd9538aa97',       // Developer workstation
   finance: 'photo-1554224155-6726b3ff858f',           // Finance / numbers
   callCenter: 'photo-1556745757-8d76bdb6984b',        // Customer service
   designerDesk: 'photo-1542744173-8e7e53415bb0',      // Creative / design
   marketingDesk: 'photo-1432888622747-4eb9a8efeb07',  // Marketing
-  officeDesk: 'photo-1497019985829-7e1ea7d2c6a4',     // Admin / data (legacy — was rendering washed out)
-  cleanDesk: 'photo-1486312338219-ce68d2c6f44d',      // MacBook + notebook on white desk (Glenn Carstens-Peters) — Admin & Data
+  officeDesk: 'photo-1497019985829-7e1ea7d2c6a4',     // Admin / data (legacy)
+  cleanDesk: 'photo-1486312338219-ce68d2c6f44d',      // MacBook + notebook on white desk — Admin & Data
   consultingRoom: 'photo-1521791136064-7986c2920216', // Professional services
   learningSetup: 'photo-1503676260728-1c00da094a0b',  // Education
   engineerSite: 'photo-1581094794329-c8112a89af12',   // Engineering
-  specialistTools: 'photo-1581090700227-1e37b190418e', // (no longer used — industries page renders Specialized as a gradient card)
+  specialistTools: 'photo-1581090700227-1e37b190418e', // (legacy — industries page now renders Specialized as a gradient card)
 };
 
 export const assets = {
@@ -102,7 +103,7 @@ export const assets = {
 
   // ─── Page-hero background portraits (passed to PageHero `bgImage`) ────────
   aboutHeroBg: u(P.confidentPro, 900),
-  industriesHeroBg: u(P.cleanCut, 900),               // SWAPPED — was friendlySmile (woman). cleanCut is verified male.
+  industriesHeroBg: u(P.cleanCut, 900),
   howItWorksHeroBg: u(P.proLaptop, 900),
   testimonialsHeroBg: u(P.suitedPro, 900),
   contactHeroBg: u(P.confident2, 900),
@@ -118,18 +119,18 @@ export const assets = {
 
   // ─── Industry tiles — premium context photography ─────────────────────────
   industryRealEstate: u(P.homeInterior, 800),
-  industryEcommerce: u(P.warehouse, 800),
+  industryEcommerce: u(P.ecommercePackages, 800),         // SWAPPED — was warehouse (too logistics-looking). Now real e-commerce shipping shot.
   industryHealthcare: u(P.medicalSpace, 800),
   industryIT: u(P.devSetup, 800),
   industryFinance: u(P.finance, 800),
   industryCustomerService: u(P.callCenter, 800),
   industryCreative: u(P.designerDesk, 800),
   industryMarketing: u(P.marketingDesk, 800),
-  industryAdmin: u(P.cleanDesk, 800),                 // SWAPPED — was officeDesk (rendered washed out). cleanDesk is iconic + reliable.
+  industryAdmin: u(P.cleanDesk, 800),
   industryServices: u(P.consultingRoom, 800),
   industryEducation: u(P.learningSetup, 800),
   industryEngineering: u(P.engineerSite, 800),
-  industrySpecialized: u(P.specialistTools, 800),     // Kept for backward compat; industries/page.tsx renders Specialized as a gradient card now.
+  industrySpecialized: u(P.specialistTools, 800),         // Kept for backward compat; industries/page.tsx renders Specialized as a gradient card.
 
   // ─── Testimonial avatars — all male ───────────────────────────────────────
   avatarJacob: u(P.beardedPro, 200),
@@ -144,9 +145,9 @@ export const assets = {
   logoFull: '/logo.svg',
 
   // ─── Backward-compatible aliases (old keys → new male photos) ─────────────
-  avatarJessica: u(P.beardedPro, 200),       // → now Jacob
-  avatarSarah: u(P.warmSmile, 200),          // → now Sam
-  avatarEmily: u(P.glassesPro, 200),         // → now Ethan
+  avatarJessica: u(P.beardedPro, 200),
+  avatarSarah: u(P.warmSmile, 200),
+  avatarEmily: u(P.glassesPro, 200),
   heroHome: u(P.heroDistel, 900),
   homeHeroGroup94: u(P.heroDistel, 900),
   homeHeroGroup93: u(P.heroDistel, 900),
@@ -156,7 +157,7 @@ export const assets = {
   ctaWomen: u(P.confident2, 1000),
   rectangleAccent: u(P.confidentPro, 800),
   about03: u(P.suitedPro, 500),
-  about04: u(P.cleanCut, 500),               // was friendlySmile (woman) — swapped to cleanCut
+  about04: u(P.cleanCut, 500),
   howApply1: u(P.proLaptop, 800),
   howApply2: u(P.confidentPro, 800),
   pricing7: u(P.cleanCut, 800),

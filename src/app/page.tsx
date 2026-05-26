@@ -16,15 +16,16 @@ import SectionHeading from '@/components/SectionHeading';
 import CtaBanner from '@/components/CtaBanner';
 import GetStartedButton from '@/components/GetStartedButton';
 import VideoCard from '@/components/VideoCard';
+import CountUp from '@/components/CountUp';
 import { assets, reviews, videoReviews } from '@/lib/content';
 
 export default function HomePage() {
   return (
     <>
       {/* ====================================================================
-         HERO
+         HERO — with subtle noise overlay for tactile premium feel
       ==================================================================== */}
-      <section className="relative isolate overflow-hidden">
+      <section className="relative isolate overflow-hidden noise">
         <div aria-hidden className="absolute inset-0 -z-20 bg-gradient-warm" />
         <div aria-hidden className="absolute inset-0 -z-10 bg-mesh-2" />
         <div aria-hidden className="absolute inset-0 -z-10 grid-backdrop opacity-50" />
@@ -90,7 +91,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* RIGHT — real photo + floating glass cards */}
+            {/* RIGHT — real photo + floating glass cards with animated counters */}
             <div className="lg:col-span-6 relative" data-reveal data-reveal-delay="200">
               <div className="relative max-w-[480px] mx-auto aspect-[4/5]">
                 <div
@@ -117,6 +118,7 @@ export default function HomePage() {
                   />
                 </div>
 
+                {/* Stat card 1 — "Hired in 7 days" */}
                 <div
                   className="absolute -top-4 -left-4 sm:-left-8 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float"
                   style={{ animationDelay: '0.4s' }}
@@ -126,12 +128,13 @@ export default function HomePage() {
                   </div>
                   <div>
                     <div className="font-display font-bold text-base text-ink-900 leading-none">
-                      Hired in 7 days
+                      Hired in <CountUp value={7} duration={1100} /> days
                     </div>
                     <div className="text-[11px] text-ink-500 mt-0.5">avg time to start</div>
                   </div>
                 </div>
 
+                {/* Stat card 2 — "77% lower cost" */}
                 <div
                   className="absolute top-1/3 -right-4 sm:-right-8 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float"
                   style={{ animationDelay: '1.2s' }}
@@ -141,12 +144,13 @@ export default function HomePage() {
                   </div>
                   <div>
                     <div className="font-display font-bold text-base text-ink-900 leading-none">
-                      77% lower cost
+                      <CountUp value={77} duration={1400} />% lower cost
                     </div>
                     <div className="text-[11px] text-ink-500 mt-0.5">vs. local hiring</div>
                   </div>
                 </div>
 
+                {/* Stat card 3 — "3,000+ hires" */}
                 <div
                   className="absolute -bottom-4 left-6 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float"
                   style={{ animationDelay: '2s' }}
@@ -162,7 +166,7 @@ export default function HomePage() {
                   </div>
                   <div>
                     <div className="font-display font-bold text-base text-ink-900 leading-none">
-                      3,000+ hires
+                      <CountUp value={3000} duration={1800} />+ hires
                     </div>
                     <div className="text-[11px] text-ink-500 mt-0.5">and counting</div>
                   </div>
@@ -351,7 +355,7 @@ export default function HomePage() {
             </div>
 
             <div className="relative" data-reveal data-reveal-delay="150">
-              <div className="card-dark p-8 sm:p-10 relative overflow-hidden">
+              <div className="card-dark p-8 sm:p-10 relative overflow-hidden noise noise-strong">
                 <div
                   aria-hidden
                   className="absolute -top-12 -right-12 w-56 h-56 rounded-full bg-gradient-brand opacity-40 blur-3xl"
@@ -422,7 +426,7 @@ export default function HomePage() {
             align="center"
           />
 
-          {/* Bento: first card is dark-featured, others are normal — clean 3-col grid */}
+          {/* Bento: first card is dark-featured, others are normal */}
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {reviews.map((t, i) => {
               const featured = i === 0;
@@ -432,7 +436,7 @@ export default function HomePage() {
                   key={t.name}
                   className={`p-6 sm:p-7 flex flex-col relative overflow-hidden rounded-3xl ${
                     featured
-                      ? 'bg-ink-900 text-white shadow-lift'
+                      ? 'bg-ink-900 text-white shadow-lift noise noise-strong'
                       : 'bg-white border border-ink-100/60 shadow-card hover:shadow-lift hover:-translate-y-1 transition-all duration-500 ease-out'
                   }`}
                   data-reveal
@@ -496,7 +500,7 @@ export default function HomePage() {
             })}
           </div>
 
-          {/* Video stories — lazy-loaded YouTube thumbnails, click to play */}
+          {/* Video stories */}
           <div className="mt-20 pt-14 border-t border-ink-100/70">
             <div className="text-center mb-10" data-reveal>
               <p className="mb-3">
