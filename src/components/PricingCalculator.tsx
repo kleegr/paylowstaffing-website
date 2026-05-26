@@ -65,9 +65,7 @@ export default function PricingCalculator() {
         <div className="lg:col-span-5 card p-6 sm:p-7 self-start">
           {/* Cadence */}
           <div>
-            <label className="text-[11px] font-semibold uppercase tracking-wider text-ink-500">
-              Billing period
-            </label>
+            <label className="label-meta">Billing period</label>
             <div
               role="tablist"
               aria-label="Billing period"
@@ -81,7 +79,7 @@ export default function PricingCalculator() {
                     role="tab"
                     aria-selected={active}
                     onClick={() => setCadence(c.id)}
-                    className={`relative rounded-full py-2 text-xs sm:text-sm font-medium transition-all duration-300 ${
+                    className={`relative rounded-full py-2 text-xs sm:text-sm font-semibold transition-all duration-300 ${
                       active ? 'bg-white text-ink-900 shadow-soft' : 'text-ink-500 hover:text-ink-800'
                     }`}
                   >
@@ -96,12 +94,10 @@ export default function PricingCalculator() {
           {/* Team size */}
           <div className="mt-7">
             <div className="flex items-center justify-between">
-              <label htmlFor="team-size" className="text-[11px] font-semibold uppercase tracking-wider text-ink-500">
-                Team size
-              </label>
-              <div className="inline-flex items-center gap-1.5">
-                <Users className="w-4 h-4 text-brand-500" />
-                <span className="font-display font-bold text-lg text-ink-900 tabular-nums">{team}</span>
+              <label htmlFor="team-size" className="label-meta">Team size</label>
+              <div className="inline-flex items-baseline gap-1.5">
+                <Users className="w-4 h-4 text-brand-500 self-center" />
+                <span className="stat-number text-ink-900 text-lg">{team}</span>
                 <span className="text-sm text-ink-500">{team === 1 ? 'person' : 'people'}</span>
               </div>
             </div>
@@ -141,7 +137,7 @@ export default function PricingCalculator() {
               </button>
             </div>
 
-            <div className="mt-2 flex justify-between text-[10px] text-ink-400 px-0.5">
+            <div className="mt-2 flex justify-between text-[10px] text-ink-400 px-0.5 tabular-nums">
               <span>1</span><span>10</span><span>25</span><span>50</span>
             </div>
           </div>
@@ -149,18 +145,18 @@ export default function PricingCalculator() {
           {/* Rate breakdown */}
           <div className="mt-7 grid grid-cols-2 gap-3">
             <div className="rounded-2xl border border-ink-100 bg-white p-4">
-              <div className="text-[10px] uppercase tracking-wider text-ink-400 font-semibold">Onshore</div>
-              <div className="mt-1 font-display font-bold text-xl text-ink-900">
-                ${ONSHORE_RATE}<span className="text-ink-400 text-sm font-medium">/hr</span>
+              <div className="label-meta">Onshore</div>
+              <div className="mt-1 stat-number text-ink-900 text-xl">
+                ${ONSHORE_RATE}<span className="text-ink-400 text-sm font-medium ml-0.5">/hr</span>
               </div>
-              <div className="text-[11px] text-ink-500 mt-0.5">US baseline</div>
+              <div className="text-[11px] text-ink-500 mt-1">US baseline</div>
             </div>
             <div className="rounded-2xl bg-gradient-brand-soft border border-brand-200 p-4 relative overflow-hidden">
-              <div className="text-[10px] uppercase tracking-wider text-brand-700 font-semibold">PayLow</div>
-              <div className="mt-1 font-display font-bold text-xl text-ink-900">
-                ${OFFSHORE_RATE}<span className="text-ink-400 text-sm font-medium">/hr</span>
+              <div className="label-meta text-brand-700">PayLow</div>
+              <div className="mt-1 stat-number text-ink-900 text-xl">
+                ${OFFSHORE_RATE}<span className="text-ink-400 text-sm font-medium ml-0.5">/hr</span>
               </div>
-              <div className="text-[11px] text-brand-700 mt-0.5 font-medium">All-in rate</div>
+              <div className="text-[11px] text-brand-700 mt-1 font-medium">All-in rate</div>
             </div>
           </div>
 
@@ -178,14 +174,12 @@ export default function PricingCalculator() {
             <div className="relative">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-white/55">
-                    Cost comparison
-                  </p>
-                  <h3 className="font-display font-bold text-white text-xl sm:text-2xl mt-1">
+                  <p className="label-meta text-white/55">Cost comparison</p>
+                  <h3 className="font-display font-bold text-white text-xl sm:text-2xl mt-1 tracking-tight" style={{ letterSpacing: '-0.02em' }}>
                     {team} {team === 1 ? 'person' : 'people'} · {cad.label.replace('Per ', '')}
                   </h3>
                 </div>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/8 border border-white/10 px-2.5 py-1 text-[11px] font-medium text-white/85">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/10 px-2.5 py-1 text-[11px] font-semibold text-white/85">
                   <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" /> Live
                 </span>
               </div>
@@ -195,11 +189,11 @@ export default function PricingCalculator() {
                 <div>
                   <div className="flex items-baseline justify-between gap-3">
                     <span className="text-sm text-white/65">Onshore equivalent</span>
-                    <span className="font-display font-semibold text-white tabular-nums text-base sm:text-lg">
+                    <span className="stat-number text-white text-base sm:text-lg">
                       {fmt(animOnshore)}<span className="text-white/35 text-xs font-medium ml-1">{cad.short}</span>
                     </span>
                   </div>
-                  <div className="mt-2 h-2.5 rounded-full bg-white/8 overflow-hidden">
+                  <div className="mt-2 h-2.5 rounded-full bg-white/10 overflow-hidden">
                     <div className="h-full bg-white/35 transition-[width] duration-700 ease-out" style={{ width: '100%' }} />
                   </div>
                 </div>
@@ -207,11 +201,11 @@ export default function PricingCalculator() {
                 <div>
                   <div className="flex items-baseline justify-between gap-3">
                     <span className="text-sm text-white/65">PayLow</span>
-                    <span className="font-display font-semibold text-white tabular-nums text-base sm:text-lg">
+                    <span className="stat-number text-white text-base sm:text-lg">
                       {fmt(animOffshore)}<span className="text-white/35 text-xs font-medium ml-1">{cad.short}</span>
                     </span>
                   </div>
-                  <div className="mt-2 h-2.5 rounded-full bg-white/8 overflow-hidden">
+                  <div className="mt-2 h-2.5 rounded-full bg-white/10 overflow-hidden">
                     <div
                       className="h-full bg-gradient-brand transition-[width] duration-700 ease-out"
                       style={{ width: `${offshoreBarPct}%` }}
@@ -224,17 +218,17 @@ export default function PricingCalculator() {
               <div className="mt-8 pt-7 border-t border-white/10">
                 <div className="flex flex-wrap items-end justify-between gap-5">
                   <div>
-                    <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-500/15 border border-brand-500/20 px-2.5 py-1 text-[11px] font-semibold text-brand-300 mb-3">
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-500/15 border border-brand-500/20 px-2.5 py-1 text-[11px] font-bold text-brand-300 mb-3 tabular-nums">
                       <TrendingDown className="w-3 h-3" /> {savingsPct}% lower
                     </div>
-                    <div className="text-[11px] uppercase tracking-wider text-white/55 font-semibold mb-1">You save</div>
+                    <div className="label-meta text-white/55 mb-2">You save</div>
                     <div
-                      className="font-display font-bold text-gradient leading-none tabular-nums"
-                      style={{ fontSize: 'clamp(2.5rem, 6.5vw, 4rem)' }}
+                      className="stat-number text-gradient leading-none"
+                      style={{ fontSize: 'clamp(2.5rem, 6.5vw, 4.25rem)', letterSpacing: '-0.035em' }}
                     >
                       {fmt(animSavings)}
                     </div>
-                    <p className="text-white/55 text-xs mt-2">{cad.label.toLowerCase()} · across {team} {team === 1 ? 'role' : 'roles'}</p>
+                    <p className="text-white/55 text-xs mt-3">{cad.label.toLowerCase()} · across {team} {team === 1 ? 'role' : 'roles'}</p>
                   </div>
                   <GetStartedButton size="lg" className="shrink-0">
                     Get started <ArrowRight className="w-4 h-4" />
@@ -247,18 +241,18 @@ export default function PricingCalculator() {
           {/* Annual + quick presets */}
           <div className="card p-5 sm:p-6 flex flex-wrap items-center justify-between gap-4" data-reveal data-reveal-delay="140">
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-ink-500 font-semibold">Annual savings</p>
-              <p className="mt-1 font-display font-bold text-2xl text-ink-900 tabular-nums">
+              <p className="label-meta">Annual savings</p>
+              <p className="mt-1 stat-number text-ink-900 text-2xl">
                 {fmt((ONSHORE_RATE - OFFSHORE_RATE) * 2080 * team)}
               </p>
-              <p className="text-xs text-ink-500 mt-0.5">vs. hiring locally · same {team} {team === 1 ? 'role' : 'roles'}</p>
+              <p className="text-xs text-ink-500 mt-1">vs. hiring locally · same {team} {team === 1 ? 'role' : 'roles'}</p>
             </div>
             <div className="flex flex-wrap gap-2">
               {[5, 10, 25].map((n) => (
                 <button
                   key={n}
                   onClick={() => setTeam(n)}
-                  className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+                  className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition tabular-nums ${
                     team === n ? 'bg-ink-900 text-white shadow-soft' : 'bg-ink-50 text-ink-700 hover:bg-ink-100'
                   }`}
                 >
@@ -268,7 +262,7 @@ export default function PricingCalculator() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

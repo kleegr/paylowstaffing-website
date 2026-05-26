@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, Globe2, Briefcase, ShieldCheck, Zap, Headphones, Star } from 'lucide-react';
+import { ArrowRight, Sparkles, Globe2, Briefcase, ShieldCheck, Zap, Headphones, Star, Quote } from 'lucide-react';
 import SectionHeading from '@/components/SectionHeading';
 import CtaBanner from '@/components/CtaBanner';
 import GetStartedButton from '@/components/GetStartedButton';
@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <>
       {/* ====================================================================
-         HERO
+         HERO — custom "Talent dashboard" SVG, no stock photo
       ==================================================================== */}
       <section className="relative isolate overflow-hidden">
         <div aria-hidden className="absolute inset-0 -z-20 bg-gradient-warm" />
@@ -20,8 +20,8 @@ export default function HomePage() {
         <div aria-hidden className="absolute -bottom-24 right-0 w-[28rem] h-[28rem] rounded-full bg-brand-300/25 blur-3xl animate-float-slow" style={{ animationDelay: '3s' }} />
 
         <div className="container-wide pt-20 pb-24 lg:pt-28 lg:pb-32">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div data-reveal>
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div className="lg:col-span-6" data-reveal>
               <p className="mb-6">
                 <span className="eyebrow">
                   <span className="eyebrow-dot animate-pulse" /> Trusted in 78+ countries
@@ -29,10 +29,11 @@ export default function HomePage() {
               </p>
 
               <h1 className="display-1">
-                Hire world-class talent. <span className="text-gradient">From $7/hour.</span>
+                Hire world-class talent.<br />
+                <span className="text-gradient">From $7 an hour.</span>
               </h1>
 
-              <p className="lead mt-6 max-w-xl">
+              <p className="lead mt-6">
                 PayLow matches you with elite offshore professionals in days — not months. Cut payroll costs by 60–80%. No contracts. No hidden fees.
               </p>
 
@@ -52,55 +53,18 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right — composition with floating glass cards */}
-            <div className="relative" data-reveal data-reveal-delay="200">
-              <div className="relative aspect-[5/6] max-w-[480px] mx-auto">
-                <div aria-hidden className="absolute inset-x-4 top-12 bottom-12 rounded-[3rem] bg-gradient-brand opacity-90 shadow-glow" />
-                <div aria-hidden className="absolute inset-x-10 top-20 bottom-6 rounded-[2.5rem] bg-white shadow-lift" />
-
+            {/* Right — custom SVG dashboard visual */}
+            <div className="lg:col-span-6 relative" data-reveal data-reveal-delay="200">
+              <div className="relative max-w-[600px] mx-auto">
                 <Image
-                  src={assets.homeHero}
-                  alt="PayLow remote professional"
-                  fill
-                  sizes="(max-width: 1024px) 90vw, 480px"
-                  className="object-contain animate-float relative z-10"
+                  src={assets.heroHome}
+                  alt="PayLow talent-match dashboard preview"
+                  width={600}
+                  height={720}
+                  className="w-full h-auto animate-float-slow"
                   priority
-                  unoptimized
                 />
-
-                <div className="absolute top-8 -left-2 sm:-left-5 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float" style={{ animationDelay: '0.4s' }}>
-                  <div className="w-9 h-9 rounded-xl bg-gradient-brand text-white inline-flex items-center justify-center">
-                    <Globe2 className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="font-display font-bold text-base text-ink-900 leading-none">78+</div>
-                    <div className="text-[11px] text-ink-500">Countries</div>
-                  </div>
-                </div>
-
-                <div className="absolute top-1/3 -right-2 sm:-right-5 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float" style={{ animationDelay: '1.2s' }}>
-                  <div className="w-9 h-9 rounded-xl bg-ink-900 text-white inline-flex items-center justify-center">
-                    <Briefcase className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="font-display font-bold text-base text-ink-900 leading-none">12K+</div>
-                    <div className="text-[11px] text-ink-500">Roles filled</div>
-                  </div>
-                </div>
-
-                <div className="absolute bottom-10 -left-2 sm:-left-5 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float" style={{ animationDelay: '2s' }}>
-                  <div className="flex -space-x-2">
-                    {['F2D2A8', 'FFA46B', 'FF8242', 'F26C2A'].map((c) => (
-                      <span key={c} className="inline-block w-7 h-7 rounded-full ring-2 ring-white" style={{ backgroundColor: `#${c}` }} />
-                    ))}
-                  </div>
-                  <div>
-                    <div className="font-display font-bold text-base text-ink-900 leading-none">3K+</div>
-                    <div className="text-[11px] text-ink-500">Jobs done</div>
-                  </div>
-                </div>
-
-                <Sparkles aria-hidden className="absolute top-2 right-4 w-4 h-4 text-brand-400 animate-pulse" />
+                <Sparkles aria-hidden className="absolute top-6 right-10 w-5 h-5 text-brand-400 animate-pulse" />
               </div>
             </div>
           </div>
@@ -108,7 +72,7 @@ export default function HomePage() {
       </section>
 
       {/* ====================================================================
-         HOW IT WORKS – 4 steps
+         HOW IT WORKS — 4 steps
       ==================================================================== */}
       <section className="section bg-white">
         <div className="container-wide">
@@ -131,7 +95,7 @@ export default function HomePage() {
                 data-reveal-delay={i * 80}
               >
                 <div className="flex items-start justify-between mb-5">
-                  <span className="font-display font-bold text-2xl text-ink-200 group-hover:text-brand-400 transition-colors">{s.n}</span>
+                  <span className="font-display font-extrabold text-2xl text-ink-200 group-hover:text-brand-400 transition-colors tabular-nums tracking-tight">{s.n}</span>
                   <span className="inline-flex w-10 h-10 items-center justify-center rounded-2xl bg-ink-50 text-ink-700 group-hover:bg-gradient-brand group-hover:text-white transition-all duration-500">
                     <s.icon className="w-4 h-4" />
                   </span>
@@ -145,7 +109,7 @@ export default function HomePage() {
       </section>
 
       {/* ====================================================================
-         INDUSTRIES showcase
+         INDUSTRIES showcase — custom SVG illustrations
       ==================================================================== */}
       <section className="section bg-ink-50/50 relative">
         <div aria-hidden className="absolute inset-0 grid-backdrop opacity-30" />
@@ -157,10 +121,10 @@ export default function HomePage() {
           />
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { title: 'Real Estate', sub: 'Property managers, listing coordinators', image: assets.industryRealEstate },
-              { title: 'E-Commerce', sub: 'Product listers, customer support', image: assets.industryEcommerce },
-              { title: 'Healthcare', sub: 'Medical billing, claims, support', image: assets.industryHealthcare },
-              { title: 'IT & Tech', sub: 'Developers, helpdesk, data', image: assets.industryIT },
+              { title: 'Real Estate', sub: 'Property managers, listings', image: assets.industryRealEstate },
+              { title: 'E-Commerce', sub: 'Product listers, CX support', image: assets.industryEcommerce },
+              { title: 'Healthcare', sub: 'Billing, claims, telehealth', image: assets.industryHealthcare },
+              { title: 'IT & Tech', sub: 'Devs, helpdesk, data', image: assets.industryIT },
             ].map((c, i) => (
               <Link
                 key={c.title}
@@ -176,7 +140,6 @@ export default function HomePage() {
                     fill
                     sizes="(max-width: 768px) 50vw, 25vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    unoptimized
                     loading="lazy"
                   />
                   <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink-900/85 via-ink-900/30 to-transparent" />
@@ -200,7 +163,7 @@ export default function HomePage() {
       </section>
 
       {/* ====================================================================
-         PRICING TEASER
+         PRICING TEASER — polished typography
       ==================================================================== */}
       <section className="section relative overflow-hidden">
         <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-warm" />
@@ -213,7 +176,7 @@ export default function HomePage() {
               <h2 className="display-2">
                 Start at <span className="text-gradient">$7/hour.</span><br />Save up to 80%.
               </h2>
-              <p className="lead mt-5 max-w-xl">
+              <p className="lead mt-5">
                 No setup fees. No taxes. No long-term contracts. Just elite talent at a fraction of what onshore costs.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
@@ -227,10 +190,10 @@ export default function HomePage() {
             <div className="relative" data-reveal data-reveal-delay="150">
               <div className="card-dark p-8 sm:p-10 relative overflow-hidden">
                 <div aria-hidden className="absolute -top-12 -right-12 w-56 h-56 rounded-full bg-gradient-brand opacity-40 blur-3xl" />
-                <p className="text-white/55 text-[11px] uppercase tracking-widest font-semibold">PayLow average</p>
-                <div className="mt-3 flex items-end gap-1 leading-none">
-                  <span className="font-display font-bold text-white" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>$</span>
-                  <span className="font-display font-bold text-gradient" style={{ fontSize: 'clamp(5rem, 12vw, 9rem)', lineHeight: 0.9 }}>7</span>
+                <p className="label-meta text-white/60">PayLow average</p>
+                <div className="mt-3 flex items-end gap-1 leading-none tabular-nums">
+                  <span className="font-display font-extrabold text-white tracking-tight" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.02em' }}>$</span>
+                  <span className="font-display font-extrabold text-gradient tracking-tight" style={{ fontSize: 'clamp(5rem, 12vw, 9rem)', lineHeight: 0.9, letterSpacing: '-0.04em' }}>7</span>
                   <span className="font-display font-semibold text-white/70 pb-3 ml-1">/hour</span>
                 </div>
                 <p className="mt-4 text-white/65 text-sm">All-in. No surprises.</p>
@@ -238,12 +201,12 @@ export default function HomePage() {
                 <div className="mt-8 grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
                   {[
                     { stat: '60–80%', label: 'Cost savings' },
-                    { stat: '7 days', label: 'Avg time to hire' },
+                    { stat: '7 days', label: 'Time to hire' },
                     { stat: '$0', label: 'Setup fee' },
                   ].map((s) => (
                     <div key={s.label}>
-                      <div className="font-display font-bold text-white text-lg sm:text-xl">{s.stat}</div>
-                      <div className="text-white/55 text-[11px] sm:text-xs">{s.label}</div>
+                      <div className="stat-number text-white text-xl sm:text-2xl">{s.stat}</div>
+                      <div className="text-white/55 text-[11px] sm:text-xs mt-1">{s.label}</div>
                     </div>
                   ))}
                 </div>
@@ -254,7 +217,7 @@ export default function HomePage() {
       </section>
 
       {/* ====================================================================
-         TESTIMONIALS
+         TESTIMONIALS — with gradient avatar SVGs
       ==================================================================== */}
       <section className="section bg-white">
         <div className="container-wide">
@@ -265,13 +228,19 @@ export default function HomePage() {
           <div className="mt-14 grid md:grid-cols-3 gap-5">
             {reviews.slice(0, 3).map((t, i) => (
               <article key={t.name} className="card-hover p-6 flex flex-col" data-reveal data-reveal-delay={i * 100}>
-                <div className="flex gap-0.5 mb-4 text-brand-500">
-                  {Array.from({ length: 5 }).map((_, k) => <Star key={k} className="w-4 h-4 fill-current" />)}
-                </div>
+                <Quote className="w-5 h-5 text-brand-400 mb-4" />
                 <p className="text-ink-700 text-[0.95rem] leading-relaxed flex-1">&ldquo;{t.quote}&rdquo;</p>
-                <div className="mt-5 pt-5 border-t border-ink-100">
-                  <div className="font-display font-semibold text-ink-900">{t.name}</div>
-                  <div className="text-sm text-ink-500">{t.role}</div>
+                <div className="mt-5 pt-5 border-t border-ink-100 flex items-center gap-3">
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden bg-ink-100 shrink-0">
+                    <Image src={assets[t.image as keyof typeof assets]} alt={t.name} fill sizes="40px" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-display font-semibold text-ink-900 text-[0.95rem]">{t.name}</div>
+                    <div className="text-xs text-ink-500">{t.role}</div>
+                  </div>
+                  <div className="flex gap-0.5 text-brand-500">
+                    {Array.from({ length: 5 }).map((_, k) => <Star key={k} className="w-3 h-3 fill-current" />)}
+                  </div>
                 </div>
               </article>
             ))}
