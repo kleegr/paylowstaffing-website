@@ -3,14 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
-  // Optimize lucide-react tree-shaking — drops ~50KB
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
   images: {
     formats: ['image/avif', 'image/webp'],
+    // All site images are now local SVGs in /public/images/.
+    // i.ytimg.com kept for YouTube thumbnails on /testimonials.
     remotePatterns: [
-      { protocol: 'https', hostname: 'paylowstaffing.com', pathname: '/wp-content/**' },
       { protocol: 'https', hostname: 'i.ytimg.com', pathname: '/**' },
     ],
   },

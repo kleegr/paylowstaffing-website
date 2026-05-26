@@ -8,23 +8,31 @@ const config: Config = {
       fontFamily: {
         display: ['var(--font-display)', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
+        // Tabular Inter for prices, calculator counters, etc.
+        numeric: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+      },
+      fontSize: {
+        // Refined display scale with paired line-heights
+        'display-xl': ['clamp(3rem, 6vw, 5.25rem)', { lineHeight: '1.02', letterSpacing: '-0.028em' }],
+        'display-lg': ['clamp(2.5rem, 5vw, 4.25rem)', { lineHeight: '1.04', letterSpacing: '-0.025em' }],
+        'display-md': ['clamp(2rem, 4vw, 3.25rem)', { lineHeight: '1.08', letterSpacing: '-0.022em' }],
+        'display-sm': ['clamp(1.5rem, 2.4vw, 2rem)', { lineHeight: '1.16', letterSpacing: '-0.018em' }],
       },
       colors: {
-        // PayLow brand orange — verified hex from live logo. Single hue, full scale.
         brand: {
           50: '#FFF4EC',
           100: '#FFE3CF',
           200: '#FFC59E',
           300: '#FFA065',
           400: '#FF8242',
-          500: '#F26C2A',   // primary brand orange (PayLow)
+          500: '#F26C2A',
           600: '#D9551A',
-          700: '#B53F0E',   // deeper red-orange (gradient end)
+          700: '#B53F0E',
           800: '#8C2E07',
           900: '#5E1F04',
           950: '#3A1102',
         },
-        // Warm-tinted neutrals for premium feel
         ink: {
           50: '#F8F7F5',
           100: '#EFEDE9',
@@ -40,7 +48,6 @@ const config: Config = {
         },
       },
       backgroundImage: {
-        // Single-hue brand gradient: orange → deeper red-orange (no invented pink)
         'gradient-brand': 'linear-gradient(135deg, #FF8242 0%, #F26C2A 50%, #D9551A 100%)',
         'gradient-brand-soft': 'linear-gradient(135deg, #FFF4EC 0%, #FFE3CF 100%)',
         'gradient-warm': 'linear-gradient(180deg, #FFFFFF 0%, #FFF4EC 60%, #FFE3CF 100%)',
