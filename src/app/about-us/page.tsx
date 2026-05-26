@@ -20,6 +20,8 @@ export default function AboutPage() {
         eyebrow="About PayLow"
         title={<>We connect ambitious teams with <span className="text-gradient">world-class talent.</span></>}
         lead="Born from a real hiring problem. Built to fix it for everyone."
+        bgImage={assets.aboutHeroBg}
+        imageAlt="A PayLow professional"
         actions={
           <>
             <GetStartedButton>Start hiring <ArrowRight className="w-4 h-4" /></GetStartedButton>
@@ -34,14 +36,14 @@ export default function AboutPage() {
           <div className="relative max-w-md mx-auto lg:mx-0" data-reveal>
             <div className="grid grid-cols-2 gap-4">
               <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-card">
-                <Image src={assets.about01} alt="PayLow recruiter" fill className="object-cover" sizes="280px" unoptimized loading="lazy" />
+                <Image src={assets.about01} alt="PayLow professional" fill className="object-cover" sizes="280px" />
               </div>
               <div className="space-y-4 mt-10">
                 <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-card">
-                  <Image src={assets.about02} alt="" fill className="object-cover" sizes="240px" unoptimized loading="lazy" />
+                  <Image src={assets.about02} alt="" fill className="object-cover" sizes="240px" />
                 </div>
                 <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-card">
-                  <Image src={assets.aboutRecruiter} alt="" fill className="object-cover" sizes="240px" unoptimized loading="lazy" />
+                  <Image src={assets.aboutRecruiter} alt="" fill className="object-cover" sizes="240px" />
                 </div>
               </div>
             </div>

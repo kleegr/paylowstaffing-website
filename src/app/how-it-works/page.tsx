@@ -26,6 +26,8 @@ export default function HowItWorksPage() {
         eyebrow="How it works"
         title={<>Hire skilled remote staff — <span className="text-gradient">without the headache.</span></>}
         lead="A clear, fast, simple process. From first call to first hire in days."
+        bgImage={assets.howItWorksHeroBg}
+        imageAlt="A PayLow recruiter"
         actions={
           <>
             <GetStartedButton>Get started <ArrowRight className="w-4 h-4" /></GetStartedButton>
@@ -53,7 +55,7 @@ export default function HowItWorksPage() {
           </div>
           <div className="relative" data-reveal data-reveal-delay="150">
             <div className="relative aspect-[4/3] rounded-4xl overflow-hidden shadow-lift">
-              <Image src={assets.howIntro} alt="PayLow team" fill sizes="(max-width: 1024px) 90vw, 500px" className="object-cover" unoptimized loading="lazy" />
+              <Image src={assets.howIntro} alt="PayLow team" fill sizes="(max-width: 1024px) 90vw, 500px" className="object-cover" />
             </div>
             <span aria-hidden className="absolute -z-10 -top-6 -left-6 w-32 h-32 rounded-3xl bg-gradient-brand-soft" />
           </div>

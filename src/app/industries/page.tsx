@@ -9,17 +9,17 @@ import GetStartedButton from '@/components/GetStartedButton';
 import { assets } from '@/lib/content';
 
 const categories = [
-  { title: 'IT & Tech', Icon: Cpu, image: assets.industryIT, sample: 'Web/mobile devs, QA, devops, support, AI engineers' },
-  { title: 'Professional Services', Icon: Briefcase, image: assets.advantageImage, sample: 'PMs, ops, recruiting, legal support, BPO' },
-  { title: 'Admin & Data', Icon: ClipboardList, image: assets.tFinancial, sample: 'EAs, data entry, transcription, document control' },
-  { title: 'Education', Icon: GraduationCap, image: assets.aboutRecruiter, sample: 'Tutors, LMS admins, instructional design' },
-  { title: 'Engineering', Icon: Hammer, image: assets.industryIT, sample: 'CAD, structural, electrical, technical writing' },
-  { title: 'Customer Service', Icon: Headphones, image: assets.advantageImage, sample: 'CX reps, live chat, telemarketing' },
-  { title: 'Creative & Design', Icon: Palette, image: assets.tAbout04, sample: 'UI/UX, graphic, animation, video editing' },
-  { title: 'Marketing', Icon: Megaphone, image: assets.industryEcommerce, sample: 'SEO/SEM, social, content, email, analytics' },
-  { title: 'Finance', Icon: Calculator, image: assets.tFinancial, sample: 'Bookkeeping, AP/AR, payroll, financial analysis' },
-  { title: 'Healthcare', Icon: HeartPulse, image: assets.industryHealthcare, sample: 'Medical billing, claims, telehealth support' },
-  { title: 'Specialized', Icon: Settings, image: assets.tColleagues, sample: 'Procurement, compliance, actuary, geology' },
+  { title: 'IT & Tech',             Icon: Cpu,             image: assets.industryIT,              sample: 'Web/mobile devs, QA, devops, support, AI engineers' },
+  { title: 'Professional Services', Icon: Briefcase,       image: assets.industryServices,        sample: 'PMs, ops, recruiting, legal support, BPO' },
+  { title: 'Admin & Data',          Icon: ClipboardList,   image: assets.industryAdmin,           sample: 'EAs, data entry, transcription, document control' },
+  { title: 'Education',             Icon: GraduationCap,   image: assets.industryEducation,       sample: 'Tutors, LMS admins, instructional design' },
+  { title: 'Engineering',           Icon: Hammer,          image: assets.industryEngineering,     sample: 'CAD, structural, electrical, technical writing' },
+  { title: 'Customer Service',      Icon: Headphones,      image: assets.industryCustomerService, sample: 'CX reps, live chat, telemarketing' },
+  { title: 'Creative & Design',     Icon: Palette,         image: assets.industryCreative,        sample: 'UI/UX, graphic, animation, video editing' },
+  { title: 'Marketing',             Icon: Megaphone,       image: assets.industryMarketing,       sample: 'SEO/SEM, social, content, email, analytics' },
+  { title: 'Finance',               Icon: Calculator,      image: assets.industryFinance,         sample: 'Bookkeeping, AP/AR, payroll, financial analysis' },
+  { title: 'Healthcare',            Icon: HeartPulse,      image: assets.industryHealthcare,      sample: 'Medical billing, claims, telehealth support' },
+  { title: 'Specialized',           Icon: Settings,        image: assets.industrySpecialized,     sample: 'Procurement, compliance, actuary, geology' },
 ];
 
 export default function IndustriesPage() {
@@ -31,6 +31,8 @@ export default function IndustriesPage() {
         eyebrow="Industries"
         title={<>Skilled professionals for every <span className="text-gradient">industry.</span></>}
         lead="Pre-vetted offshore talent across the roles your team actually needs."
+        bgImage={assets.industriesHeroBg}
+        imageAlt="A PayLow specialist"
         actions={<GetStartedButton>Talk to us <ArrowRight className="w-4 h-4" /></GetStartedButton>}
       />
 
@@ -62,7 +64,6 @@ export default function IndustriesPage() {
                       fill
                       sizes="(max-width: 768px) 100vw, 25vw"
                       className={`object-cover transition-transform duration-700 ease-out ${isOpen ? 'scale-105' : 'group-hover:scale-105'}`}
-                      unoptimized
                       loading="lazy"
                     />
                     <div aria-hidden className={`absolute inset-0 transition-opacity duration-500 ${isOpen ? 'bg-gradient-to-t from-brand-900/85 via-brand-700/40 to-transparent' : 'bg-gradient-to-t from-ink-900/85 via-ink-900/30 to-transparent'}`} />

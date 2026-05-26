@@ -40,94 +40,144 @@ export const navLinks = [
 ] as const;
 
 /**
- * Image assets.
+ * Image assets — premium, male-focused professional photography from Unsplash.
  *
- * - People-focused photography is served from Unsplash CDN. Next.js's image
- *   optimizer caches them through Vercel's edge as AVIF/WebP, so first-request
- *   latency is the only cost — subsequent loads are local-fast.
- * - Industry icons + diagrams stay as local SVGs in /public/images/ (kept as
- *   resilient fallbacks too).
+ * Direction: every photo communicates trust, competence, and friendly
+ * professionalism. Portraits skew warm and natural — no awkward stock-photo
+ * energy, no fake handshakes. Industry context photos (warehouse, home
+ * interior, dev setup, etc.) are clean object-focused shots that pair with
+ * the portraits without competing with them.
+ *
+ * Performance: Unsplash images are served via `images.unsplash.com` (already
+ * whitelisted in next.config.mjs). Next.js's image optimizer transforms them
+ * at the Vercel edge into AVIF/WebP, sized per viewport, so first request
+ * is the only cost — repeat visits are CDN-fast.
  */
+const u = (id: string, w = 1200) =>
+  `https://images.unsplash.com/${id}?w=${w}&auto=format&fit=crop&q=85`;
+
+// Photo bank — IDs chosen and verified as male-focused professional imagery.
+const P = {
+  // Portraits
+  heroDistel: 'photo-1519085360753-af0119f7cbe7',     // Young pro at laptop, headphones (iconic remote-work shot)
+  proLaptop: 'photo-1556157382-97eda2d62296',         // Male at laptop in modern lit office
+  friendlySmile: 'photo-1573496359142-b8d87734a5a2',  // Friendly young male, candid
+  confidentPro: 'photo-1492562080023-ab3db95bfbce',   // Confident professional male
+  suitedPro: 'photo-1564564321837-a57b7070ac4f',      // Male in suit, blurred bg
+  beardedPro: 'photo-1472099645785-5658abf4ff4e',     // Bearded male, natural light
+  glassesSmile: 'photo-1599566150163-29194dcaad36',   // Smiling male with glasses
+  warmSmile: 'photo-1560250097-0b93528c311a',         // Warmly smiling male
+  cleanCut: 'photo-1507003211169-0a1dd7228f2d',       // Clean-cut male (reviewer)
+  confident2: 'photo-1500648767791-00dcc994a43e',     // Confident male portrait (reviewer)
+  asianPro: 'photo-1531123897727-8f129e1688ce',       // Asian male professional (reviewer)
+  glassesPro: 'photo-1542178243-bc20204b769f',        // Male with glasses (reviewer)
+
+  // Industry-context shots — clean, premium environment photography
+  homeInterior: 'photo-1560518883-ce09059eeffa',      // Real estate
+  warehouse: 'photo-1556742049-0a6b21adf8a4',         // E-commerce / logistics
+  medicalSpace: 'photo-1576091160399-112ba8d25d1d',   // Healthcare
+  devSetup: 'photo-1517694712202-14dd9538aa97',       // Developer workstation
+  finance: 'photo-1554224155-6726b3ff858f',           // Finance / numbers
+  callCenter: 'photo-1556745757-8d76bdb6984b',        // Customer service
+  designerDesk: 'photo-1542744173-8e7e53415bb0',      // Creative / design
+  marketingDesk: 'photo-1432888622747-4eb9a8efeb07',  // Marketing
+  officeDesk: 'photo-1497019985829-7e1ea7d2c6a4',     // Admin / data
+  consultingRoom: 'photo-1521791136064-7986c2920216', // Professional services
+  learningSetup: 'photo-1503676260728-1c00da094a0b',  // Education
+  engineerSite: 'photo-1581094794329-c8112a89af12',   // Engineering
+  specialistTools: 'photo-1581090700227-1e37b190418e', // Specialized roles
+};
+
 export const assets = {
-  heroPerson:
-    'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=900&auto=format&fit=crop&q=80',
-  visualAbout:
-    'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1000&auto=format&fit=crop&q=80',
-  visualHowItWorks:
-    'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1000&auto=format&fit=crop&q=80',
-  visualContact:
-    'https://images.unsplash.com/photo-1573164574572-cb89e39749b4?w=1000&auto=format&fit=crop&q=80',
-  visualPricing:
-    'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1000&auto=format&fit=crop&q=80',
-  avatarJessica:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80',
-  avatarDavid:
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
-  avatarSarah:
-    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&auto=format&fit=crop&q=80',
-  avatarJohnDoe:
-    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
-  avatarJohnP:
-    'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&auto=format&fit=crop&q=80',
-  avatarEmily:
-    'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80',
-  heroHome: '/images/hero-home.svg',
-  industryRealEstate: '/images/industry-real-estate.svg',
-  industryEcommerce: '/images/industry-ecommerce.svg',
-  industryHealthcare: '/images/industry-healthcare.svg',
-  industryIT: '/images/industry-it.svg',
-  industryFinance: '/images/industry-finance.svg',
-  industryCustomerService: '/images/industry-customer-service.svg',
-  industryCreative: '/images/industry-creative.svg',
-  industryMarketing: '/images/industry-marketing.svg',
-  industryAdmin: '/images/industry-admin.svg',
-  industryServices: '/images/industry-services.svg',
-  industryEducation: '/images/industry-education.svg',
-  industryEngineering: '/images/industry-engineering.svg',
-  industrySpecialized: '/images/industry-specialized.svg',
+  // ─── Homepage ──────────────────────────────────────────────────────────────
+  heroPerson: u(P.heroDistel, 900),
+
+  // ─── "Visual" tokens (reused across pages) ────────────────────────────────
+  visualAbout: u(P.proLaptop, 1200),
+  visualHowItWorks: u(P.consultingRoom, 1200),
+  visualContact: u(P.suitedPro, 1200),
+  visualPricing: u(P.confidentPro, 1200),
+
+  // ─── Page-hero background portraits (passed to PageHero `bgImage`) ────────
+  aboutHeroBg: u(P.confidentPro, 900),
+  industriesHeroBg: u(P.friendlySmile, 900),
+  howItWorksHeroBg: u(P.proLaptop, 900),
+  testimonialsHeroBg: u(P.suitedPro, 900),
+  contactHeroBg: u(P.confident2, 900),
+  faqHeroBg: u(P.glassesSmile, 900),
+
+  // ─── About-page photo collage (3 portraits) ───────────────────────────────
+  about01: u(P.beardedPro, 700),
+  about02: u(P.glassesSmile, 500),
+  aboutRecruiter: u(P.warmSmile, 500),
+
+  // ─── How-it-works intro photo ─────────────────────────────────────────────
+  howIntro: u(P.glassesPro, 1000),
+
+  // ─── Industry tiles — premium context photography ─────────────────────────
+  industryRealEstate: u(P.homeInterior, 800),
+  industryEcommerce: u(P.warehouse, 800),
+  industryHealthcare: u(P.medicalSpace, 800),
+  industryIT: u(P.devSetup, 800),
+  industryFinance: u(P.finance, 800),
+  industryCustomerService: u(P.callCenter, 800),
+  industryCreative: u(P.designerDesk, 800),
+  industryMarketing: u(P.marketingDesk, 800),
+  industryAdmin: u(P.officeDesk, 800),
+  industryServices: u(P.consultingRoom, 800),
+  industryEducation: u(P.learningSetup, 800),
+  industryEngineering: u(P.engineerSite, 800),
+  industrySpecialized: u(P.specialistTools, 800),
+
+  // ─── Testimonial avatars — all male ───────────────────────────────────────
+  avatarJacob: u(P.beardedPro, 200),
+  avatarDavid: u(P.cleanCut, 200),
+  avatarSam: u(P.warmSmile, 200),
+  avatarJohnDoe: u(P.confident2, 200),
+  avatarJohnP: u(P.asianPro, 200),
+  avatarEthan: u(P.glassesPro, 200),
+
+  // ─── Logo ─────────────────────────────────────────────────────────────────
   logoGlow: '/logo.svg',
   logoFull: '/logo.svg',
-  homeHeroGroup94: '/images/hero-home.svg',
-  homeHeroGroup93: '/images/hero-home.svg',
-  homeHeroGroup95: '/images/hero-home.svg',
-  aboutHeroBg: '/images/visual-about.svg',
-  industriesHeroBg: '/images/industry-it.svg',
-  howItWorksHeroBg: '/images/visual-how-it-works.svg',
-  faqHeroBg: '/images/visual-contact.svg',
-  testimonialsHeroBg: '/images/visual-about.svg',
-  contactHeroBg: '/images/visual-contact.svg',
-  whyImage: '/images/visual-about.svg',
-  advantageImage: '/images/industry-services.svg',
-  ctaWomen: '/images/visual-contact.svg',
-  rectangleAccent: '/images/visual-about.svg',
-  about01: '/images/visual-about.svg',
-  about02: '/images/industry-services.svg',
-  aboutRecruiter: '/images/industry-admin.svg',
-  about03: '/images/visual-about.svg',
-  about04: '/images/industry-creative.svg',
-  howIntro: '/images/visual-how-it-works.svg',
-  howApply1: '/images/visual-how-it-works.svg',
-  howApply2: '/images/visual-how-it-works.svg',
-  pricing7: '/images/visual-pricing.svg',
-  pricingImage: '/images/visual-pricing.svg',
-  industriesHero1: '/images/industry-services.svg',
-  industriesHero2: '/images/industry-it.svg',
-  industriesAdvantage: '/images/visual-about.svg',
-  tColleagues: '/images/avatar-jessica.svg',
-  tProperty: '/images/avatar-sarah.svg',
-  tAbout04: '/images/avatar-john-p.svg',
-  tFinancial: '/images/avatar-david.svg',
-  tHomeImg7: '/images/avatar-emily.svg',
-  tManSlider: '/images/avatar-john-doe.svg',
+
+  // ─── Backward-compatible aliases (old keys → new male photos) ─────────────
+  // Kept so older code paths don't break; safe to remove later.
+  avatarJessica: u(P.beardedPro, 200),       // → now Jacob
+  avatarSarah: u(P.warmSmile, 200),          // → now Sam
+  avatarEmily: u(P.glassesPro, 200),         // → now Ethan
+  heroHome: u(P.heroDistel, 900),
+  homeHeroGroup94: u(P.heroDistel, 900),
+  homeHeroGroup93: u(P.heroDistel, 900),
+  homeHeroGroup95: u(P.heroDistel, 900),
+  whyImage: u(P.proLaptop, 1000),
+  advantageImage: u(P.consultingRoom, 800),
+  ctaWomen: u(P.confident2, 1000),           // renamed-purpose: now a male portrait
+  rectangleAccent: u(P.confidentPro, 800),
+  about03: u(P.suitedPro, 500),
+  about04: u(P.friendlySmile, 500),
+  howApply1: u(P.proLaptop, 800),
+  howApply2: u(P.confidentPro, 800),
+  pricing7: u(P.cleanCut, 800),
+  pricingImage: u(P.confidentPro, 1000),
+  industriesHero1: u(P.consultingRoom, 800),
+  industriesHero2: u(P.devSetup, 800),
+  industriesAdvantage: u(P.proLaptop, 1000),
+  tColleagues: u(P.warmSmile, 200),
+  tProperty: u(P.warmSmile, 200),
+  tAbout04: u(P.glassesPro, 200),
+  tFinancial: u(P.cleanCut, 200),
+  tHomeImg7: u(P.glassesPro, 200),
+  tManSlider: u(P.confident2, 200),
 } as const;
 
 export const reviews = [
   {
     quote:
-      'We had a marketing coordinator on board in 6 days. She runs circles around the agency we used to pay 4x for.',
-    name: 'Jessica M.',
+      'We had a marketing coordinator on board in 6 days. He runs circles around the agency we used to pay 4x for.',
+    name: 'Jacob M.',
     role: 'Marketing Director, e-commerce',
-    image: 'avatarJessica',
+    image: 'avatarJacob',
   },
   {
     quote:
@@ -139,9 +189,9 @@ export const reviews = [
   {
     quote:
       'I needed a property coordinator who could juggle 14 listings. PayLow sent me three. I hired all three.',
-    name: 'Sarah K.',
+    name: 'Sam K.',
     role: 'Broker, real estate',
-    image: 'avatarSarah',
+    image: 'avatarSam',
   },
   {
     quote:
@@ -160,9 +210,9 @@ export const reviews = [
   {
     quote:
       'Our customer-support team doubled overnight without doubling our payroll. Couldn\u2019t recommend higher.',
-    name: 'Emily T.',
+    name: 'Ethan T.',
     role: 'Operations, training co.',
-    image: 'avatarEmily',
+    image: 'avatarEthan',
   },
 ] as const;
 

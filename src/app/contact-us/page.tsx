@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Mail, Phone, MapPin, Facebook, Youtube, Linkedin, MessageCircle } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import ContactForm from '@/components/ContactForm';
-import { siteConfig } from '@/lib/content';
+import { siteConfig, assets } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Contact Us',
@@ -32,6 +32,8 @@ export default function ContactPage() {
         eyebrow="Contact"
         title={<>Let&apos;s build your <span className="text-gradient">remote team.</span></>}
         lead="Tell us about your project. A human replies within one business day."
+        bgImage={assets.contactHeroBg}
+        imageAlt="A PayLow team member"
         compact
       />
 

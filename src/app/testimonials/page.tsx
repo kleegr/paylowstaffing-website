@@ -11,15 +11,6 @@ export const metadata: Metadata = {
   description: 'Real stories from PayLow Staffing clients — photography, property management, real estate, IT, and more.',
 };
 
-const avatarMap: Record<string, string> = {
-  tColleagues: assets.tColleagues,
-  tFinancial: assets.tFinancial,
-  tProperty: assets.tProperty,
-  tManSlider: assets.tManSlider,
-  tAbout04: assets.tAbout04,
-  tHomeImg7: assets.tHomeImg7,
-};
-
 export default function TestimonialsPage() {
   return (
     <>
@@ -27,6 +18,8 @@ export default function TestimonialsPage() {
         eyebrow="Testimonials"
         title={<>Real teams. <span className="text-gradient">Real results.</span></>}
         lead="Stories from PayLow clients across industries and time zones."
+        bgImage={assets.testimonialsHeroBg}
+        imageAlt="A PayLow client"
         compact
       />
 
@@ -79,6 +72,7 @@ export default function TestimonialsPage() {
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {reviews.map((r, i) => {
               const featured = i === 0;
+              const avatarSrc = assets[r.image as keyof typeof assets] as string;
               return (
                 <article
                   key={r.name}
@@ -97,7 +91,7 @@ export default function TestimonialsPage() {
                   </p>
                   <div className={`mt-5 pt-5 border-t ${featured ? 'border-white/10' : 'border-ink-100'} flex items-center gap-3 relative`}>
                     <div className="relative w-11 h-11 rounded-full overflow-hidden bg-ink-200 shrink-0">
-                      <Image src={avatarMap[r.image] ?? assets.tColleagues} alt={r.name} fill sizes="44px" className="object-cover" unoptimized loading="lazy" />
+                      <Image src={avatarSrc} alt={r.name} fill sizes="44px" className="object-cover" />
                     </div>
                     <div className="flex-1">
                       <div className={`font-display font-semibold ${featured ? 'text-white' : 'text-ink-900'}`}>{r.name}</div>
