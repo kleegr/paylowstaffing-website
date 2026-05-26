@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Specialized staffing">
+  <defs><linearGradient id="spB" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2A2620"/><stop offset="100%" stop-color="#5E1F04"/></linearGradient><linearGradient id="spBr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF8242"/><stop offset="100%" stop-color="#D9551A"/></linearGradient></defs>
+  <rect width="400" height="500" fill="url(#spB)"/>
+  <circle cx="100" cy="380" r="140" fill="url(#spBr)" opacity="0.20"/>
+  <!-- Diamond -->
+  <g transform="translate(200,240)">
+    <path d="M0 -90 L80 -10 L0 90 L-80 -10 Z" fill="url(#spBr)"/>
+    <path d="M0 -90 L80 -10 L0 -10 Z" fill="#FFFFFF" opacity="0.3"/>
+    <path d="M0 -10 L80 -10 L0 90 Z" fill="#FFFFFF" opacity="0.18"/>
+    <path d="M0 -10 L-80 -10 L0 90 Z" fill="#000000" opacity="0.18"/>
+    <line x1="-80" y1="-10" x2="80" y2="-10" stroke="#FFFFFF" stroke-width="1" opacity="0.4"/>
+  </g>
+  <g transform="translate(80,400)"><rect width="240" height="34" rx="17" fill="#FFFFFF"/><text x="120" y="22" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="700" fill="#0E0D0C" text-anchor="middle">rare-skill specialists</text></g>
+</svg>

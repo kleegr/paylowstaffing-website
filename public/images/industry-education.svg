@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Education staffing">
+  <defs><linearGradient id="edB" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5E1F04"/><stop offset="100%" stop-color="#0E0D0C"/></linearGradient><linearGradient id="edBr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFA065"/><stop offset="100%" stop-color="#F26C2A"/></linearGradient></defs>
+  <rect width="400" height="500" fill="url(#edB)"/>
+  <circle cx="320" cy="100" r="140" fill="url(#edBr)" opacity="0.22"/>
+  <!-- Graduation cap -->
+  <g transform="translate(200,220)">
+    <path d="M-90 0 L0 -50 L90 0 L0 50 Z" fill="url(#edBr)"/>
+    <path d="M-90 0 L0 50 L0 100 L-70 70 Z" fill="#FFFFFF" opacity="0.2"/>
+    <path d="M90 0 L0 50 L0 100 L70 70 Z" fill="#FFFFFF" opacity="0.3"/>
+    <circle cx="90" cy="0" r="6" fill="#FFFFFF"/>
+    <path d="M90 0 L90 30 L100 40" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(80,400)"><rect width="240" height="40" rx="20" fill="#FFFFFF"/><text x="120" y="26" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#0E0D0C" text-anchor="middle">expert tutors · LMS · design</text></g>
+</svg>

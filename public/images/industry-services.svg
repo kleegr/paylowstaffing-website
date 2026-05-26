@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Professional services staffing">
+  <defs><linearGradient id="psB" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0E0D0C"/><stop offset="100%" stop-color="#2A2620"/></linearGradient><linearGradient id="psBr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFA065"/><stop offset="100%" stop-color="#F26C2A"/></linearGradient></defs>
+  <rect width="400" height="500" fill="url(#psB)"/>
+  <circle cx="100" cy="100" r="160" fill="url(#psBr)" opacity="0.18"/>
+  <g transform="translate(70,150)">
+    <rect width="260" height="200" rx="20" fill="#FFFFFF"/>
+    <text x="24" y="40" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="600" fill="#8B8474" letter-spacing="1.6">PROJECTS</text>
+    <g transform="translate(24,60)">
+      <rect x="0" y="0" width="212" height="36" rx="10" fill="#FFF4EC"/>
+      <circle cx="18" cy="18" r="6" fill="url(#psBr)"/>
+      <rect x="32" y="12" width="100" height="5" rx="2" fill="#0E0D0C"/>
+      <rect x="32" y="22" width="60" height="4" rx="2" fill="#8B8474"/>
+      <rect x="168" y="12" width="36" height="14" rx="7" fill="url(#psBr)"/>
+      <text x="186" y="22" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="700" fill="#FFFFFF" text-anchor="middle">DONE</text>
+      <rect x="0" y="48" width="212" height="36" rx="10" fill="#F8F7F5"/>
+      <circle cx="18" cy="66" r="6" fill="#2A2620"/>
+      <rect x="32" y="60" width="100" height="5" rx="2" fill="#0E0D0C"/>
+      <rect x="32" y="70" width="80" height="4" rx="2" fill="#8B8474"/>
+      <rect x="0" y="96" width="212" height="36" rx="10" fill="#F8F7F5"/>
+      <circle cx="18" cy="114" r="6" fill="#FFA065"/>
+      <rect x="32" y="108" width="100" height="5" rx="2" fill="#0E0D0C"/>
+      <rect x="32" y="118" width="70" height="4" rx="2" fill="#8B8474"/>
+    </g>
+  </g>
+  <g transform="translate(80,400)"><rect width="240" height="34" rx="17" fill="#FFFFFF"/><text x="120" y="22" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="700" fill="#0E0D0C" text-anchor="middle">on-time · on-budget · expert</text></g>
+</svg>

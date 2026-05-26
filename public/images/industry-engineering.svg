@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Engineering staffing">
+  <defs><linearGradient id="enB" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1A1816"/><stop offset="100%" stop-color="#0E0D0C"/></linearGradient><linearGradient id="enBr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF8242"/><stop offset="100%" stop-color="#D9551A"/></linearGradient></defs>
+  <rect width="400" height="500" fill="url(#enB)"/>
+  <circle cx="200" cy="460" r="180" fill="url(#enBr)" opacity="0.20"/>
+  <!-- Gear -->
+  <g transform="translate(200,230)">
+    <g fill="url(#enBr)">
+      <rect x="-8" y="-100" width="16" height="24" rx="4"/>
+      <rect x="-8" y="76" width="16" height="24" rx="4"/>
+      <rect x="-100" y="-8" width="24" height="16" rx="4"/>
+      <rect x="76" y="-8" width="24" height="16" rx="4"/>
+      <rect x="-78" y="-78" width="24" height="16" rx="4" transform="rotate(-45 -66 -70)"/>
+      <rect x="54" y="54" width="24" height="16" rx="4" transform="rotate(-45 66 62)"/>
+      <rect x="-78" y="62" width="24" height="16" rx="4" transform="rotate(45 -66 70)"/>
+      <rect x="54" y="-78" width="24" height="16" rx="4" transform="rotate(45 66 -70)"/>
+    </g>
+    <circle cx="0" cy="0" r="70" fill="url(#enBr)"/>
+    <circle cx="0" cy="0" r="38" fill="#0E0D0C"/>
+    <circle cx="0" cy="0" r="16" fill="url(#enBr)"/>
+  </g>
+  <g transform="translate(80,420)"><rect width="240" height="34" rx="17" fill="#FFFFFF"/><text x="120" y="22" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="700" fill="#0E0D0C" text-anchor="middle">CAD · structural · electrical</text></g>
+</svg>

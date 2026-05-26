@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Admin and data staffing">
+  <defs><linearGradient id="adB" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1A1816"/><stop offset="100%" stop-color="#0E0D0C"/></linearGradient><linearGradient id="adBr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF8242"/><stop offset="100%" stop-color="#D9551A"/></linearGradient></defs>
+  <rect width="400" height="500" fill="url(#adB)"/>
+  <circle cx="320" cy="380" r="160" fill="url(#adBr)" opacity="0.22"/>
+  <g transform="translate(50,120)">
+    <rect width="300" height="260" rx="18" fill="#FFFFFF"/>
+    <rect x="0" y="0" width="300" height="40" rx="18" fill="#F8F7F5"/>
+    <rect x="0" y="22" width="300" height="18" fill="#F8F7F5"/>
+    <text x="20" y="26" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="700" fill="#0E0D0C">SPREADSHEET</text>
+    <g transform="translate(0,40)">
+      <line x1="0" y1="40" x2="300" y2="40" stroke="#EFEDE9"/>
+      <line x1="0" y1="80" x2="300" y2="80" stroke="#EFEDE9"/>
+      <line x1="0" y1="120" x2="300" y2="120" stroke="#EFEDE9"/>
+      <line x1="0" y1="160" x2="300" y2="160" stroke="#EFEDE9"/>
+      <line x1="0" y1="200" x2="300" y2="200" stroke="#EFEDE9"/>
+      <line x1="75" y1="0" x2="75" y2="220" stroke="#EFEDE9"/>
+      <line x1="150" y1="0" x2="150" y2="220" stroke="#EFEDE9"/>
+      <line x1="225" y1="0" x2="225" y2="220" stroke="#EFEDE9"/>
+      <rect x="0" y="0" width="75" height="40" fill="url(#adBr)" opacity="0.18"/>
+      <rect x="75" y="40" width="75" height="40" fill="url(#adBr)" opacity="0.10"/>
+      <rect x="150" y="80" width="75" height="40" fill="url(#adBr)"/>
+      <rect x="225" y="120" width="75" height="40" fill="url(#adBr)" opacity="0.14"/>
+      <rect x="0" y="160" width="75" height="40" fill="url(#adBr)" opacity="0.08"/>
+    </g>
+  </g>
+  <g transform="translate(280,80)"><circle cx="0" cy="0" r="22" fill="#FFFFFF"/><text x="0" y="6" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="800" fill="url(#adBr)" text-anchor="middle">A</text></g>
+</svg>
