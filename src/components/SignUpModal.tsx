@@ -86,7 +86,7 @@ export default function SignUpModal() {
           {!iframeLoaded && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 z-10 pointer-events-none">
               <Loader2 className="w-7 h-7 text-brand-500 animate-spin" />
-              <p className="text-sm text-ink-500">Loading\u2026</p>
+              <p className="text-sm text-ink-500">Loading&hellip;</p>
             </div>
           )}
           <iframe

@@ -43,7 +43,7 @@ export default function HowItWorksPage() {
             <p className="mb-5"><span className="eyebrow"><span className="eyebrow-dot" /> Why PayLow</span></p>
             <h2 className="display-2">Clarity, speed, <span className="text-gradient">and zero guesswork.</span></h2>
             <p className="lead mt-5">
-              No RFPs. No r\u00e9sum\u00e9 piles. A focused matching process that puts the right person in your workflow &mdash; fast.
+              No RFPs. No r&eacute;sum&eacute; piles. A focused matching process that puts the right person in your workflow &mdash; fast.
             </p>
             <ul className="mt-7 space-y-3">
               {[

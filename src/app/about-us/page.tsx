@@ -19,7 +19,7 @@ export default function AboutPage() {
       <PageHero
         eyebrow="About PayLow"
         title={<>Built by people who <span className="text-gradient">needed it.</span></>}
-        lead="We couldn\u2019t find affordable, qualified help. So we found it. Then we built the company that finds it for you."
+        lead="We couldn't find affordable, qualified help. So we found it. Then we built the company that finds it for you."
         bgImage={assets.aboutHeroBg}
         imageAlt="A PayLow professional"
         actions={

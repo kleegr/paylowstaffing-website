@@ -36,7 +36,7 @@ export default function FaqPage() {
       <PageHero
         eyebrow="FAQ"
         title={<>Questions we <span className="text-gradient">hear most.</span></>}
-        lead="Search below. Still curious? We\u2019re one click away."
+        lead="Search below. Still curious? We're one click away."
         actions={<GetStartedButton>Ask a question <ArrowRight className="w-4 h-4" /></GetStartedButton>}
         compact
       />
