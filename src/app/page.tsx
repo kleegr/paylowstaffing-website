@@ -7,7 +7,7 @@ import GetStartedButton from '@/components/GetStartedButton';
 import VideoCard from '@/components/VideoCard';
 import CountUp from '@/components/CountUp';
 import FaqSection from '@/components/FaqSection';
-import ProofRail from '@/components/ProofRail';
+import RotatingProofChip from '@/components/RotatingProofChip';
 import { assets, reviews, videoReviews } from '@/lib/content';
 
 export default function HomePage() {
@@ -39,8 +39,14 @@ export default function HomePage() {
                 </span>
               </h1>
 
-              <p className="lead mt-6">
-                We screen thousands. You meet your top 4 or 5. You hire on the call. From $7 an hour &mdash; all in.
+              {/* Rotating proof chip — lives right under the headline,
+                  cycles through value phrases. The hero's quiet motion. */}
+              <div className="mt-5">
+                <RotatingProofChip />
+              </div>
+
+              <p className="lead mt-5">
+                We screen thousands. You meet your top 4 or 5. You hire on the call. From $7 an hour. No surprises.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -48,8 +54,10 @@ export default function HomePage() {
                 <Link href="/pricing" className="btn-outline btn-lg">See the math</Link>
               </div>
 
+              {/* Static pill row — informational anchor below the buttons.
+                  Updated wording: no more "All-in pricing". */}
               <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-3 max-w-xl text-sm text-ink-600">
-                {['Pre-vetted', 'Your timezone', 'Hire this week', 'All-in pricing'].map((p) => (
+                {['Pre-vetted talent', 'Your time zone', 'Hire this week', 'No hidden fees'].map((p) => (
                   <p key={p} className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500" /> {p}</p>
                 ))}
               </div>
@@ -100,10 +108,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PROOF RAIL — quiet ongoing motion below the hero */}
-      <ProofRail />
-
-      {/* HOW IT WORKS */}
+      {/* HOW IT WORKS — ProofRail removed; hero now contains the motion */}
       <section className="section bg-white">
         <div className="container-wide">
           <SectionHeading
@@ -115,7 +120,6 @@ export default function HomePage() {
             {[
               { n: '01', t: 'Brief us',      d: 'A 15-minute call. Tell us what you need.',                     icon: Headphones },
               { n: '02', t: 'We screen',     d: 'Hundreds apply. Four or five make the cut.',                   icon: ShieldCheck },
-              // Step 03: side-by-side benefit baked into the description.
               { n: '03', t: 'You interview', d: 'See your 4 or 5 picks side by side. Decide on the call.',      icon: Briefcase },
               { n: '04', t: 'They start',    d: 'Set up and productive day one.',                                icon: Zap },
             ].map((s, i) => (
@@ -167,7 +171,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PRICING TEASER */}
+      {/* PRICING TEASER — "all-in" wording removed */}
       <section className="section relative overflow-hidden">
         <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-warm" />
         <div aria-hidden className="absolute -top-20 left-1/3 w-96 h-96 rounded-full bg-gradient-brand opacity-12 blur-3xl" />
@@ -188,7 +192,7 @@ export default function HomePage() {
                 </span>
               </h2>
               <p className="lead mt-5">
-                All-in pricing. No setup fees, no payroll taxes, no surprise markups.
+                No setup fees. No payroll taxes. No surprise markups.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link href="/pricing" className="btn-primary">See the calculator <ArrowRight className="w-4 h-4" /></Link>
@@ -207,7 +211,7 @@ export default function HomePage() {
                   </span>
                   <span className="font-display font-semibold text-white/70 pb-3 ml-1">/hour</span>
                 </div>
-                <p className="mt-4 text-white/65 text-sm">All-in. No setup fees. No surprises.</p>
+                <p className="mt-4 text-white/65 text-sm">No setup fees. No payroll taxes. No surprises.</p>
 
                 <div className="mt-8 grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
                   {[

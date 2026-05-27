@@ -21,13 +21,14 @@ const onshoreCons = [
   'Long-term contracts',
 ];
 const paylowPros = [
-  '$7/hr, all-in',
+  '$7 an hour, flat',
   'Vetted before you see them',
   'Hire in 7 days',
   'Cancel anytime',
 ];
 
-// "What $7 actually buys" — the quality anchor
+// "What $7 actually buys" — the quality anchor.
+// 4th card retitled from "All-in pricing" to "One flat rate".
 const qualities = [
   {
     Icon: ShieldCheck,
@@ -46,7 +47,7 @@ const qualities = [
   },
   {
     Icon: CheckCircle2,
-    title: 'All-in pricing',
+    title: 'One flat rate',
     body: 'Their pay, our placement, ongoing account management, the tools we provide. No surprise markups.',
   },
 ];
