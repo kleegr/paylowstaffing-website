@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
-import { ArrowRight, Check, X } from 'lucide-react';
+import { ArrowRight, Check, X, ShieldCheck, Briefcase, Clock, CheckCircle2 } from 'lucide-react';
 import SectionHeading from '@/components/SectionHeading';
 import PricingCalculator from '@/components/PricingCalculator';
 import CtaBanner from '@/components/CtaBanner';
 import GetStartedButton from '@/components/GetStartedButton';
+import CountUp from '@/components/CountUp';
 
 export const metadata: Metadata = {
   title: 'Pricing',
-  description: 'Vetted remote staff from $7 an hour. Run the calculator. See what changes.',
+  description: 'Vetted remote staff from $7 an hour. Senior talent, screened first. Run the calculator and see what changes.',
 };
 
 const onshoreCons = [
@@ -17,16 +18,43 @@ const onshoreCons = [
   'Long-term contracts',
 ];
 const paylowPros = [
-  '$7/hr \u2014 all-in',
-  'No recruitment fees',
+  '$7/hr, all-in',
+  'Vetted before you see them',
   '7-day average to hire',
   'Cancel anytime',
+];
+
+// "What $7 actually buys" — the quality anchor. Four short cards that
+// frame $7 as serious hiring, not cheap labor. Order matters: trust
+// (vetting) → quality (experience) → fit (timezone) → price clarity
+// (all-in). Each line is a concrete claim, not a feeling.
+const qualities = [
+  {
+    Icon: ShieldCheck,
+    title: 'Pre-vetted',
+    body: 'Skills tested. References checked. Culture-fit interviewed. About 1 in 50 makes your shortlist.',
+  },
+  {
+    Icon: Briefcase,
+    title: 'Experienced',
+    body: 'Senior professionals with real years in their field. Not entry-level. Not freelancers passing through.',
+  },
+  {
+    Icon: Clock,
+    title: 'Your timezone',
+    body: 'Matched to your business hours, with overlap with US Eastern. Same-day collaboration, no handoffs.',
+  },
+  {
+    Icon: CheckCircle2,
+    title: 'All-in pricing',
+    body: 'Their pay, our placement, ongoing account management, the tools we provide. No surprise markups.',
+  },
 ];
 
 export default function PricingPage() {
   return (
     <>
-      {/* Hero */}
+      {/* HERO */}
       <section className="relative isolate overflow-hidden">
         <div aria-hidden className="absolute inset-0 -z-20 bg-gradient-warm" />
         <div aria-hidden className="absolute inset-0 -z-10 bg-mesh-2" />
@@ -37,29 +65,76 @@ export default function PricingPage() {
           <div data-reveal>
             <p className="mb-5"><span className="eyebrow"><span className="eyebrow-dot" /> Pricing</span></p>
             <h1 className="display-1">
-              One rate.<br />
-              <span className="text-gradient">Real savings.</span>
+              Quality stays.<br />
+              <span className="text-gradient">Cost drops.</span>
             </h1>
             <p className="lead mt-6 max-w-2xl mx-auto">
-              Vetted remote staff from $7 an hour. Run the calculator. See what changes.
+              Vetted remote staff from $7 an hour. Same caliber. Same screening. Way better math.
             </p>
           </div>
 
-          <div className="mt-10 flex items-end justify-center gap-2 lg:gap-3" data-reveal data-reveal-delay="100">
-            <span className="font-display font-bold text-ink-900 self-start mt-4" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>$</span>
-            <span className="font-display font-black text-gradient leading-none" style={{ fontSize: 'clamp(9rem, 22vw, 17rem)' }}>7</span>
-            <span className="font-display font-semibold text-ink-700 pb-4" style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)' }}>/hour</span>
+          {/* Giant $7 with $55 → $7 countdown for visual consistency with
+              the homepage pricing card. "$" stays in its own smaller-font
+              span so it doesn't scale with the giant numeric. */}
+          <div className="mt-10 flex items-end justify-center gap-2 lg:gap-3 tabular-nums" data-reveal data-reveal-delay="100">
+            <span
+              className="font-display font-bold text-ink-900 self-start mt-4"
+              style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}
+            >
+              $
+            </span>
+            <span
+              className="font-display font-black leading-none inline-block"
+              style={{ fontSize: 'clamp(9rem, 22vw, 17rem)' }}
+            >
+              <CountUp className="text-gradient" from={55} value={7} duration={1800} format="int" />
+            </span>
+            <span
+              className="font-display font-semibold text-ink-700 pb-4"
+              style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)' }}
+            >
+              /hour
+            </span>
           </div>
-          <p className="text-ink-500 mt-4 text-sm">Specialized roles run higher. No setup fees. No hidden costs.</p>
+          <p className="text-ink-500 mt-4 text-sm">Specialized roles run higher. Same standards. Same screening.</p>
         </div>
       </section>
 
-      {/* Calculator */}
+      {/* WHAT $7 ACTUALLY BUYS — quality anchor */}
       <section className="section bg-white">
         <div className="container-wide max-w-6xl">
           <SectionHeading
+            eyebrow="Why it works"
+            title={<>What <span className="text-gradient">$7 actually buys.</span></>}
+            lead="Not cheap labor. A vetted hire on your team."
+            align="center"
+          />
+
+          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {qualities.map((q, i) => (
+              <article
+                key={q.title}
+                className="card p-6 group hover:shadow-lift transition-all duration-500 ease-out hover:-translate-y-1"
+                data-reveal
+                data-reveal-delay={i * 80}
+              >
+                <span className="inline-flex w-11 h-11 items-center justify-center rounded-2xl bg-gradient-brand text-white shadow-glow-sm group-hover:scale-105 transition-transform duration-500">
+                  <q.Icon className="w-4 h-4" />
+                </span>
+                <h3 className="mt-5 font-display font-bold text-lg text-ink-900">{q.title}</h3>
+                <p className="mt-2 text-ink-500 text-sm leading-relaxed">{q.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CALCULATOR */}
+      <section className="section bg-ink-50/50">
+        <div className="container-wide max-w-6xl">
+          <SectionHeading
             eyebrow="Cost calculator"
-            title={<>See your <span className="text-gradient">real savings.</span></>}
+            title={<>See your <span className="text-gradient">savings.</span></>}
             lead="Move the dials. Watch the math change."
             align="center"
           />
@@ -69,8 +144,8 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Side-by-side comparison */}
-      <section className="section bg-ink-50/50">
+      {/* SIDE-BY-SIDE */}
+      <section className="section bg-white">
         <div className="container-wide max-w-5xl">
           <SectionHeading
             eyebrow="Side by side"

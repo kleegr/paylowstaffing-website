@@ -9,14 +9,15 @@ import { assets } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'How It Works',
-  description: 'First call to first hire in days. We screen. You decide.',
+  description: 'First call to first hire in days. We screen. You compare. You decide.',
 };
 
 const processSteps = [
-  { n: '01', title: 'Brief us',      d: 'A 15-minute call. Tell us what you need.',  Icon: Headphones },
-  { n: '02', title: 'We match',      d: 'We screen hundreds. You see 4 or 5 picks.', Icon: ShieldCheck },
-  { n: '03', title: 'You interview', d: 'Meet your favorites. Pick on the call.',    Icon: UserCheck },
-  { n: '04', title: 'They start',    d: 'Onboarded and productive day one.',         Icon: Zap },
+  { n: '01', title: 'Brief us',      d: 'A 15-minute call. Tell us what you need.',           Icon: Headphones },
+  { n: '02', title: 'We match',      d: 'We screen hundreds. You see 4 or 5 picks.',          Icon: ShieldCheck },
+  // Step 03: side-by-side comparison is the punchline of our process.
+  { n: '03', title: 'You interview', d: 'See your shortlist side by side. Decide on the call.', Icon: UserCheck },
+  { n: '04', title: 'They start',    d: 'Onboarded and productive day one.',                  Icon: Zap },
 ];
 
 export default function HowItWorksPage() {
@@ -25,7 +26,7 @@ export default function HowItWorksPage() {
       <PageHero
         eyebrow="How it works"
         title={<>Hire remote staff. <span className="text-gradient">Without the headache.</span></>}
-        lead="First call to first hire in days. We screen. You decide."
+        lead="First call to first hire in days. We screen. You compare. You decide."
         bgImage={assets.howItWorksHeroBg}
         imageAlt="A PayLow recruiter"
         actions={
@@ -48,7 +49,8 @@ export default function HowItWorksPage() {
             <ul className="mt-7 space-y-3">
               {[
                 'A real person to call. Never a chatbot.',
-                'Talent vetted before you see them.',
+                'Vetted before you see them.',
+                'Compare 4 or 5 picks side by side.',
                 'Hire in days, not months.',
               ].map((s) => (
                 <li key={s} className="flex items-center gap-3 text-ink-700">
