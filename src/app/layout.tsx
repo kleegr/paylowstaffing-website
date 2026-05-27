@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
-// Self-hosted fonts (via @fontsource) — no external request, no CLS
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
@@ -9,7 +8,6 @@ import '@fontsource/inter/700.css';
 import '@fontsource/plus-jakarta-sans/600.css';
 import '@fontsource/plus-jakarta-sans/700.css';
 import '@fontsource/plus-jakarta-sans/800.css';
-// Handwritten accent — used sparingly for personality
 import '@fontsource/caveat/500.css';
 import '@fontsource/caveat/700.css';
 
@@ -24,11 +22,11 @@ import { siteConfig } from '@/lib/content';
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — Hire brilliant remote staff from $7/hr`,
+    default: `${siteConfig.name} \u2014 Remote staff from $7/hour. Hired in days.`,
     template: `%s | ${siteConfig.fullName}`,
   },
   description:
-    'PayLow matches you with vetted remote pros in days, not months. Save 60–80% on payroll. No contracts, no payroll taxes, no setup fees.',
+    'Vetted remote staff, matched to your team in days. From $7 an hour, all-in. Meet 4\u20135 pre-screened candidates and hire on the call. No setup fees, no long contracts.',
   keywords: ['remote staffing', 'offshore staffing', 'virtual assistants', 'hire remote', 'PayLow Staffing'],
   authors: [{ name: 'PayLow Staffing' }],
   creator: 'PayLow Staffing',
@@ -39,14 +37,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} — Hire brilliant remote staff from $7/hr`,
-    description: 'Vetted remote pros, matched in days. Save 60–80%. No contracts.',
+    title: `${siteConfig.name} \u2014 Remote staff from $7/hour. Hired in days.`,
+    description: 'Vetted remote staff, matched in days. From $7 an hour, all-in. No setup fees.',
   },
   twitter: {
     card: 'summary_large_image',
     site: '@Paylowstaffing',
     title: siteConfig.fullName,
-    description: 'Hire brilliant remote staff from $7/hr.',
+    description: 'Vetted remote staff from $7/hour. Hired in days.',
   },
   robots: { index: true, follow: true },
   icons: { icon: '/favicon.svg', apple: '/favicon.svg' },

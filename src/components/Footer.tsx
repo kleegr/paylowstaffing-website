@@ -29,7 +29,7 @@ export default function Footer() {
           <div className="lg:col-span-5">
             <Logo size="md" variant="dark" />
             <p className="mt-5 text-sm leading-relaxed text-white/65 max-w-md">
-              Skilled remote staff for ambitious teams. From $7/hour. Matched in days.
+              Vetted remote staff for ambitious teams. From $7 an hour. Hired in days.
             </p>
 
             <ul className="mt-7 flex flex-wrap items-center gap-2.5">

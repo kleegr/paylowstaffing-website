@@ -54,8 +54,8 @@ export default function ContactForm() {
         <div className="mx-auto w-14 h-14 rounded-full bg-gradient-brand text-white inline-flex items-center justify-center shadow-glow-sm mb-4">
           <CheckCircle2 className="w-7 h-7" />
         </div>
-        <h3 className="display-3">Thanks — we got your message!</h3>
-        <p className="mt-3 text-ink-600">A PayLow team member will reach out within one business day.</p>
+        <h3 className="display-3">Got it.</h3>
+        <p className="mt-3 text-ink-600">We&rsquo;ll be in touch within one business day.</p>
         <button onClick={() => setStatus('idle')} className="btn-outline mt-6">Send another</button>
       </div>
     );
@@ -90,7 +90,7 @@ export default function ContactForm() {
       </div>
 
       <div className="field">
-        <textarea id="message" name="message" rows={4} placeholder="What kind of help are you looking for?" className="field-input resize-none" />
+        <textarea id="message" name="message" rows={4} placeholder="What kind of role are you looking to fill?" className="field-input resize-none" />
         <label htmlFor="message" className="field-label">How can we help?</label>
       </div>
 
@@ -121,8 +121,8 @@ export default function ContactForm() {
       <div className="flex flex-wrap items-center gap-4 pt-1">
         <button type="submit" disabled={status === 'submitting'} className="btn-primary btn-lg">
           {status === 'submitting'
-            ? (<><Loader2 className="w-4 h-4 animate-spin" /> Submitting…</>)
-            : (<>Submit <Send className="w-4 h-4" /></>)}
+            ? (<><Loader2 className="w-4 h-4 animate-spin" /> Submitting&hellip;</>)
+            : (<>Send it <Send className="w-4 h-4" /></>)}
         </button>
         <p className="text-xs text-ink-500">
           By submitting you agree to our{' '}

@@ -11,14 +11,8 @@ export default function CtaBanner() {
           className="relative overflow-hidden rounded-4xl bg-ink-900 text-white p-8 sm:p-12 lg:p-14 shadow-lift noise noise-strong"
           data-reveal
         >
-          <div
-            aria-hidden
-            className="absolute inset-0 opacity-50 bg-mesh-2 mix-blend-screen"
-          />
-          <div
-            aria-hidden
-            className="absolute -top-20 -right-10 w-72 h-72 rounded-full bg-gradient-brand opacity-30 blur-3xl"
-          />
+          <div aria-hidden className="absolute inset-0 opacity-50 bg-mesh-2 mix-blend-screen" />
+          <div aria-hidden className="absolute -top-20 -right-10 w-72 h-72 rounded-full bg-gradient-brand opacity-30 blur-3xl" />
 
           <div className="relative grid lg:grid-cols-5 gap-10 items-center">
             <div className="lg:col-span-3">
@@ -31,7 +25,7 @@ export default function CtaBanner() {
                 <span className="text-gradient">your match?</span>
               </h2>
               <p className="lead mt-4 text-white/75 max-w-xl">
-                Tell us the role. We&rsquo;ll have a shortlist on your desk this week.
+                Tell us the role. We&rsquo;ll have a shortlist this week.
               </p>
             </div>
             <div className="lg:col-span-2 flex flex-col gap-3 lg:items-end">
