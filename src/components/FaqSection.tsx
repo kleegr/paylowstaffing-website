@@ -2,35 +2,36 @@
 
 import { Plus } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import FaqAnswer from './FaqAnswer';
 
 /**
- * FAQ — native HTML <details> accordion. v4.
+ * FAQ — native HTML <details> + word-by-word typewriter. v5.
  *
- * Why this version exists:
- * Despite v3 being a plain React state accordion (no typewriter), the user
- * still saw the answer "disappear" on click. The most likely cause was a
- * race between the global `[data-reveal]` opacity transition (0→1 over
- * 0.9s) and the inner accordion's own opacity transition (0→100) firing
- * at the same time in some browsers. Pile a few transitions together and
- * weird things happen.
+ * Builds on v4 (native <details>, which finally fixed the disappearing
+ * bug) and adds a stable typewriter on top via the FaqAnswer client
+ * component.
  *
- * What this is now:
- * Native <details>/<summary>. The browser handles open/close. There is no
- * React state, no event handler, no JS controlling the toggle. The only
- * JavaScript on this page involved with the FAQ is React rendering the
- * static markup once on mount. After that, clicking the question toggles
- * the `open` attribute and the browser shows/hides the content.
+ * What's the same as v4:
+ * - <details>/<summary> structure — browser handles open/close
+ * - name="paylow-faq" for exclusive-open behavior
+ * - [open] CSS selector for icon rotation, border, shadow
+ * - data-faq-version marker for build verification (now v5)
  *
- * Visual:
- * - Plus icon rotates 45° to ✕ when open (CSS, via [open] selector)
- * - Plus background goes from ink-50 to brand gradient when open
- * - Card border shifts to brand-200 + shadow when open
- * - Answer fades down on open via CSS @keyframes (280ms, ease-out)
+ * What's new:
+ * - <FaqAnswer> renders inside each <details> and listens to the
+ *   parent's 'toggle' event. When [open] is set, it types out the
+ *   answer word-by-word.
+ * - The wrapper's @keyframes fade-down has been REMOVED — the typing
+ *   IS the entrance animation. No more stacked opacity transitions.
+ * - Layout-shift safe: an invisible ghost <p> inside FaqAnswer
+ *   reserves the full answer's natural height before typing starts.
+ * - Accessible: the full answer text is in the DOM at all times,
+ *   readable by screen readers and search engines, regardless of
+ *   how far along the typing animation is.
  *
- * Exclusive behavior:
- * `name="paylow-faq"` groups the <details> elements so only one stays
- * open at a time (native HTML feature, supported in all current browsers).
- * Older browsers fall back to multi-open behavior, which still works.
+ * No auto-collapse (per user request). Once open, an answer stays
+ * open until the user clicks again or opens another FAQ (the
+ * native exclusive group closes the previous one).
  */
 
 const faqs = [
@@ -61,7 +62,7 @@ export default function FaqSection() {
     <section
       id="faq"
       className="section bg-white scroll-mt-24"
-      data-faq-version="v4-native-details"
+      data-faq-version="v5-details-with-typer"
     >
       <div className="container-narrow">
         <SectionHeading
@@ -92,9 +93,7 @@ export default function FaqSection() {
                 </span>
               </summary>
               <div className="paylow-faq-answer px-5 pb-5 sm:px-6 sm:pb-6">
-                <p className="text-ink-600 leading-relaxed text-[15px]">
-                  {f.a}
-                </p>
+                <FaqAnswer text={f.a} />
               </div>
             </details>
           ))}
@@ -120,18 +119,22 @@ export default function FaqSection() {
           box-shadow: 0 4px 16px rgba(242, 108, 42, 0.30);
         }
 
-        /* Answer fade-down on open. The @keyframes runs once each time
-           [open] is added (i.e. every click that opens an item). */
-        @keyframes paylow-faq-fade-in {
-          from { opacity: 0; transform: translateY(-4px); }
-          to { opacity: 1; transform: translateY(0); }
+        /* NO opacity/transform keyframe on .paylow-faq-answer anymore.
+           The typewriter IS the entrance animation. This is the change
+           that prevents the v1–v3 "answer disappears" bug from coming
+           back — there's no opacity transition here that can race with
+           the global [data-reveal] rule. */
+
+        /* Caret blink — simple opacity flash. Only animates the caret
+           span (which has aria-hidden), not the answer text. Safe. */
+        @keyframes paylow-faq-caret-blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
         }
-        .paylow-faq-item[open] > .paylow-faq-answer {
-          animation: paylow-faq-fade-in 280ms ease-out both;
-        }
+        .paylow-faq-caret { animation: paylow-faq-caret-blink 0.9s steps(1) infinite; }
 
         @media (prefers-reduced-motion: reduce) {
-          .paylow-faq-item[open] > .paylow-faq-answer { animation: none; }
+          .paylow-faq-caret { animation: none; opacity: 0; }
         }
       ` }} />
     </section>
