@@ -7,7 +7,7 @@ import GetStartedButton from '@/components/GetStartedButton';
 
 export const metadata: Metadata = {
   title: 'Pricing',
-  description: 'Pre-vetted remote pros from $7/hour. Run the calculator. See what you save.',
+  description: 'Vetted remote staff from $7 an hour. Run the calculator. See what changes.',
 };
 
 const onshoreCons = [
@@ -18,9 +18,9 @@ const onshoreCons = [
 ];
 const paylowPros = [
   '$7/hr \u2014 all-in',
-  'No recruitment fee',
+  'No recruitment fees',
   '7-day average to hire',
-  'No lock-in. Ever.',
+  'Cancel anytime',
 ];
 
 export default function PricingPage() {
@@ -38,24 +38,19 @@ export default function PricingPage() {
             <p className="mb-5"><span className="eyebrow"><span className="eyebrow-dot" /> Pricing</span></p>
             <h1 className="display-1">
               One rate.<br />
-              <span className="text-gradient">Massive savings.</span>
+              <span className="text-gradient">Real savings.</span>
             </h1>
             <p className="lead mt-6 max-w-2xl mx-auto">
-              Pre-vetted remote pros from $7/hour. Run the calculator. See what you save.
+              Vetted remote staff from $7 an hour. Run the calculator. See what changes.
             </p>
           </div>
 
           <div className="mt-10 flex items-end justify-center gap-2 lg:gap-3" data-reveal data-reveal-delay="100">
             <span className="font-display font-bold text-ink-900 self-start mt-4" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>$</span>
-            <span
-              className="font-display font-black text-gradient leading-none"
-              style={{ fontSize: 'clamp(9rem, 22vw, 17rem)' }}
-            >
-              7
-            </span>
+            <span className="font-display font-black text-gradient leading-none" style={{ fontSize: 'clamp(9rem, 22vw, 17rem)' }}>7</span>
             <span className="font-display font-semibold text-ink-700 pb-4" style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)' }}>/hour</span>
           </div>
-          <p className="text-ink-500 mt-4 text-sm">Specialized roles can run higher. No hidden fees. Ever.</p>
+          <p className="text-ink-500 mt-4 text-sm">Specialized roles run higher. No setup fees. No hidden costs.</p>
         </div>
       </section>
 
@@ -65,7 +60,7 @@ export default function PricingPage() {
           <SectionHeading
             eyebrow="Cost calculator"
             title={<>See your <span className="text-gradient">real savings.</span></>}
-            lead="Move the dials. Watch the math update in real time."
+            lead="Move the dials. Watch the math change."
             align="center"
           />
           <div className="mt-12">

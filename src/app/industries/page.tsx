@@ -3,18 +3,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import {
-  ArrowRight,
-  Cpu,
-  Briefcase,
-  ClipboardList,
-  GraduationCap,
-  Hammer,
-  Headphones,
-  Palette,
-  Megaphone,
-  Calculator,
-  HeartPulse,
-  Settings,
+  ArrowRight, Cpu, Briefcase, ClipboardList, GraduationCap, Hammer,
+  Headphones, Palette, Megaphone, Calculator, HeartPulse, Settings,
 } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import SectionHeading from '@/components/SectionHeading';
@@ -28,8 +18,6 @@ type Category = {
   sample: string;
 };
 
-// Specialized uses image: null — renders as a brand-tinted gradient card,
-// adding visual variety to the grid and avoiding stock-photo risk.
 const categories: Category[] = [
   { title: 'IT & Tech',             Icon: Cpu,             image: assets.industryIT,              sample: 'Devs, QA, devops, AI engineers.' },
   { title: 'Professional Services', Icon: Briefcase,       image: assets.industryServices,        sample: 'PMs, ops, recruiting, legal support.' },
@@ -45,7 +33,6 @@ const categories: Category[] = [
 ];
 
 export default function IndustriesPage() {
-  // Default first card open so the section reads as interactive on landing.
   const [active, setActive] = useState<number | null>(0);
 
   return (
@@ -53,7 +40,7 @@ export default function IndustriesPage() {
       <PageHero
         eyebrow="Industries"
         title={<>Pros for every <span className="text-gradient">corner of your business.</span></>}
-        lead="Pre-vetted remote talent across the roles your team actually needs."
+        lead="Pre-vetted talent for every role your team needs."
         bgImage={assets.industriesHeroBg}
         imageAlt="A PayLow specialist"
         actions={<GetStartedButton>Find my match <ArrowRight className="w-4 h-4" /></GetStartedButton>}
@@ -64,7 +51,7 @@ export default function IndustriesPage() {
           <SectionHeading
             eyebrow="Specialties"
             title={<>Find your <span className="text-gradient">perfect hire.</span></>}
-            lead="Tap any category. See the roles we fill."
+            lead="Tap a category. See what we fill."
             align="center"
           />
 
@@ -80,9 +67,7 @@ export default function IndustriesPage() {
                   onClick={() => setActive(isOpen ? null : i)}
                   aria-expanded={isOpen}
                   className={`group relative overflow-hidden rounded-3xl text-left transition-all duration-500 ease-out ${
-                    isOpen
-                      ? 'shadow-lift ring-2 ring-brand-500 -translate-y-1'
-                      : 'shadow-card hover:shadow-lift hover:-translate-y-1'
+                    isOpen ? 'shadow-lift ring-2 ring-brand-500 -translate-y-1' : 'shadow-card hover:shadow-lift hover:-translate-y-1'
                   }`}
                 >
                   <div className="relative aspect-[5/4]">
@@ -93,14 +78,9 @@ export default function IndustriesPage() {
                           alt={c.title}
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                          className={`object-cover transition-transform duration-700 ease-out ${
-                            isOpen ? 'scale-110' : 'group-hover:scale-105'
-                          }`}
+                          className={`object-cover transition-transform duration-700 ease-out ${isOpen ? 'scale-110' : 'group-hover:scale-105'}`}
                           loading="lazy"
                         />
-                        {/* Strong gradient overlay — always solid at the bottom so the
-                            icon chip + title are legible regardless of underlying photo.
-                            Open state shifts to brand-tinted for emphasis. */}
                         <div
                           aria-hidden
                           className={`absolute inset-0 transition-opacity duration-500 ${
@@ -111,30 +91,14 @@ export default function IndustriesPage() {
                         />
                       </>
                     ) : (
-                      // Specialized — gradient-only card.
                       <>
-                        <div
-                          aria-hidden
-                          className="absolute inset-0 bg-gradient-to-br from-ink-900 via-ink-800 to-brand-700"
-                        />
-                        <div
-                          aria-hidden
-                          className="absolute inset-0 bg-mesh-2 opacity-40 mix-blend-screen"
-                        />
-                        <div
-                          aria-hidden
-                          className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-gradient-brand opacity-30 blur-3xl"
-                        />
-                        <div
-                          aria-hidden
-                          className="absolute -bottom-12 -left-10 w-40 h-40 rounded-full bg-brand-400/20 blur-3xl"
-                        />
+                        <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-ink-900 via-ink-800 to-brand-700" />
+                        <div aria-hidden className="absolute inset-0 bg-mesh-2 opacity-40 mix-blend-screen" />
+                        <div aria-hidden className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-gradient-brand opacity-30 blur-3xl" />
+                        <div aria-hidden className="absolute -bottom-12 -left-10 w-40 h-40 rounded-full bg-brand-400/20 blur-3xl" />
                       </>
                     )}
 
-                    {/* Bottom info bar — frosted icon chip + title in a row.
-                        The chip is always visible regardless of photo brightness,
-                        solving the dim-photo readability issue cleanly. */}
                     <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
                       <div className="flex items-center gap-3">
                         <span
@@ -151,8 +115,6 @@ export default function IndustriesPage() {
                         </h3>
                       </div>
 
-                      {/* Sample text — slides in when card is open or hovered.
-                          pl-12 aligns the text under the title (skipping the icon column). */}
                       <p
                         className={`text-xs sm:text-[13px] text-white/90 mt-3 pl-12 leading-relaxed transition-all duration-500 ease-out ${
                           isOpen
@@ -164,13 +126,10 @@ export default function IndustriesPage() {
                       </p>
                     </div>
 
-                    {/* Corner state indicator — white pill when open, faint on hover otherwise. */}
                     <span
                       aria-hidden="true"
                       className={`absolute top-3 right-3 inline-flex w-8 h-8 items-center justify-center rounded-full backdrop-blur-md border transition-all duration-500 ${
-                        isOpen
-                          ? 'bg-white text-brand-700 border-white rotate-45 shadow-glow-sm'
-                          : 'bg-white/15 text-white border-white/25 opacity-0 group-hover:opacity-100'
+                        isOpen ? 'bg-white text-brand-700 border-white rotate-45 shadow-glow-sm' : 'bg-white/15 text-white border-white/25 opacity-0 group-hover:opacity-100'
                       }`}
                     >
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -183,7 +142,7 @@ export default function IndustriesPage() {
 
           <div className="mt-14 flex justify-center" data-reveal>
             <GetStartedButton size="lg">
-              Hire for your team <ArrowRight className="w-4 h-4" />
+              Find my match <ArrowRight className="w-4 h-4" />
             </GetStartedButton>
           </div>
         </div>

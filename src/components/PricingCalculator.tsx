@@ -60,7 +60,7 @@ export default function PricingCalculator() {
       <div aria-hidden className="absolute -inset-x-4 -inset-y-6 -z-10 bg-mesh-2 opacity-40 rounded-[3rem] blur-2xl" />
 
       <div className="grid lg:grid-cols-12 gap-5 lg:gap-6">
-        {/* ===== LEFT: Inputs ===== */}
+        {/* LEFT: Inputs */}
         <div className="lg:col-span-5 card p-6 sm:p-7 self-start">
           <div>
             <label className="label-meta">Show me</label>
@@ -152,16 +152,16 @@ export default function PricingCalculator() {
               <div className="mt-1 stat-number text-ink-900 text-xl">
                 ${OFFSHORE_RATE}<span className="text-ink-400 text-sm font-medium ml-0.5">/hr</span>
               </div>
-              <div className="text-[11px] text-brand-700 mt-1 font-medium">All-in. No extras.</div>
+              <div className="text-[11px] text-brand-700 mt-1 font-medium">All-in pricing</div>
             </div>
           </div>
 
           <p className="mt-5 text-[11px] text-ink-400 leading-relaxed">
-            40 hrs/week assumed. Specialized roles can run higher. No payroll tax, recruitment fees, or lock-in contracts.
+            40 hrs/week assumed. Specialized roles run higher. No payroll tax. No setup fees. Cancel anytime.
           </p>
         </div>
 
-        {/* ===== RIGHT: Results ===== */}
+        {/* RIGHT: Results */}
         <div className="lg:col-span-7 space-y-4">
           <div className="relative overflow-hidden rounded-3xl bg-ink-900 text-white shadow-lift p-6 sm:p-8" data-reveal data-reveal-delay="80">
             <div aria-hidden className="absolute inset-0 bg-mesh-2 opacity-30 mix-blend-screen" />
@@ -216,8 +216,6 @@ export default function PricingCalculator() {
                       <TrendingDown className="w-3 h-3" /> {savingsPct}% less
                     </div>
                     <div className="label-meta text-white/55 mb-2">You keep</div>
-                    {/* numeric-xl: dedicated helper for huge numbers — prevents gradient-text
-                        clipping/overlap that happens with extreme negative tracking. */}
                     <div className="numeric-xl text-gradient">
                       {fmt(animSavings)}
                     </div>

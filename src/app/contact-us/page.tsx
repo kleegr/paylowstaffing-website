@@ -101,7 +101,7 @@ export default function ContactPage() {
                 <div aria-hidden className="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-gradient-brand opacity-30 blur-3xl" />
                 <p className="text-[10px] uppercase tracking-wider font-semibold text-white/55">Average reply</p>
                 <p className="mt-1 font-display font-bold text-white text-2xl">&lt; 24 hours</p>
-                <p className="mt-2 text-white/65 text-sm">A small, human team. Real people, real fast.</p>
+                <p className="mt-2 text-white/65 text-sm">A small team. Real humans. Fast replies.</p>
               </div>
             </aside>
 
@@ -109,7 +109,7 @@ export default function ContactPage() {
               <div className="card p-7 sm:p-9">
                 <h2 className="display-3">Tell us about it.</h2>
                 <p className="text-ink-500 text-sm mt-2 mb-7">
-                  A few details. A fast reply. That&apos;s it.
+                  A few details. A fast reply.
                 </p>
                 <ContactForm />
               </div>
