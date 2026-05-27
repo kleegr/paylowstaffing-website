@@ -109,10 +109,11 @@ export default function HomePage() {
           />
           <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { n: '01', t: 'Brief us',      d: 'A 15-minute call. Tell us what you need.',     icon: Headphones },
-              { n: '02', t: 'We screen',     d: 'Hundreds apply. Four or five make the cut.',   icon: ShieldCheck },
-              { n: '03', t: 'You interview', d: 'Meet your favorites. Pick on the call.',       icon: Briefcase },
-              { n: '04', t: 'They start',    d: 'Set up and productive day one.',               icon: Zap },
+              { n: '01', t: 'Brief us',      d: 'A 15-minute call. Tell us what you need.',                     icon: Headphones },
+              { n: '02', t: 'We screen',     d: 'Hundreds apply. Four or five make the cut.',                   icon: ShieldCheck },
+              // Step 03: side-by-side benefit baked into the description.
+              { n: '03', t: 'You interview', d: 'See your 4 or 5 picks side by side. Decide on the call.',      icon: Briefcase },
+              { n: '04', t: 'They start',    d: 'Set up and productive day one.',                                icon: Zap },
             ].map((s, i) => (
               <article key={s.n} className="card-hover p-6 group" data-reveal data-reveal-delay={i * 80}>
                 <div className="flex items-start justify-between mb-5">
