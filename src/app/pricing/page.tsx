@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
-import { ArrowRight, Check, X, ShieldCheck, Briefcase, Clock, CheckCircle2 } from 'lucide-react';
+import {
+  ArrowRight, Check, X, ShieldCheck, Briefcase, Clock, CheckCircle2,
+  Sparkles, MessageCircle, Award, TrendingDown,
+} from 'lucide-react';
 import SectionHeading from '@/components/SectionHeading';
 import PricingCalculator from '@/components/PricingCalculator';
 import CtaBanner from '@/components/CtaBanner';
@@ -20,14 +23,11 @@ const onshoreCons = [
 const paylowPros = [
   '$7/hr, all-in',
   'Vetted before you see them',
-  '7-day average to hire',
+  'Hire in 7 days',
   'Cancel anytime',
 ];
 
-// "What $7 actually buys" — the quality anchor. Four short cards that
-// frame $7 as serious hiring, not cheap labor. Order matters: trust
-// (vetting) → quality (experience) → fit (timezone) → price clarity
-// (all-in). Each line is a concrete claim, not a feeling.
+// "What $7 actually buys" — the quality anchor
 const qualities = [
   {
     Icon: ShieldCheck,
@@ -51,6 +51,25 @@ const qualities = [
   },
 ];
 
+// Stat chips that anchor the calculator section
+const calculatorStats = [
+  { label: 'Avg savings',      value: '60\u201380%' },
+  { label: 'Avg time to hire', value: '7 days' },
+  { label: 'Setup fee',        value: '$0' },
+];
+
+// Floating proof chips around the giant $7 — desktop only.
+// Anchored to a `relative` wrapper around the price block.
+const floatingChips = [
+  { Icon: ShieldCheck,   text: 'Skills-tested',      pos: 'top-6 -left-2',     delay: '0.3s' },
+  { Icon: MessageCircle, text: 'Fluent English',     pos: 'top-12 -right-4',   delay: '1.1s' },
+  { Icon: Award,         text: 'Top 1-in-50',        pos: 'bottom-14 -left-6', delay: '1.8s' },
+  { Icon: Sparkles,      text: 'Reference-checked',  pos: 'bottom-6 -right-2', delay: '0.6s' },
+];
+
+// Trust strip items below the price
+const trustItems = ['Vetted', 'Fluent English', 'Your timezone', 'Cancel anytime'];
+
 export default function PricingPage() {
   return (
     <>
@@ -60,6 +79,7 @@ export default function PricingPage() {
         <div aria-hidden className="absolute inset-0 -z-10 bg-mesh-2" />
         <div aria-hidden className="absolute inset-0 -z-10 grid-backdrop opacity-50" />
         <div aria-hidden className="absolute -top-32 left-1/3 w-[28rem] h-[28rem] rounded-full bg-gradient-brand opacity-15 blur-3xl animate-float-slow" />
+        <div aria-hidden className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-brand-300/20 blur-3xl animate-float-slow" style={{ animationDelay: '2.5s' }} />
 
         <div className="container-wide pt-24 pb-16 lg:pt-32 lg:pb-20 text-center max-w-4xl">
           <div data-reveal>
@@ -73,30 +93,67 @@ export default function PricingPage() {
             </p>
           </div>
 
-          {/* Giant $7 with $55 → $7 countdown for visual consistency with
-              the homepage pricing card. "$" stays in its own smaller-font
-              span so it doesn't scale with the giant numeric. */}
-          <div className="mt-10 flex items-end justify-center gap-2 lg:gap-3 tabular-nums" data-reveal data-reveal-delay="100">
-            <span
-              className="font-display font-bold text-ink-900 self-start mt-4"
-              style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}
-            >
-              $
-            </span>
-            <span
-              className="font-display font-black leading-none inline-block"
-              style={{ fontSize: 'clamp(9rem, 22vw, 17rem)' }}
-            >
-              <CountUp className="text-gradient" from={55} value={7} duration={1800} format="int" />
-            </span>
-            <span
-              className="font-display font-semibold text-ink-700 pb-4"
-              style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)' }}
-            >
-              /hour
-            </span>
+          {/* Price block wrapper. `relative` so floating chips can anchor.
+              `max-w-2xl mx-auto` gives the chips room to sit just outside
+              the price column without spilling into container padding. */}
+          <div className="mt-10 relative max-w-2xl mx-auto" data-reveal data-reveal-delay="100">
+            {/* Floating proof chips — desktop only. Each has its own delay
+                on the `animate-float` keyframe so they don't sync up. */}
+            <div aria-hidden="true" className="hidden lg:block">
+              {floatingChips.map((c) => (
+                <span
+                  key={c.text}
+                  className={`absolute ${c.pos} inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur border border-ink-100 px-3 py-1.5 text-xs font-semibold text-ink-700 shadow-soft animate-float whitespace-nowrap`}
+                  style={{ animationDelay: c.delay }}
+                >
+                  <c.Icon className="w-3.5 h-3.5 text-brand-500" />
+                  {c.text}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex items-end justify-center gap-2 lg:gap-3 tabular-nums">
+              <span
+                className="font-display font-bold text-ink-900 self-start mt-4"
+                style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}
+              >
+                $
+              </span>
+              <span
+                className="font-display font-black leading-none inline-block"
+                style={{ fontSize: 'clamp(9rem, 22vw, 17rem)' }}
+              >
+                <CountUp className="text-gradient" from={55} value={7} duration={1800} format="int" />
+              </span>
+              <span
+                className="font-display font-semibold text-ink-700 pb-4"
+                style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)' }}
+              >
+                /hour
+              </span>
+            </div>
           </div>
-          <p className="text-ink-500 mt-4 text-sm">Specialized roles run higher. Same standards. Same screening.</p>
+
+          <p className="text-ink-500 mt-4 text-sm">
+            Specialized roles run higher. Same standards. Same screening.
+          </p>
+
+          {/* Trust strip — always visible, all viewports */}
+          <div
+            className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-ink-600"
+            data-reveal
+            data-reveal-delay="200"
+          >
+            {trustItems.map((item, i) => (
+              <span key={item} className="inline-flex items-center gap-x-5">
+                {i > 0 && <span className="text-ink-200" aria-hidden="true">·</span>}
+                <span className="inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-500" />
+                  {item}
+                </span>
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -114,24 +171,43 @@ export default function PricingPage() {
             {qualities.map((q, i) => (
               <article
                 key={q.title}
-                className="card p-6 group hover:shadow-lift transition-all duration-500 ease-out hover:-translate-y-1"
+                className="card p-6 group hover:shadow-lift transition-all duration-500 ease-out hover:-translate-y-1 relative overflow-hidden"
                 data-reveal
                 data-reveal-delay={i * 80}
               >
-                <span className="inline-flex w-11 h-11 items-center justify-center rounded-2xl bg-gradient-brand text-white shadow-glow-sm group-hover:scale-105 transition-transform duration-500">
+                {/* Subtle brand glow that fades in on hover */}
+                <div aria-hidden className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-brand opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500" />
+                <span className="relative inline-flex w-11 h-11 items-center justify-center rounded-2xl bg-gradient-brand text-white shadow-glow-sm group-hover:scale-105 transition-transform duration-500">
                   <q.Icon className="w-4 h-4" />
                 </span>
-                <h3 className="mt-5 font-display font-bold text-lg text-ink-900">{q.title}</h3>
-                <p className="mt-2 text-ink-500 text-sm leading-relaxed">{q.body}</p>
+                <h3 className="mt-5 font-display font-bold text-lg text-ink-900 relative">{q.title}</h3>
+                <p className="mt-2 text-ink-500 text-sm leading-relaxed relative">{q.body}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CALCULATOR */}
-      <section className="section bg-ink-50/50">
-        <div className="container-wide max-w-6xl">
+      {/* CALCULATOR — with stat-chip anchor row + decorative orbs */}
+      <section className="section bg-ink-50/50 relative overflow-hidden">
+        <div aria-hidden className="absolute -top-32 -left-20 w-96 h-96 rounded-full bg-gradient-brand opacity-10 blur-3xl animate-float-slow" />
+        <div aria-hidden className="absolute -bottom-20 -right-32 w-80 h-80 rounded-full bg-brand-300/20 blur-3xl animate-float-slow" style={{ animationDelay: '3s' }} />
+
+        <div className="container-wide max-w-6xl relative">
+          {/* Stat chip row — grounds the calculator with concrete numbers
+              before the user touches the dials. */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8" data-reveal>
+            {calculatorStats.map((s) => (
+              <div
+                key={s.label}
+                className="inline-flex items-center gap-2 rounded-full bg-white border border-ink-100 px-4 py-2 text-sm shadow-soft"
+              >
+                <span className="text-ink-500">{s.label}</span>
+                <span className="font-display font-bold text-ink-900 tabular-nums">{s.value}</span>
+              </div>
+            ))}
+          </div>
+
           <SectionHeading
             eyebrow="Cost calculator"
             title={<>See your <span className="text-gradient">savings.</span></>}
@@ -144,9 +220,11 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* SIDE-BY-SIDE */}
-      <section className="section bg-white">
-        <div className="container-wide max-w-5xl">
+      {/* SIDE-BY-SIDE — with subtle brand-tint background orb */}
+      <section className="section bg-white relative overflow-hidden">
+        <div aria-hidden className="absolute -top-20 left-1/4 w-72 h-72 rounded-full bg-brand-300/10 blur-3xl" />
+
+        <div className="container-wide max-w-5xl relative">
           <SectionHeading
             eyebrow="Side by side"
             title={<>The PayLow <span className="text-gradient">advantage.</span></>}
@@ -192,6 +270,32 @@ export default function PricingPage() {
                 </GetStartedButton>
               </div>
             </article>
+          </div>
+        </div>
+      </section>
+
+      {/* Pre-CTA guarantee strip — sits flush above the shared CtaBanner */}
+      <section className="bg-white pb-2">
+        <div className="container-wide max-w-4xl">
+          <div
+            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-ink-600"
+            data-reveal
+          >
+            <span className="inline-flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-brand-500" />
+              <span className="font-semibold text-ink-900">30-day replacement</span>
+              <span className="text-ink-400">if it&rsquo;s not a fit</span>
+            </span>
+            <span className="text-ink-200" aria-hidden="true">·</span>
+            <span className="inline-flex items-center gap-2">
+              <TrendingDown className="w-4 h-4 text-brand-500" />
+              <span className="font-semibold text-ink-900">No setup fees</span>
+            </span>
+            <span className="text-ink-200" aria-hidden="true">·</span>
+            <span className="inline-flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-brand-500" />
+              <span className="font-semibold text-ink-900">Cancel anytime</span>
+            </span>
           </div>
         </div>
       </section>
