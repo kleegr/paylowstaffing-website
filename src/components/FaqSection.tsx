@@ -5,24 +5,21 @@ import { Plus } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 
 /**
- * Homepage FAQ — typewriter reveal.
+ * Homepage FAQ — typewriter reveal (v2).
  *
- * Click + on a question: the answer types in character-by-character. Once
- * fully typed, it holds for 5s, then auto-collapses. The + icon resets.
+ * Click + on a question → answer types in character-by-character. Once
+ * fully typed, holds for 5s, then auto-collapses. The + icon resets.
  *
- * Interaction matrix:
- *  - Click open FAQ while it's typing → close immediately (kill interval).
- *  - Click open FAQ during hold phase → close immediately (kill timeout).
- *  - Click a DIFFERENT FAQ → previous closes cleanly, new one types fresh.
- *  - 5s after typing completes → auto-close.
- *  - prefers-reduced-motion → full answer instant, no auto-close (user
- *    controls pace; we don't yank text away from them).
- *
- * Layout shift avoidance:
- *  - A visually hidden "ghost" paragraph holds the full answer's height.
- *  - The visible typed text overlays it in the same CSS grid cell.
- *  - Result: typing fills in over reserved space — the box doesn't grow
- *    line by line as text appears.
+ * v2 changes vs v1 (which had a rendering bug where the answer never
+ * appeared):
+ *  - Replaced the CSS-grid overlay (two <p> in the same grid cell) with
+ *    `position:absolute inset-0` over a `position:relative` parent. The
+ *    grid stack was fragile; the absolute overlay is the standard pattern
+ *    and works deterministically across browsers.
+ *  - Slowed timing from 18ms/char to 80ms/char so typing is clearly
+ *    visible at premium pace (~12s for a 150-char answer, then 5s hold).
+ *  - Switched reduced-motion detection to useState so SSR/hydration is
+ *    deterministic.
  */
 
 const faqs = [
@@ -48,21 +45,19 @@ const faqs = [
   },
 ];
 
-const TYPE_MS = 18;     // ms per character
-const HOLD_MS = 5000;   // ms to hold fully-typed answer before auto-close
+const TYPE_MS = 80;     // 12.5 chars/sec — typical answer types in ~12s
+const HOLD_MS = 5000;   // 5s after typing completes, then auto-close
 
 export default function FaqSection() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [typed, setTyped] = useState<Record<number, string>>({});
   const typeIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const holdTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const reducedMotionRef = useRef(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
-  // One-shot reduced-motion detection. We don't react to mid-session
-  // toggles — not worth the complexity for this rare case.
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    reducedMotionRef.current = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    setReducedMotion(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false);
   }, []);
 
   const clearTimers = () => {
@@ -76,8 +71,6 @@ export default function FaqSection() {
     }
   };
 
-  // Cleanup on unmount — important for React strict-mode double-mount and
-  // for navigation away from the page mid-animation.
   useEffect(() => () => clearTimers(), []);
 
   const handleClick = (i: number) => {
@@ -88,18 +81,17 @@ export default function FaqSection() {
       return;
     }
 
-    // Different FAQ (or none open) → open i fresh. We don't touch typed[prev]
-    // so the previous box's text stays put while its grid-row collapses
-    // (clean close animation). When prev is re-opened later, this handler
-    // resets typed[prev] = '' before re-typing.
+    // Different (or none) → open i. Previous box's typed text stays put
+    // during its grid-row close transition; when re-opened later, this
+    // handler resets that index's typed text to '' before re-typing.
     clearTimers();
     setOpenIdx(i);
 
     const fullText = faqs[i].a;
 
-    // Reduced motion: skip the animation entirely. No auto-collapse either
-    // — reduced-motion users get manual control over when to close.
-    if (reducedMotionRef.current) {
+    // Reduced motion → show full answer instantly, no auto-close.
+    // Reduced-motion users keep control over when to close.
+    if (reducedMotion) {
       setTyped((prev) => ({ ...prev, [i]: fullText }));
       return;
     }
@@ -115,9 +107,6 @@ export default function FaqSection() {
           clearInterval(typeIntervalRef.current);
           typeIntervalRef.current = null;
         }
-        // Hold the fully-typed answer for HOLD_MS, then auto-collapse.
-        // The setOpenIdx callback guards against race: if the user already
-        // opened a different FAQ during the hold, we leave it alone.
         holdTimeoutRef.current = setTimeout(() => {
           setOpenIdx((cur) => (cur === i ? null : cur));
           holdTimeoutRef.current = null;
@@ -140,7 +129,7 @@ export default function FaqSection() {
           {faqs.map((f, i) => {
             const isOpen = openIdx === i;
             const displayText = typed[i] ?? '';
-            const isTyping = isOpen && !reducedMotionRef.current && displayText.length < f.a.length;
+            const isTyping = isOpen && !reducedMotion && displayText.length < f.a.length;
 
             return (
               <div
@@ -169,27 +158,33 @@ export default function FaqSection() {
                 </button>
                 <div className={`grid transition-all duration-500 ease-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
                   <div className="overflow-hidden">
-                    <div className="px-5 pb-5 sm:px-6 sm:pb-6 grid">
-                      {/* Ghost: reserves the full answer's height so the visible
-                          typed text fills in over the same box — no per-line
-                          layout growth as characters appear. */}
-                      <p
-                        aria-hidden="true"
-                        className="col-start-1 row-start-1 invisible select-none text-ink-600 leading-relaxed text-[15px]"
-                      >
-                        {f.a}
-                      </p>
-                      {/* Visible typed text overlays the ghost in the same grid cell. */}
-                      <p className="col-start-1 row-start-1 text-ink-600 leading-relaxed text-[15px]">
-                        {displayText}
-                        {isTyping && (
-                          <span
-                            aria-hidden="true"
-                            className="inline-block w-[2px] h-[0.95em] bg-brand-500 ml-0.5 align-text-bottom animate-pulse"
-                            style={{ animationDuration: '0.9s' }}
-                          />
-                        )}
-                      </p>
+                    <div className="px-5 pb-5 sm:px-6 sm:pb-6">
+                      {/* relative wrapper has no padding — its bounding box
+                          equals the ghost <p> bounding box. The absolute
+                          overlay's inset-0 then aligns perfectly. */}
+                      <div className="relative">
+                        {/* Ghost: reserves the full answer's natural height.
+                            `invisible` = visibility:hidden (keeps layout,
+                            removes from accessibility tree). */}
+                        <p
+                          aria-hidden="true"
+                          className="invisible select-none text-ink-600 leading-relaxed text-[15px]"
+                        >
+                          {f.a}
+                        </p>
+                        {/* Visible typed text — absolute, inset-0, identical
+                            font metrics to the ghost so wrapping matches. */}
+                        <p className="absolute inset-0 text-ink-600 leading-relaxed text-[15px]">
+                          {displayText}
+                          {isTyping && (
+                            <span
+                              aria-hidden="true"
+                              className="inline-block w-[2px] h-[0.95em] bg-brand-500 ml-0.5 align-text-bottom animate-pulse"
+                              style={{ animationDuration: '0.9s' }}
+                            />
+                          )}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
