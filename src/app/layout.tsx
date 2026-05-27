@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.fullName}`,
   },
   description:
-    'Vetted remote staff, matched to your team in days. From $7 an hour, all-in. Meet 4\u20135 pre-screened candidates and hire on the call. No setup fees, no long contracts.',
+    'Vetted remote staff, matched to your team in days. From $7 an hour. Meet 4\u20135 pre-screened candidates and hire on the call. No setup fees, no long contracts.',
   keywords: ['remote staffing', 'offshore staffing', 'virtual assistants', 'hire remote', 'PayLow Staffing'],
   authors: [{ name: 'PayLow Staffing' }],
   creator: 'PayLow Staffing',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     siteName: siteConfig.name,
     title: `${siteConfig.name} \u2014 Remote staff from $7/hour. Hired in days.`,
-    description: 'Vetted remote staff, matched in days. From $7 an hour, all-in. No setup fees.',
+    description: 'Vetted remote staff, matched in days. From $7 an hour. No setup fees.',
   },
   twitter: {
     card: 'summary_large_image',

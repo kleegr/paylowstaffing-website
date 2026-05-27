@@ -152,7 +152,7 @@ export default function PricingCalculator() {
               <div className="mt-1 stat-number text-ink-900 text-xl">
                 ${OFFSHORE_RATE}<span className="text-ink-400 text-sm font-medium ml-0.5">/hr</span>
               </div>
-              <div className="text-[11px] text-brand-700 mt-1 font-medium">All-in pricing</div>
+              <div className="text-[11px] text-brand-700 mt-1 font-medium">No hidden fees</div>
             </div>
           </div>
 
