@@ -7,6 +7,7 @@ import GetStartedButton from '@/components/GetStartedButton';
 import VideoCard from '@/components/VideoCard';
 import CountUp from '@/components/CountUp';
 import FaqSection from '@/components/FaqSection';
+import ProofRail from '@/components/ProofRail';
 import { assets, reviews, videoReviews } from '@/lib/content';
 
 export default function HomePage() {
@@ -98,6 +99,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* PROOF RAIL — quiet ongoing motion below the hero */}
+      <ProofRail />
 
       {/* HOW IT WORKS */}
       <section className="section bg-white">
