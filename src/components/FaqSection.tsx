@@ -5,23 +5,16 @@ import { Plus } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 
 /**
- * Homepage FAQ — compact 5-item accordion.
- *
- * Replaces the standalone /faq page. Keeps the highest-leverage answers users
- * actually need before they sign up. Anchored at #faq so /faq → /#faq
- * (308 in next.config.mjs) lands smoothly here.
- *
- * Accordion uses the CSS grid-template-rows trick for height animation:
- * a parent with `grid-rows-[0fr]` collapses to height 0, and animating to
- * `grid-rows-[1fr]` smoothly expands to fit content. Pure CSS, no JS
- * measuring, works for any content height. Wider browser support than
- * `interpolate-size: allow-keywords` and cleaner than a max-height hack.
+ * Homepage FAQ — compact 5-item accordion. Replaces the standalone /faq page.
+ * Anchored at #faq so /faq → /#faq (308 in next.config.mjs) lands here.
  */
 
 const faqs = [
   {
     q: 'How fast can I actually hire?',
-    a: 'Most clients meet their three-person shortlist within five business days and hire within seven. The fifteen-minute scoping call is the longest part of the process.',
+    // Updated: was "three-person shortlist". Now reflects the actual 4–5
+    // shortlist size PayLow delivers, consistent with the homepage copy.
+    a: 'Most clients meet their 4\u20135 person shortlist within five business days and hire within seven. The fifteen-minute scoping call is the longest part of the process.',
   },
   {
     q: 'What does $7/hour really include?',
@@ -42,7 +35,6 @@ const faqs = [
 ];
 
 export default function FaqSection() {
-  // Default to first item open so the section has visible content on landing.
   const [open, setOpen] = useState<number | null>(0);
 
   return (

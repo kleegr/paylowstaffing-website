@@ -20,6 +20,11 @@ import CountUp from '@/components/CountUp';
 import FaqSection from '@/components/FaqSection';
 import { assets, reviews, videoReviews } from '@/lib/content';
 
+// Reusable formatters for the price + percentage count-ups so the same
+// behavior is applied in every place the homepage mentions "$7/hour".
+const dollarFormat = (n: number) => '$' + Math.round(n);
+const intFormat = (n: number) => Math.round(n).toString();
+
 export default function HomePage() {
   return (
     <>
@@ -53,18 +58,40 @@ export default function HomePage() {
                 Hire your next teammate.
                 <br />
                 <span className="relative inline-block">
-                  <span className="text-gradient">From $7/hour.</span>
+                  {/*
+                    The outer text-gradient span renders "From " and "/hour."
+                    with the gradient. CountUp's inner span ALSO gets the
+                    text-gradient class (via the new className prop) because
+                    background-clip:text doesn't cascade through children —
+                    each text fragment needs its own background.
+                  */}
+                  <span className="text-gradient">
+                    From{' '}
+                    <CountUp
+                      className="text-gradient"
+                      from={55}
+                      value={7}
+                      duration={900}
+                      format={dollarFormat}
+                    />
+                    /hour.
+                  </span>
+                  {/*
+                    Note positioned at top-right of the price span. Arrow now
+                    points DOWN-LEFT (↙ = &#8601;) toward the "$7" — was ↘
+                    (&#8600;) pointing away into empty space.
+                  */}
                   <span
                     aria-hidden="true"
                     className="hidden md:inline-block handwritten-accent absolute -top-6 -right-6 text-2xl whitespace-nowrap"
                   >
-                    not a typo &#8600;
+                    not a typo &#8601;
                   </span>
                 </span>
               </h1>
 
               <p className="lead mt-6">
-                We do the screening. You meet three pre-vetted pros. You hire on the call.
+                We do the screening. You meet 4&ndash;5 vetted candidates. You hire on the call.
                 Save 60&ndash;80%. No payroll, no agency, no contracts.
               </p>
 
@@ -203,7 +230,9 @@ export default function HomePage() {
               {
                 n: '02',
                 t: 'We screen the world',
-                d: 'We review hundreds. You see the top three.',
+                // Updated: was "You see the top three." Now reflects the
+                // actual 4–5 shortlist size PayLow delivers.
+                d: 'We review hundreds. You see the top 4\u20135.',
                 icon: ShieldCheck,
               },
               {
@@ -333,10 +362,22 @@ export default function HomePage() {
                 </span>
               </p>
               <h2 className="display-2">
-                Start at <span className="text-gradient">$7/hour.</span>
+                Start at{' '}
+                <span className="text-gradient">
+                  <CountUp
+                    className="text-gradient"
+                    from={55}
+                    value={7}
+                    duration={900}
+                    format={dollarFormat}
+                  />
+                  /hour.
+                </span>
                 <br />
                 <span className="handwritten-accent text-4xl sm:text-5xl ml-1">
-                  save up to 80%.
+                  save up to{' '}
+                  <CountUp value={80} duration={1200} format={intFormat} />
+                  %.
                 </span>
               </h2>
               <p className="lead mt-5">
@@ -364,15 +405,29 @@ export default function HomePage() {
                   >
                     $
                   </span>
+                  {/*
+                    Giant number: countdown 55 → 7 at huge font size. The
+                    outer span only carries sizing/typography. text-gradient
+                    is applied to CountUp's inner span directly so the
+                    animated digits render with the brand gradient. The "/hour"
+                    label shifts left ~0.6em as the number contracts — bounded
+                    inside the dark card, doesn't push outside content.
+                  */}
                   <span
-                    className="font-display font-extrabold text-gradient tracking-tight"
+                    className="font-display font-extrabold tracking-tight inline-block"
                     style={{
                       fontSize: 'clamp(5rem, 12vw, 9rem)',
                       lineHeight: 0.9,
                       letterSpacing: '-0.04em',
                     }}
                   >
-                    7
+                    <CountUp
+                      className="text-gradient"
+                      from={55}
+                      value={7}
+                      duration={1000}
+                      format={intFormat}
+                    />
                   </span>
                   <span className="font-display font-semibold text-white/70 pb-3 ml-1">
                     /hour
