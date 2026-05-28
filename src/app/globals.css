@@ -6,6 +6,9 @@
   --font-display: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-script: 'Caveat', ui-rounded, system-ui, cursive;
+  /* Handwritten quote font (testimonial carousel). Self-hosted via
+     @fontsource/shadows-into-light-two. Caveat is a graceful fallback. */
+  --font-hand: 'Shadows Into Light Two', 'Caveat', ui-rounded, system-ui, cursive;
 }
 
 @layer base {
@@ -143,6 +146,14 @@
     transform: rotate(-3deg);
     display: inline-block;
     letter-spacing: 0;
+  }
+
+  /* Shadows Into Light Two — warm, human handwriting for the testimonial
+     quote text only. Slightly looser line-height since the face runs tall. */
+  .font-hand {
+    font-family: var(--font-hand);
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
 
   .eyebrow {
