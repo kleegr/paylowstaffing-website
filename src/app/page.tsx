@@ -1,25 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, ShieldCheck, Zap, Headphones, Briefcase, Star, Quote, TrendingDown, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Sparkles, ShieldCheck, Zap, Headphones, Briefcase, TrendingDown, CheckCircle2 } from 'lucide-react';
 import SectionHeading from '@/components/SectionHeading';
 import CtaBanner from '@/components/CtaBanner';
 import GetStartedButton from '@/components/GetStartedButton';
 import CountUp from '@/components/CountUp';
 import FaqSection from '@/components/FaqSection';
 import RotatingProofChip from '@/components/RotatingProofChip';
+import TestimonialCarousel from '@/components/TestimonialCarousel';
 import { assets, reviews } from '@/lib/content';
-
-// Monogram initials from a name like "John D." -> "JD". Used by the
-// text-first testimonial cards instead of a stock portrait.
-function initials(name: string): string {
-  return name
-    .replace(/[^a-zA-Z .]/g, '')
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? '')
-    .join('');
-}
 
 export default function HomePage() {
   return (
@@ -261,8 +250,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* TESTIMONIALS — text-first. No people photos, no videos. Monogram
-          initials + stars + role/company keep it credible and premium. */}
+      {/* TESTIMONIALS — interactive stacked-paper carousel. Text-first: no
+          photos, no videos. Handwritten quote + typewriter + auto-advance. */}
       <section id="testimonials" className="section bg-white relative overflow-hidden scroll-mt-24">
         <div aria-hidden className="absolute -top-20 right-1/4 w-96 h-96 rounded-full bg-brand-300/15 blur-3xl" />
         <div className="container-wide relative">
@@ -273,54 +262,8 @@ export default function HomePage() {
             align="center"
           />
 
-          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-            {reviews.map((t, i) => {
-              const featured = i === 0;
-              return (
-                <article
-                  key={t.name}
-                  className={`p-6 sm:p-7 flex flex-col relative overflow-hidden rounded-3xl ${
-                    featured
-                      ? 'bg-ink-900 text-white shadow-lift noise noise-strong sm:col-span-2 lg:col-span-1'
-                      : 'bg-white border border-ink-100/60 shadow-card hover:shadow-lift hover:-translate-y-1 transition-all duration-500 ease-out'
-                  }`}
-                  data-reveal
-                  data-reveal-delay={i * 60}
-                >
-                  {featured && <div aria-hidden className="absolute -top-14 -right-14 w-56 h-56 rounded-full bg-gradient-brand opacity-30 blur-3xl" />}
-
-                  {/* Top row: quote mark + stars */}
-                  <div className="flex items-center justify-between relative">
-                    <Quote className={`w-6 h-6 ${featured ? 'text-brand-300' : 'text-brand-400'}`} strokeWidth={2} />
-                    <div className={`flex gap-0.5 ${featured ? 'text-brand-300' : 'text-brand-500'}`}>
-                      {Array.from({ length: 5 }).map((_, k) => (<Star key={k} className="w-3.5 h-3.5 fill-current" />))}
-                    </div>
-                  </div>
-
-                  <p className={`mt-4 leading-relaxed flex-1 relative ${featured ? 'text-white/95 text-[1.05rem] font-display font-medium' : 'text-ink-700 text-[0.95rem]'}`}>
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-
-                  <div className={`mt-6 pt-5 border-t flex items-center gap-3 relative ${featured ? 'border-white/10' : 'border-ink-100'}`}>
-                    {/* Monogram — replaces the old stock portrait */}
-                    <span
-                      aria-hidden="true"
-                      className={`inline-flex w-11 h-11 items-center justify-center rounded-full font-display font-bold text-sm shrink-0 ${
-                        featured
-                          ? 'bg-white/10 text-brand-200 border border-white/15'
-                          : 'bg-brand-50 text-brand-700 border border-brand-100'
-                      }`}
-                    >
-                      {initials(t.name)}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div className={`font-display font-semibold text-sm ${featured ? 'text-white' : 'text-ink-900'}`}>{t.name}</div>
-                      <div className={`text-xs truncate ${featured ? 'text-white/55' : 'text-ink-500'}`}>{t.role} &middot; {t.company}</div>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
+          <div className="mt-14">
+            <TestimonialCarousel reviews={reviews} />
           </div>
         </div>
       </section>
