@@ -29,7 +29,7 @@ import { siteConfig } from '@/lib/content';
 export const metadata: Metadata = {
   title: 'Book a Free Hiring Call',
   description:
-    'Book a free call with PayLow Staffing to learn how to hire vetted remote staff from around $7/hour. 15 minutes. No commitment.',
+    'Book a free call with PayLow Staffing to learn how to hire vetted remote staff from around $7/hour. Less than 30 minutes. No commitment.',
 };
 
 // Six reasons to book — each gets its own icon + tight copy.
@@ -92,13 +92,13 @@ const steps = [
   },
 ];
 
-const trustPills = ['100% free', '15 minutes', 'No commitment', 'No setup fee'];
+const trustPills = ['100% free', 'Less than 30 minutes', 'No commitment', 'No setup fee'];
 
 // Floating proof badges around the calendar card. Desktop-only because on
 // mobile the calendar takes the full viewport width and there's nowhere
 // off-edge for the badges to sit without overlapping the picker UI.
 const floatingBadges = [
-  { Icon: Clock,        text: '15-minute call', pos: '-top-3 left-4 sm:-left-4',           delay: '0.2s' },
+  { Icon: Clock,        text: 'Under 30 minutes', pos: '-top-3 left-4 sm:-left-4',           delay: '0.2s' },
   { Icon: ShieldCheck,  text: 'No commitment',  pos: 'top-1/3 -right-4',                    delay: '1.0s' },
   { Icon: Sparkles,     text: 'Real human',     pos: '-bottom-3 -left-3',                   delay: '1.6s' },
   { Icon: CheckCircle2, text: 'No setup fee',   pos: '-bottom-3 right-6 sm:right-10',       delay: '0.6s' },
@@ -121,7 +121,7 @@ export default function BookACallPage() {
           <div data-reveal>
             <p className="mb-5">
               <span className="eyebrow">
-                <span className="eyebrow-dot animate-pulse" /> Free hiring call &middot; 15 minutes
+                <span className="eyebrow-dot animate-pulse" /> Free hiring call &middot; under 30 minutes
               </span>
             </p>
             <h1 className="display-1">
@@ -129,7 +129,7 @@ export default function BookACallPage() {
               <span className="text-gradient">next great hire.</span>
             </h1>
             <p className="lead mt-6 max-w-2xl mx-auto">
-              In 15 minutes, we&rsquo;ll learn the role, explain how PayLow works, and show you the kind of talent we can put in front of you. From $7 an hour. No setup fees, no commitment.
+              In less than 30 minutes, we&rsquo;ll learn the role, explain how PayLow works, and show you the kind of talent we can put in front of you. From $7 an hour. No setup fees, no commitment.
             </p>
           </div>
 
@@ -263,7 +263,7 @@ export default function BookACallPage() {
               Pick a time that works <span className="text-gradient">for you.</span>
             </h2>
             <p className="lead mt-5 mx-auto">
-              The call is free. It usually takes about 15 minutes.
+              The call is free and takes less than 30 minutes.
             </p>
           </div>
 
@@ -296,7 +296,7 @@ export default function BookACallPage() {
                       Free hiring call
                     </p>
                     <p className="text-[11px] text-ink-500 mt-0.5">
-                      15 minutes &middot; via video
+                      Under 30 minutes &middot; via video
                     </p>
                   </div>
                 </div>
