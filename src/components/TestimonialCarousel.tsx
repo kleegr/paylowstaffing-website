@@ -3,31 +3,32 @@
 import {
   useCallback, useEffect, useRef, useState,
 } from 'react';
-import { ArrowRight, ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
+import { Quote, Star } from 'lucide-react';
 
 /**
  * TestimonialCarousel — a pile of handwritten review cards you flip through.
  *
- * The interaction model is a physical card stack, not a fading slider:
- *  - 3 cards are rendered at once: the active card on top, plus two peeking
- *    from underneath at smaller scale + downward offset + slight rotation, so
- *    it reads as a real pile.
- *  - Advancing flicks the top card up-and-away (translate + rotate + fade)
- *    while the cards beneath shift forward into place. Going back drops a card
- *    down onto the top of the pile. Driven by a short phase state machine with
- *    CSS transforms — no animation library.
- *  - Live pointer drag tilts + slides the top card; releasing past a threshold
- *    commits the flick in that direction (works on mouse + touch).
- *  - Each card uses a different handwriting treatment (font family, size,
- *    slant, spacing, weight) so every quote feels like a different person.
- *  - The active quote types out; auto-advance is tied to that — it only moves
- *    on AFTER the typing finishes plus a short reading pause (a subtle line
- *    shows that pause), so it never feels like a blind timer. Hover / touch /
- *    drag / manual nav all override it.
+ * Clean, controls-free presentation: just the card stack. Navigation is by
+ * swipe/drag, and the pile auto-advances on its own — but the auto-advance is
+ * tied to the reading experience, not a blind timer:
  *
- * Dependency-free to match the design system. Accessible: labelled region,
- * aria-labelled controls, aria-live quote, keyboard arrows, and a full
- * reduced-motion path (no flicking, no typing, instant text).
+ *   type out the active quote → hold ~1.8s → flick to the next card → repeat.
+ *
+ * The interaction model is a physical card stack, not a fading slider:
+ *  - 3 cards render at once: active on top + two peeking from underneath at
+ *    smaller scale + downward offset + slight rotation, so it reads as a pile.
+ *  - Advancing flicks the top card up-and-away (translate + rotate + fade)
+ *    while the cards beneath rise forward into place. CSS transforms only —
+ *    no animation library.
+ *  - Live pointer drag tilts + lifts the top card; releasing past a threshold
+ *    commits the flick in that direction (mouse + touch).
+ *  - Each card uses a different handwriting treatment (font family, size,
+ *    slant, spacing, weight, ink, tilt) so every quote feels hand-written by
+ *    a different person.
+ *
+ * No visible arrows, no count, no progress bar. Accessible: labelled region,
+ * aria-live quote, invisible keyboard arrows, and a full reduced-motion path
+ * (no flicking, no typing, no auto-advance — full text shown instantly).
  */
 
 type Review = {
@@ -37,10 +38,10 @@ type Review = {
   company: string;
 };
 
-const TYPE_MS = 28;          // per-character typing speed (gentle)
-const READ_PAUSE_MS = 2600;  // pause AFTER typing finishes before auto-advancing
-const FLICK_MS = 460;        // card flick-away animation duration
-const DRAG_THRESHOLD = 70;   // px to commit a flick
+const TYPE_MS = 28;        // per-character typing speed (gentle)
+const HOLD_MS = 1800;      // pause AFTER typing finishes before auto-advancing
+const FLICK_MS = 460;      // card flick-away animation duration
+const DRAG_THRESHOLD = 70; // px to commit a flick
 const SWIPE_SOUND_URL =
   'https://assets.cdn.filesafe.space/qfbPEd8130ccGKpJuL8j/media/69e7901eda11eeea68d7f19a.mp3';
 
@@ -91,7 +92,6 @@ export default function TestimonialCarousel({ reviews }: { reviews: readonly Rev
   const [reduced, setReduced] = useState(false);
   const [paused, setPaused] = useState(false);
   const [typed, setTyped] = useState(false);      // active card finished typing
-  const [readProgress, setReadProgress] = useState(0); // 0..1 reading-pause fill
 
   // Flick animation state
   const [phase, setPhase] = useState<'idle' | 'out'>('idle');
@@ -101,18 +101,10 @@ export default function TestimonialCarousel({ reviews }: { reviews: readonly Rev
   const [dragging, setDragging] = useState(false);
 
   const sectionRef = useRef<HTMLDivElement | null>(null);
-
-  // mirrors for the rAF reading-pause loop
-  const pausedRef = useRef(false);
-  const inViewRef = useRef(false);
-  const reducedRef = useRef(false);
-  const typedRef = useRef(false);
   const draggingRef = useRef(false);
-  useEffect(() => { pausedRef.current = paused; }, [paused]);
-  useEffect(() => { inViewRef.current = inView; }, [inView]);
-  useEffect(() => { reducedRef.current = reduced; }, [reduced]);
-  useEffect(() => { typedRef.current = typed; }, [typed]);
+  const phaseRef = useRef<'idle' | 'out'>('idle');
   useEffect(() => { draggingRef.current = dragging; }, [dragging]);
+  useEffect(() => { phaseRef.current = phase; }, [phase]);
 
   // ---- Audio (lazy + gesture-unlocked) -----------------------------------
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -182,68 +174,43 @@ export default function TestimonialCarousel({ reviews }: { reviews: readonly Rev
   // ---- advance with a flick ---------------------------------------------
   const flickTimer = useRef<number | null>(null);
   const advance = useCallback((direction: 1 | -1) => {
-    if (phase === 'out') return; // already animating
+    if (phaseRef.current === 'out') return; // already animating
     setTyped(false);
-    setReadProgress(0);
     playSwipe();
 
-    if (reducedRef.current) {
+    if (reduced) {
       setIndex((i) => (((i + direction) % count) + count) % count);
       return;
     }
     setDir(direction);
     setPhase('out');
+    phaseRef.current = 'out';
     if (flickTimer.current) window.clearTimeout(flickTimer.current);
     flickTimer.current = window.setTimeout(() => {
       setIndex((i) => (((i + direction) % count) + count) % count);
       setDragX(0);
       setDragY(0);
       setPhase('idle');
+      phaseRef.current = 'idle';
     }, FLICK_MS);
-  }, [phase, count, playSwipe]);
+  }, [count, playSwipe, reduced]);
 
   const next = useCallback(() => advance(1), [advance]);
   const prev = useCallback(() => advance(-1), [advance]);
-  const goTo = useCallback((target: number) => {
-    if (target === index) return;
-    advance(target > index ? 1 : -1);
-  }, [advance, index]);
 
   useEffect(() => () => { if (flickTimer.current) window.clearTimeout(flickTimer.current); }, []);
 
-  // ---- auto-advance tied to typing completion + reading pause ------------
+  // ---- auto-advance: after typing completes, hold, then flick ------------
+  // A single timeout (not a per-frame timer). It is armed only once the active
+  // card has finished typing, is on screen, and the user isn't interacting.
+  // Any of those changing (or the index changing) clears and re-evaluates it,
+  // so manual swipes always override and it never double-fires.
   useEffect(() => {
-    if (reduced) return;            // no auto-motion under reduced-motion
-    let raf = 0;
-    let last: number | null = null;
-    let elapsed = 0;
-
-    const tick = (ts: number) => {
-      if (last == null) last = ts;
-      const dt = ts - last;
-      last = ts;
-      // Only count down once the card has finished typing, is on screen, and
-      // the user isn't interacting. This makes the advance feel like the card
-      // is "done being read", not a blind timer.
-      const counting =
-        typedRef.current && inViewRef.current && !pausedRef.current && !draggingRef.current;
-      if (counting) {
-        elapsed += dt;
-        const p = Math.min(1, elapsed / READ_PAUSE_MS);
-        setReadProgress(p);
-        if (p >= 1) { elapsed = 0; setReadProgress(0); next(); }
-      } else if (!typedRef.current) {
-        // still typing → keep the indicator empty
-        elapsed = 0;
-        setReadProgress((prevP) => (prevP !== 0 ? 0 : prevP));
-      }
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-    // re-arm whenever the active card changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reduced, next, index]);
+    if (reduced) return;
+    if (!typed || !inView || paused || dragging || phase === 'out') return;
+    const t = window.setTimeout(() => { next(); }, HOLD_MS);
+    return () => window.clearTimeout(t);
+  }, [typed, inView, paused, dragging, phase, index, reduced, next]);
 
   // ---- pointer drag / swipe ---------------------------------------------
   const startX = useRef<number | null>(null);
@@ -251,7 +218,7 @@ export default function TestimonialCarousel({ reviews }: { reviews: readonly Rev
   const axis = useRef<null | 'h' | 'v'>(null);
 
   function onPointerDown(e: React.PointerEvent) {
-    if (reducedRef.current || phase === 'out') return;
+    if (reduced || phase === 'out') return;
     startX.current = e.clientX;
     startY.current = e.clientY;
     axis.current = null;
@@ -291,7 +258,7 @@ export default function TestimonialCarousel({ reviews }: { reviews: readonly Rev
     }
   }
 
-  // ---- keyboard ----------------------------------------------------------
+  // ---- keyboard (invisible, a11y) ----------------------------------------
   function onKeyDown(e: React.KeyboardEvent) {
     if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
@@ -302,8 +269,6 @@ export default function TestimonialCarousel({ reviews }: { reviews: readonly Rev
     const i = (index + d) % count;
     return { depth: d, i, review: reviews[i] };
   });
-
-  const counter = (n: number) => String(n + 1).padStart(2, '0');
 
   return (
     <div
@@ -442,65 +407,9 @@ export default function TestimonialCarousel({ reviews }: { reviews: readonly Rev
         })}
       </div>
 
-      {/* ===== Controls row: prev · counter+progress · next ===== */}
-      <div className="mt-9 flex items-center justify-center gap-5">
-        <button
-          type="button"
-          onClick={prev}
-          aria-label="Previous testimonial"
-          className="inline-flex w-12 h-12 items-center justify-center rounded-full bg-white border border-ink-200 text-ink-700 hover:border-brand-500 hover:text-brand-600 active:scale-95 transition-all duration-200 shadow-soft"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-
-        <div className="flex flex-col items-center gap-2 min-w-[8rem]">
-          {/* card counter — "02 / 06" */}
-          <div className="font-display font-bold text-sm text-ink-900 tabular-nums tracking-wide">
-            <span className="text-brand-600">{counter(index)}</span>
-            <span className="text-ink-300"> / {counter(count - 1)}</span>
-          </div>
-          {/* subtle reading-pause indicator (only fills after typing finishes) */}
-          <div aria-hidden className="h-[3px] w-28 rounded-full bg-ink-100 overflow-hidden">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600"
-              style={{
-                width: `${(reduced ? 0 : readProgress) * 100}%`,
-                transition: 'width 90ms linear',
-              }}
-            />
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={next}
-          aria-label="Next testimonial"
-          className="inline-flex w-12 h-12 items-center justify-center rounded-full bg-white border border-ink-200 text-ink-700 hover:border-brand-500 hover:text-brand-600 active:scale-95 transition-all duration-200 shadow-soft"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
-      </div>
-
-      {/* ===== Dots ===== */}
-      <div className="mt-5 flex items-center justify-center gap-2">
-        {reviews.map((r, i) => (
-          <button
-            key={r.name}
-            type="button"
-            onClick={() => goTo(i)}
-            aria-label={`Go to testimonial ${i + 1} of ${count}`}
-            aria-current={i === index}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              i === index ? 'w-6 bg-gradient-brand' : 'w-2 bg-ink-200 hover:bg-ink-300'
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* ===== "swipe to read more" hint ===== */}
-      <div className="mt-6 flex items-center justify-center gap-2 text-ink-400">
-        <span className="handwritten-accent text-lg text-brand-500">swipe to read more</span>
-        <ArrowRight aria-hidden className="w-4 h-4 text-brand-400 animate-pulse" />
+      {/* Subtle, non-counting swipe hint. No arrows, no count, no progress bar. */}
+      <div className="mt-10 flex items-center justify-center">
+        <span className="handwritten-accent text-lg text-brand-500">swipe to read more &rarr;</span>
       </div>
     </div>
   );
