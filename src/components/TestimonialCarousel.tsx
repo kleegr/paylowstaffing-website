@@ -90,7 +90,7 @@ export default function TestimonialCarousel({ reviews }: { reviews: readonly Rev
   const [index, setIndex] = useState(0);
   const [inView, setInView] = useState(false);
   const [reduced, setReduced] = useState(false);
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(false);   // hover / focus intent only
   const [typed, setTyped] = useState(false);      // active card finished typing
 
   // Flick animation state
@@ -202,9 +202,10 @@ export default function TestimonialCarousel({ reviews }: { reviews: readonly Rev
 
   // ---- auto-advance: after typing completes, hold, then flick ------------
   // A single timeout (not a per-frame timer). It is armed only once the active
-  // card has finished typing, is on screen, and the user isn't interacting.
-  // Any of those changing (or the index changing) clears and re-evaluates it,
-  // so manual swipes always override and it never double-fires.
+  // card has finished typing, is on screen, and the user isn't interacting
+  // (hover/focus -> paused, or mid-drag -> dragging). Any of those changing
+  // (or the index changing) clears and re-evaluates it, so manual swipes
+  // always override and it never double-fires.
   useEffect(() => {
     if (reduced) return;
     if (!typed || !inView || paused || dragging || phase === 'out') return;
@@ -223,7 +224,11 @@ export default function TestimonialCarousel({ reviews }: { reviews: readonly Rev
     startY.current = e.clientY;
     axis.current = null;
     setDragging(true);
-    setPaused(true);
+    // NOTE: do not touch `paused` here. The auto-advance effect already gates
+    // on `dragging`, so the drag itself is covered. Conflating it with
+    // `paused` was the bug: on a committed swipe (and on touch, where there's
+    // no mouseleave to clear it) `paused` stayed true forever and the pile
+    // stopped auto-advancing after the first manual swipe.
     try { (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId); } catch { /* noop */ }
   }
   function onPointerMove(e: React.PointerEvent) {
@@ -254,7 +259,6 @@ export default function TestimonialCarousel({ reviews }: { reviews: readonly Rev
       // snap back
       setDragX(0);
       setDragY(0);
-      setPaused(false);
     }
   }
 
@@ -279,7 +283,7 @@ export default function TestimonialCarousel({ reviews }: { reviews: readonly Rev
       tabIndex={0}
       onKeyDown={onKeyDown}
       onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => { if (!draggingRef.current) setPaused(false); }}
+      onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
       className="relative mx-auto max-w-2xl outline-none"
