@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import {
   ArrowRight, Cpu, Briefcase, ClipboardList, GraduationCap, Hammer,
-  Headphones, Palette, Megaphone, Calculator, HeartPulse, Settings,
+  Headphones, Palette, Megaphone, Calculator, HeartPulse, Settings, Check,
 } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import SectionHeading from '@/components/SectionHeading';
@@ -16,23 +16,28 @@ type Category = {
   Icon: React.ComponentType<{ className?: string }>;
   image: string | null;
   sample: string;
+  roles: string[];
 };
 
 const categories: Category[] = [
-  { title: 'IT & Tech',             Icon: Cpu,             image: assets.industryIT,              sample: 'Devs, QA, devops, AI engineers.' },
-  { title: 'Professional Services', Icon: Briefcase,       image: assets.industryServices,        sample: 'PMs, ops, recruiting, legal support.' },
-  { title: 'Admin & Data',          Icon: ClipboardList,   image: assets.industryAdmin,           sample: 'EAs, data entry, transcription.' },
-  { title: 'Education',             Icon: GraduationCap,   image: assets.industryEducation,       sample: 'Tutors, LMS admins, instructional designers.' },
-  { title: 'Engineering',           Icon: Hammer,          image: assets.industryEngineering,     sample: 'CAD, structural, electrical, tech writing.' },
-  { title: 'Customer Service',      Icon: Headphones,      image: assets.industryCustomerService, sample: 'CX reps, live chat, telesupport.' },
-  { title: 'Creative & Design',     Icon: Palette,         image: assets.industryCreative,        sample: 'UI/UX, graphic, animation, video.' },
-  { title: 'Marketing',             Icon: Megaphone,       image: assets.industryMarketing,       sample: 'SEO, social, content, email, analytics.' },
-  { title: 'Finance',               Icon: Calculator,      image: assets.industryFinance,         sample: 'Bookkeeping, AP/AR, payroll, FP&A.' },
-  { title: 'Healthcare',            Icon: HeartPulse,      image: assets.industryHealthcare,      sample: 'Medical billing, claims, telehealth.' },
-  { title: 'Specialized',           Icon: Settings,        image: null,                            sample: 'Procurement, compliance, actuarial.' },
+  { title: 'IT & Tech',             Icon: Cpu,           image: assets.industryIT,              sample: 'Engineers who ship.',            roles: ['Developers', 'QA', 'DevOps', 'AI engineers'] },
+  { title: 'Professional Services', Icon: Briefcase,     image: assets.industryServices,        sample: 'The backbone of operations.',    roles: ['Project managers', 'Ops', 'Recruiting', 'Legal support'] },
+  { title: 'Admin & Data',          Icon: ClipboardList, image: assets.industryAdmin,           sample: 'Keep everything moving.',        roles: ['Executive assistants', 'Data entry', 'Transcription'] },
+  { title: 'Education',             Icon: GraduationCap, image: assets.industryEducation,       sample: 'Teach, build, support.',         roles: ['Tutors', 'LMS admins', 'Instructional designers'] },
+  { title: 'Engineering',           Icon: Hammer,        image: assets.industryEngineering,     sample: 'Technical, precise, reliable.',  roles: ['CAD', 'Structural', 'Electrical', 'Tech writing'] },
+  { title: 'Customer Service',      Icon: Headphones,    image: assets.industryCustomerService, sample: 'Your front line.',               roles: ['CX reps', 'Live chat', 'Telesupport'] },
+  { title: 'Creative & Design',     Icon: Palette,       image: assets.industryCreative,        sample: 'Make it look the part.',         roles: ['UI/UX', 'Graphic', 'Animation', 'Video'] },
+  { title: 'Marketing',             Icon: Megaphone,     image: assets.industryMarketing,       sample: 'Growth, end to end.',            roles: ['SEO', 'Social', 'Content', 'Email', 'Analytics'] },
+  { title: 'Finance',               Icon: Calculator,    image: assets.industryFinance,         sample: 'Numbers you can trust.',         roles: ['Bookkeeping', 'AP/AR', 'Payroll', 'FP&A'] },
+  { title: 'Healthcare',            Icon: HeartPulse,    image: assets.industryHealthcare,      sample: 'Compliant, careful support.',    roles: ['Medical billing', 'Claims', 'Telehealth'] },
+  { title: 'Specialized',           Icon: Settings,      image: null,                           sample: 'Hard-to-fill, handled.',         roles: ['Procurement', 'Compliance', 'Actuarial'] },
 ];
 
 export default function IndustriesPage() {
+  // First card open by default so the pattern is obvious. On mobile every
+  // card's roles are ALWAYS visible regardless of open state (no hover
+  // dependency) — opening just adds a highlight + on larger screens reveals
+  // the photo accent.
   const [active, setActive] = useState<number | null>(0);
 
   return (
@@ -51,90 +56,94 @@ export default function IndustriesPage() {
           <SectionHeading
             eyebrow="Specialties"
             title={<>Find your <span className="text-gradient">perfect hire.</span></>}
-            lead="Tap a category. See what we fill."
+            lead="Tap a category to see the roles we fill."
             align="center"
           />
 
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {categories.map((c, i) => {
               const isOpen = active === i;
-              const hasImage = c.image !== null;
-
               return (
                 <button
                   key={c.title}
                   type="button"
-                  onClick={() => setActive(isOpen ? null : i)}
+                  onClick={() => setActive(isOpen ? i : i)}
                   aria-expanded={isOpen}
-                  className={`group relative overflow-hidden rounded-3xl text-left transition-all duration-500 ease-out ${
-                    isOpen ? 'shadow-lift ring-2 ring-brand-500 -translate-y-1' : 'shadow-card hover:shadow-lift hover:-translate-y-1'
+                  className={`group text-left rounded-3xl border bg-white p-5 sm:p-6 transition-all duration-300 ease-out ${
+                    isOpen
+                      ? 'border-brand-300 shadow-lift ring-1 ring-brand-200'
+                      : 'border-ink-100 shadow-card hover:border-ink-200 hover:shadow-lift hover:-translate-y-0.5'
                   }`}
                 >
-                  <div className="relative aspect-[5/4]">
-                    {hasImage ? (
-                      <>
-                        <Image
-                          src={c.image as string}
-                          alt={c.title}
-                          fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                          className={`object-cover transition-transform duration-700 ease-out ${isOpen ? 'scale-110' : 'group-hover:scale-105'}`}
-                          loading="lazy"
-                        />
-                        <div
-                          aria-hidden
-                          className={`absolute inset-0 transition-opacity duration-500 ${
-                            isOpen
-                              ? 'bg-gradient-to-t from-brand-900/95 via-brand-800/55 to-brand-600/10'
-                              : 'bg-gradient-to-t from-ink-900/92 via-ink-900/55 to-ink-900/10'
-                          }`}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-ink-900 via-ink-800 to-brand-700" />
-                        <div aria-hidden className="absolute inset-0 bg-mesh-2 opacity-40 mix-blend-screen" />
-                        <div aria-hidden className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-gradient-brand opacity-30 blur-3xl" />
-                        <div aria-hidden className="absolute -bottom-12 -left-10 w-40 h-40 rounded-full bg-brand-400/20 blur-3xl" />
-                      </>
-                    )}
-
-                    <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-                      <div className="flex items-center gap-3">
-                        <span
-                          aria-hidden="true"
-                          className="inline-flex w-9 h-9 items-center justify-center rounded-xl bg-white/15 backdrop-blur-md border border-white/25 shadow-sm shrink-0"
-                        >
-                          <c.Icon className="w-4 h-4 text-white" />
-                        </span>
-                        <h3
-                          className="font-display font-bold text-white text-base sm:text-lg leading-tight"
-                          style={{ letterSpacing: '-0.018em' }}
-                        >
-                          {c.title}
-                        </h3>
-                      </div>
-
-                      <p
-                        className={`text-xs sm:text-[13px] text-white/90 mt-3 pl-12 leading-relaxed transition-all duration-500 ease-out ${
-                          isOpen
-                            ? 'opacity-100 translate-y-0 max-h-20'
-                            : 'opacity-0 -translate-y-1 max-h-0 group-hover:opacity-100 group-hover:translate-y-0 group-hover:max-h-20'
-                        }`}
-                      >
-                        {c.sample}
-                      </p>
-                    </div>
-
+                  {/* Header row — icon + title, always high-contrast (dark text
+                      on white), never text-over-photo. */}
+                  <div className="flex items-center gap-3.5">
                     <span
                       aria-hidden="true"
-                      className={`absolute top-3 right-3 inline-flex w-8 h-8 items-center justify-center rounded-full backdrop-blur-md border transition-all duration-500 ${
-                        isOpen ? 'bg-white text-brand-700 border-white rotate-45 shadow-glow-sm' : 'bg-white/15 text-white border-white/25 opacity-0 group-hover:opacity-100'
+                      className={`inline-flex w-11 h-11 items-center justify-center rounded-2xl shrink-0 transition-colors duration-300 ${
+                        isOpen
+                          ? 'bg-gradient-brand text-white shadow-glow-sm'
+                          : 'bg-brand-50 text-brand-700 group-hover:bg-gradient-brand group-hover:text-white'
+                      }`}
+                    >
+                      <c.Icon className="w-5 h-5" />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-display font-bold text-ink-900 text-base sm:text-lg leading-tight" style={{ letterSpacing: '-0.018em' }}>
+                        {c.title}
+                      </h3>
+                      <p className="text-[13px] text-ink-500 mt-0.5 leading-snug">{c.sample}</p>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      className={`inline-flex w-7 h-7 items-center justify-center rounded-full shrink-0 transition-all duration-300 ${
+                        isOpen ? 'bg-brand-500 text-white rotate-90' : 'bg-ink-50 text-ink-400 group-hover:bg-ink-100'
                       }`}
                     >
                       <ArrowRight className="w-3.5 h-3.5" />
                     </span>
                   </div>
+
+                  {/* Roles — always visible. Readable chips, no hover needed,
+                      so this works perfectly on touch devices. */}
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {c.roles.map((r) => (
+                      <span
+                        key={r}
+                        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[12px] font-medium transition-colors duration-300 ${
+                          isOpen
+                            ? 'bg-brand-50 text-brand-700 border border-brand-100'
+                            : 'bg-ink-50 text-ink-600 border border-transparent'
+                        }`}
+                      >
+                        {isOpen && <Check className="w-3 h-3" />}
+                        {r}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Photo accent — only when open, and only from sm up. Kept
+                      OUT of the mobile flow so small screens stay compact and
+                      text-led (image dominance reduced per brief). */}
+                  {c.image && (
+                    <div
+                      className={`hidden sm:block overflow-hidden rounded-2xl transition-all duration-500 ease-out ${
+                        isOpen ? 'mt-5 max-h-44 opacity-100' : 'mt-0 max-h-0 opacity-0'
+                      }`}
+                    >
+                      <div className="relative aspect-[16/9]">
+                        <Image
+                          src={c.image}
+                          alt={c.title}
+                          fill
+                          sizes="(max-width: 1024px) 50vw, 33vw"
+                          className="object-cover"
+                          loading="lazy"
+                        />
+                        <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink-900/40 to-transparent" />
+                      </div>
+                    </div>
+                  )}
                 </button>
               );
             })}
