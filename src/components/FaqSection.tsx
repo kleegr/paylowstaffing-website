@@ -5,55 +5,52 @@ import SectionHeading from './SectionHeading';
 import FaqAnswer from './FaqAnswer';
 
 /**
- * FAQ — native HTML <details> + word-by-word typewriter. v6.
+ * FAQ — native HTML <details> + word-by-word typewriter. v7.
  *
- * What's new vs v5 (the version the user confirmed is stable):
- *  - Expanded from 5 to 9 questions, with polished copy that matches the
- *    rest of the site's voice (short lines, confident, plain English).
- *  - Each question now has a `featured` flag. The 5 most important
- *    objections (English fluency, freelancer comparison, dedicated staff,
- *    hidden fees, replacement guarantee) get visual weight — a subtle
- *    warm gradient background, stronger border, soft shadow, and a
- *    brand-tinted plus icon. The 4 supporting questions stay light.
- *  - Existing "What does $7/hour really include?" merged into the new
- *    "Are there any recruitment fees, setup fees, or hidden costs?".
- *  - Existing "What if it isn't a fit?" replaced by the clearer
- *    "Can I replace someone if they're not a good fit?".
+ * What's new vs v6:
+ *  - Added a new featured question: "What kind of experience can I expect?"
+ *    placed second (right after the English question) since "are these people
+ *    actually qualified?" is the other top objection. Polished copy that
+ *    frames the talent as qualified + vetted, not a cheap list.
+ *  - Softened the "15-minute scoping call" wording in the speed answer to
+ *    "a short scoping call" so it stays consistent with the Book a Call page
+ *    (which now says "less than 30 minutes").
  *
- * Stable foundation preserved EXACTLY from v5:
+ * Stable foundation preserved EXACTLY (do not touch):
  *  - <details> structure (browser handles open/close)
  *  - name="paylow-faq" for exclusive-open behavior
  *  - FaqAnswer client component handles the word-by-word typing
  *  - No opacity transitions on the answer — typing IS the entrance
  *  - prefers-reduced-motion: full answer instant, no caret
  *
- * If anything breaks: this file is the only thing v6 changed. Reverting
- * to v5 means swapping back the faqs array and removing the conditional
- * className branches. The <details>+FaqAnswer mechanism is untouched.
- *
- * Build-verification marker: data-faq-version="v6-featured-cards".
+ * Build-verification marker: data-faq-version="v7-experience-q".
  */
 
 const faqs = [
-  // ===== FEATURED — the top 5 objections, styled with extra visual weight ====
+  // ===== FEATURED — the top objections, styled with extra visual weight ====
   {
     q: 'Do the candidates speak good English?',
     a: 'Yes. Clear English is one of the things we screen for hardest. We look for candidates who can speak professionally, follow instructions, and communicate with your team and customers without friction.',
     featured: true,
   },
   {
+    q: 'What kind of experience can I expect?',
+    a: 'We source experienced remote professionals across serious business roles — from software developers and QuickBooks experts to CRM implementers, social media managers, operations assistants, and customer support specialists. The goal isn\u2019t just to find someone affordable. It\u2019s to find someone capable, vetted, and ready to do the work from day one.',
+    featured: true,
+  },
+  {
     q: 'How is PayLow different from hiring a freelancer?',
-    a: 'Freelancers can be hit or miss. With PayLow, we screen first \u2014 then bring you vetted people who are ready for steady work. You get a dedicated team member, not someone squeezing you in between ten other projects.',
+    a: 'Freelancers can be hit or miss. With PayLow, we screen first — then bring you vetted people who are ready for steady work. You get a dedicated team member, not someone squeezing you in between ten other projects.',
     featured: true,
   },
   {
     q: 'Is the staff member dedicated to my business?',
-    a: 'Yes. During your scheduled hours, they\u2019re dedicated to your business \u2014 not juggling your work alongside five other companies. One focus, one team, one set of priorities.',
+    a: 'Yes. During your scheduled hours, they\u2019re dedicated to your business — not juggling your work alongside five other companies. One focus, one team, one set of priorities.',
     featured: true,
   },
   {
     q: 'Are there any recruitment fees, setup fees, or hidden costs?',
-    a: 'No. No recruitment fees, no setup fees, no payroll taxes, no hidden costs. You pay the agreed hourly rate \u2014 starting at $7 an hour \u2014 and that\u2019s it.',
+    a: 'No. No recruitment fees, no setup fees, no payroll taxes, no hidden costs. You pay the agreed hourly rate — starting at $7 an hour — and that\u2019s it.',
     featured: true,
   },
   {
@@ -65,7 +62,7 @@ const faqs = [
   // ===== SUPPORTING — process / logistics, lighter styling =====
   {
     q: 'How fast can I actually hire?',
-    a: 'Most clients meet their 4 or 5 picks within five business days. Compare them side by side and hire on the call. The 15-minute scoping call is the longest part.',
+    a: 'Most clients meet their 4 or 5 picks within five business days. Compare them side by side and hire on the call. A short scoping call is the longest part.',
     featured: false,
   },
   {
@@ -75,7 +72,7 @@ const faqs = [
   },
   {
     q: 'Can I hire part-time, or only full-time?',
-    a: 'Both. Part-time or full-time, your call. The minimum is 20 hours a week \u2014 enough for your hire to actually learn the role and make progress.',
+    a: 'Both. Part-time or full-time, your call. The minimum is 20 hours a week — enough for your hire to actually learn the role and make progress.',
     featured: false,
   },
   {
@@ -90,7 +87,7 @@ export default function FaqSection() {
     <section
       id="faq"
       className="section bg-white scroll-mt-24"
-      data-faq-version="v6-featured-cards"
+      data-faq-version="v7-experience-q"
     >
       <div className="container-narrow">
         <SectionHeading
