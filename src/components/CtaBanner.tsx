@@ -1,8 +1,16 @@
 import Link from 'next/link';
-import { ArrowRight, Phone } from 'lucide-react';
+import { ArrowRight, Phone, Calendar } from 'lucide-react';
 import GetStartedButton from './GetStartedButton';
 import { siteConfig } from '@/lib/content';
 
+/**
+ * Bottom-of-page CTA banner. Shared across homepage and pricing.
+ *
+ * Three conversion paths offered, in descending commitment level:
+ *  1. "Find my match"   — opens the Get Started modal (immediate intent)
+ *  2. "Book a free call" — links to /book-a-call (talk first, decide later)
+ *  3. Phone link        — demoted to a small text link below the buttons
+ */
 export default function CtaBanner() {
   return (
     <section className="section">
@@ -33,11 +41,18 @@ export default function CtaBanner() {
                 Find my match <ArrowRight className="w-4 h-4" />
               </GetStartedButton>
               <Link
-                href={`tel:${siteConfig.contact.phoneTel}`}
+                href="/book-a-call"
                 className="btn-outline btn-lg w-full lg:w-auto justify-center bg-white/10 border-white/20 text-white hover:bg-white/15 hover:border-white/30"
               >
-                <Phone className="w-4 h-4" /> {siteConfig.contact.phone}
+                <Calendar className="w-4 h-4" /> Book a free call
               </Link>
+              <a
+                href={`tel:${siteConfig.contact.phoneTel}`}
+                className="text-sm text-white/55 hover:text-white/85 transition-colors inline-flex items-center justify-center lg:justify-end gap-1.5 mt-1"
+              >
+                <Phone className="w-3.5 h-3.5" />
+                Or call {siteConfig.contact.phone}
+              </a>
             </div>
           </div>
         </div>

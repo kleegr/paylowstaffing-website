@@ -8,6 +8,8 @@ export const siteConfig = {
   termsUrl: 'https://toc.paylowstaffing.com/',
   privacyUrl: 'https://privacy-policy.paylowstaffing.com/',
   contactFormEmbedUrl: 'https://lc.paylowstaffing.com/widget/form/1bJDrrS4rOrnEZPBoXDJ',
+  bookingCalendarUrl: 'https://lc.paylowstaffing.com/widget/booking/EzZExLiu67To0wM8HyrA',
+  bookingEmbedScriptUrl: 'https://lc.paylowstaffing.com/js/form_embed.js',
   designer: { name: 'Chaim Teitelbaum', url: 'https://www.chaimteitelbaum.com' },
   contact: {
     address: '3 Collage Rd #104 Monsey NY 10952',
@@ -25,16 +27,19 @@ export const siteConfig = {
   },
 } as const;
 
-// Tight 5-link nav. About Us → covered by hero copy on the homepage.
+// Tight 6-link nav. About Us → covered by hero copy on the homepage.
 // FAQ → lives as an accordion section on the homepage at #faq.
 // Both old routes are 308'd in next.config.mjs.
 // Header.tsx + Footer.tsx auto-update from this list, so this is the single
 // source of truth for site navigation.
+// Book a Call inserted between Pricing and Contact Us — the natural funnel
+// position (someone who's seen the price is the most likely to book).
 export const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'How It Works', href: '/how-it-works' },
   { label: 'Industries', href: '/industries' },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Book a Call', href: '/book-a-call' },
   { label: 'Contact Us', href: '/contact-us' },
 ] as const;
 
