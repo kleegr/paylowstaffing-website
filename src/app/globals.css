@@ -6,9 +6,24 @@
   --font-display: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-script: 'Caveat', ui-rounded, system-ui, cursive;
-  /* Handwritten quote font (testimonial carousel). Self-hosted via
-     @fontsource/shadows-into-light-two. Caveat is a graceful fallback. */
+  /* Handwritten quote font (testimonial carousel). Loaded via the
+     @font-face below (Fontsource woff2 on jsDelivr) rather than an npm
+     package, so it isn't tied to a fragile version range in the dep tree.
+     Caveat is a graceful fallback while the webfont loads / if it fails. */
   --font-hand: 'Shadows Into Light Two', 'Caveat', ui-rounded, system-ui, cursive;
+}
+
+/* Shadows Into Light Two — single 400 weight, latin subset. Served from the
+   Fontsource CDN (jsDelivr). font-display: swap so text paints immediately in
+   the Caveat fallback and swaps in when the face arrives — no invisible text,
+   and the carousel also reserves the quote height itself so there's no shift. */
+@font-face {
+  font-family: 'Shadows Into Light Two';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/fontsource/fonts/shadows-into-light-two@latest/latin-400-normal.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/fontsource/fonts/shadows-into-light-two@latest/latin-400-normal.woff') format('woff');
 }
 
 @layer base {
