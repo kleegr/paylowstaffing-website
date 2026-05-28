@@ -25,6 +25,16 @@ import {
  *  - On unmute, volume is set to a gentle 0.12 ("very low volume").
  *  - playsInline keeps it inline on iOS (no forced fullscreen).
  *
+ * Click-to-unmute (the headline interaction):
+ *  - A direct click/tap on the video body unmutes it (at low volume) and makes
+ *    sure it's playing. This is the natural "I want to hear this" gesture.
+ *  - While still muted, a tap NEVER pauses — it always unmutes + plays, even if
+ *    the controls were hidden (the first tap opts into sound instead of just
+ *    revealing the bar). This matches what the user asked for.
+ *  - Once unmuted, the video surface goes back to normal play/pause toggling,
+ *    so the gesture isn't sticky or surprising.
+ *  - The mute/speaker button keeps working independently and can re-mute.
+ *
  * Layout-shift safety:
  *  - Fixed `aspect-video` (16:9) box reserves the space before any bytes load.
  *  - object-cover fills the frame. (If this MP4 isn't 16:9, swap to
@@ -39,6 +49,8 @@ type Props = {
   src: string;
   label?: string;
 };
+
+const UNMUTE_VOLUME = 0.12; // gentle, not full blast
 
 function formatTime(s: number): string {
   if (!Number.isFinite(s) || s < 0) s = 0;
@@ -61,11 +73,13 @@ export default function ProcessVideo({ src, label = 'See how it works' }: Props)
 
   // Refs mirror state so the auto-hide timer never reads stale values.
   const playingRef = useRef(true);
+  const mutedRef = useRef(true);
   const scrubbingRef = useRef(false);
   const controlsVisibleRef = useRef(true);
   const hideTimer = useRef<number | null>(null);
 
   useEffect(() => { playingRef.current = isPlaying; }, [isPlaying]);
+  useEffect(() => { mutedRef.current = isMuted; }, [isMuted]);
   useEffect(() => { controlsVisibleRef.current = controlsVisible; }, [controlsVisible]);
 
   const clearHide = useCallback(() => {
@@ -92,7 +106,7 @@ export default function ProcessVideo({ src, label = 'See how it works' }: Props)
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    v.volume = 0.12;
+    v.volume = UNMUTE_VOLUME;
     const p = v.play();
     if (p && typeof p.catch === 'function') {
       p.catch(() => {/* autoplay blocked; center play button covers it */});
@@ -107,12 +121,22 @@ export default function ProcessVideo({ src, label = 'See how it works' }: Props)
     else v.pause();
   }
 
+  // Unmute at a gentle volume and make sure playback is running. Used by both
+  // the video-surface click and (implicitly) keeps the speaker button logic DRY.
+  function unmuteWithSound() {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = false;
+    v.volume = UNMUTE_VOLUME;
+    if (v.paused) v.play().catch(() => {});
+  }
+
   function toggleMute() {
     const v = videoRef.current;
     if (!v) return;
     v.muted = !v.muted;
     if (!v.muted) {
-      v.volume = 0.12;
+      v.volume = UNMUTE_VOLUME;
       if (v.paused) v.play().catch(() => {});
     }
   }
@@ -162,9 +186,24 @@ export default function ProcessVideo({ src, label = 'See how it works' }: Props)
     else if (e.key === ' ' || e.key === 'Enter') { togglePlay(); e.preventDefault(); }
   }
 
-  // Click anywhere on the video body: if controls are hidden, reveal them;
-  // otherwise toggle play. Mirrors the behavior of high-end mobile players.
+  // Click anywhere on the video body.
+  //
+  // Priority 1 — if the video is still muted, the click is an "I want sound"
+  // gesture: unmute at low volume and ensure it's playing. We do this FIRST,
+  // before the controls-hidden check, so even the very first tap (when the bar
+  // has auto-hidden) turns sound on instead of merely revealing the bar. A
+  // muted tap never pauses.
+  //
+  // Priority 2 — once unmuted, behave like a normal player surface: if the
+  // controls are hidden, the first tap just reveals them; otherwise toggle
+  // play/pause.
   function onSurfaceClick() {
+    const v = videoRef.current;
+    if (v && v.muted) {
+      unmuteWithSound();
+      revealControls();
+      return;
+    }
     if (!controlsVisibleRef.current) { revealControls(); return; }
     togglePlay();
     revealControls();
@@ -213,10 +252,10 @@ export default function ProcessVideo({ src, label = 'See how it works' }: Props)
 
         {/* Fixed-ratio box reserves space → zero layout shift while loading */}
         <div className="relative aspect-video w-full bg-ink-900">
-          {/* Click-surface for play/pause (sits under the control bar) */}
+          {/* Click-surface for unmute + play/pause (sits under the control bar) */}
           <button
             type="button"
-            aria-label={isPlaying ? 'Pause video' : 'Play video'}
+            aria-label={isMuted ? 'Unmute and play with sound' : (isPlaying ? 'Pause video' : 'Play video')}
             onClick={onSurfaceClick}
             className="absolute inset-0 z-10 w-full h-full cursor-pointer"
             tabIndex={-1}
@@ -256,8 +295,8 @@ export default function ProcessVideo({ src, label = 'See how it works' }: Props)
           {!isPlaying && (
             <button
               type="button"
-              onClick={(e) => { e.stopPropagation(); togglePlay(); revealControls(); }}
-              aria-label="Play video"
+              onClick={(e) => { e.stopPropagation(); unmuteWithSound(); revealControls(); }}
+              aria-label="Play video with sound"
               className="absolute inset-0 z-20 m-auto w-16 h-16 sm:w-20 sm:h-20 inline-flex items-center justify-center rounded-full bg-white/95 text-ink-900 shadow-lift hover:scale-105 transition-transform duration-200"
             >
               <Play className="w-7 h-7 sm:w-8 sm:h-8 translate-x-0.5" fill="currentColor" />
