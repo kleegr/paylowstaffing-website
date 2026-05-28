@@ -10,6 +10,7 @@ import '@fontsource/plus-jakarta-sans/700.css';
 import '@fontsource/plus-jakarta-sans/800.css';
 import '@fontsource/caveat/500.css';
 import '@fontsource/caveat/700.css';
+import '@fontsource/shadows-into-light-two/400.css';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';

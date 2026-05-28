@@ -14,6 +14,7 @@
     "@fontsource/caveat": "^5.2.8",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/plus-jakarta-sans": "^5.2.8",
+    "@fontsource/shadows-into-light-two": "^5.2.8",
     "clsx": "^2.1.1",
     "lucide-react": "^0.454.0",
     "next": "14.2.15",
