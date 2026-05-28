@@ -17,9 +17,14 @@
   html {
     scroll-behavior: smooth;
     line-height: 1.6;
+    /* Guard against horizontal scroll from decorative absolutely-positioned
+       orbs / blurs that can extend past the viewport on small screens.
+       `clip` (not `hidden`) is used so it never breaks the sticky header. */
+    overflow-x: clip;
   }
   body {
     @apply bg-white text-ink-700;
+    overflow-x: clip;
     font-family: var(--font-sans);
     font-feature-settings: 'cv11', 'ss01', 'cv02';
     font-variant-ligatures: contextual common-ligatures;
