@@ -2,15 +2,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowRight, Sparkles, Headphones, UserCheck, Zap, ShieldCheck } from 'lucide-react';
-import PageHero from '@/components/PageHero';
 import SectionHeading from '@/components/SectionHeading';
 import GetStartedButton from '@/components/GetStartedButton';
+import ProcessVideo from '@/components/ProcessVideo';
 import { assets } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'How It Works',
-  description: 'First call to first hire in days. We screen. You compare. You decide.',
+  description: 'First call to first hire in days. We screen. You compare. You decide. Watch the 60-second overview.',
 };
+
+// Hosted MP4 for the process overview video. External URL for now (per brief).
+// If we later want faster first-paint, this can be moved to a self-hosted /
+// CDN-optimized asset or given a poster frame.
+const PROCESS_VIDEO_URL =
+  'https://assets.cdn.filesafe.space/Ol42XQMnbIMA9pBMkS1m/media/6a17a9ec8c6ee94929a88b0b.mp4';
 
 const processSteps = [
   { n: '01', title: 'Brief us',      d: 'A 15-minute call. Tell us what you need.',           Icon: Headphones },
@@ -23,19 +29,45 @@ const processSteps = [
 export default function HowItWorksPage() {
   return (
     <>
-      <PageHero
-        eyebrow="How it works"
-        title={<>Hire remote staff. <span className="text-gradient">Without the headache.</span></>}
-        lead="First call to first hire in days. We screen. You compare. You decide."
-        bgImage={assets.howItWorksHeroBg}
-        imageAlt="A PayLow recruiter"
-        actions={
-          <>
-            <GetStartedButton>Find my match <ArrowRight className="w-4 h-4" /></GetStartedButton>
-            <Link href="/pricing" className="btn-outline">See pricing</Link>
-          </>
-        }
-      />
+      {/* ============================================================
+          HERO — heading + the process video as the main visual intro
+         ============================================================ */}
+      <section className="relative isolate overflow-hidden" aria-labelledby="how-hero-title">
+        {/* Backdrops (same treatment as the shared PageHero, kept on-brand) */}
+        <div aria-hidden className="absolute inset-0 -z-20 bg-gradient-warm" />
+        <div aria-hidden className="absolute inset-0 -z-10 bg-mesh-1 opacity-90" />
+        <div aria-hidden className="absolute inset-0 -z-10 grid-backdrop opacity-50" />
+        <div aria-hidden className="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-gradient-brand opacity-15 blur-3xl animate-float-slow" />
+        <div
+          aria-hidden
+          className="absolute -bottom-24 -right-20 w-[26rem] h-[26rem] rounded-full bg-brand-300/20 blur-3xl animate-float-slow"
+          style={{ animationDelay: '3s' }}
+        />
+
+        <div className="container-wide pt-24 pb-16 lg:pt-28 lg:pb-20">
+          {/* Heading block — centered so it sits on the same axis as the video */}
+          <div className="max-w-3xl mx-auto text-center" data-reveal>
+            <p className="mb-5">
+              <span className="eyebrow"><span className="eyebrow-dot" /> How it works</span>
+            </p>
+            <h1 id="how-hero-title" className="display-1">
+              Hire remote staff. <span className="text-gradient">Without the headache.</span>
+            </h1>
+            <p className="lead mt-6 max-w-2xl mx-auto">
+              First call to first hire in days. We screen. You compare. You decide.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <GetStartedButton>Find my match <ArrowRight className="w-4 h-4" /></GetStartedButton>
+              <Link href="/pricing" className="btn-outline">See pricing</Link>
+            </div>
+          </div>
+
+          {/* The process video — directly under the heading, the dominant visual */}
+          <div className="mt-12 lg:mt-16 max-w-4xl mx-auto" data-reveal data-reveal-delay="150">
+            <ProcessVideo src={PROCESS_VIDEO_URL} label="See how it works" />
+          </div>
+        </div>
+      </section>
 
       {/* Intro split */}
       <section className="section bg-white">
