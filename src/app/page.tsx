@@ -4,11 +4,22 @@ import { ArrowRight, Sparkles, ShieldCheck, Zap, Headphones, Briefcase, Star, Qu
 import SectionHeading from '@/components/SectionHeading';
 import CtaBanner from '@/components/CtaBanner';
 import GetStartedButton from '@/components/GetStartedButton';
-import VideoCard from '@/components/VideoCard';
 import CountUp from '@/components/CountUp';
 import FaqSection from '@/components/FaqSection';
 import RotatingProofChip from '@/components/RotatingProofChip';
-import { assets, reviews, videoReviews } from '@/lib/content';
+import { assets, reviews } from '@/lib/content';
+
+// Monogram initials from a name like "John D." -> "JD". Used by the
+// text-first testimonial cards instead of a stock portrait.
+function initials(name: string): string {
+  return name
+    .replace(/[^a-zA-Z .]/g, '')
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase() ?? '')
+    .join('');
+}
 
 export default function HomePage() {
   return (
@@ -54,11 +65,10 @@ export default function HomePage() {
                 <Link href="/pricing" className="btn-outline btn-lg">See the math</Link>
               </div>
 
-              {/* Static pill row — informational anchor below the buttons.
-                  Updated wording: no more "All-in pricing". */}
+              {/* Static pill row — informational anchor below the buttons. */}
               <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-3 max-w-xl text-sm text-ink-600">
                 {['Pre-vetted talent', 'Your time zone', 'Hire this week', 'No hidden fees'].map((p) => (
-                  <p key={p} className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500" /> {p}</p>
+                  <p key={p} className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500 shrink-0" /> {p}</p>
                 ))}
               </div>
             </div>
@@ -73,7 +83,10 @@ export default function HomePage() {
                   <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink-900/30 via-transparent to-transparent" />
                 </div>
 
-                <div className="absolute -top-4 -left-4 sm:-left-8 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float" style={{ animationDelay: '0.4s' }}>
+                {/* Floating proof cards. Hidden below sm to avoid spilling off
+                    the portrait edges on small phones (caused horizontal feel
+                    + cramped overlaps). They reappear from sm up. */}
+                <div className="hidden sm:flex absolute -top-4 -left-4 sm:-left-8 z-20 card-glass px-3.5 py-2.5 items-center gap-3 animate-float" style={{ animationDelay: '0.4s' }}>
                   <div className="w-9 h-9 rounded-xl bg-gradient-brand text-white inline-flex items-center justify-center"><CheckCircle2 className="w-4 h-4" /></div>
                   <div>
                     <div className="font-display font-bold text-base text-ink-900 leading-none">Hired in <CountUp value={7} duration={1300} /> days</div>
@@ -81,7 +94,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="absolute top-1/3 -right-4 sm:-right-8 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float" style={{ animationDelay: '1.2s' }}>
+                <div className="hidden sm:flex absolute top-1/3 -right-4 sm:-right-8 z-20 card-glass px-3.5 py-2.5 items-center gap-3 animate-float" style={{ animationDelay: '1.2s' }}>
                   <div className="w-9 h-9 rounded-xl bg-ink-900 text-white inline-flex items-center justify-center"><TrendingDown className="w-4 h-4" /></div>
                   <div>
                     <div className="font-display font-bold text-base text-ink-900 leading-none"><CountUp value={77} duration={1700} />% lower cost</div>
@@ -89,7 +102,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="absolute -bottom-4 left-6 z-20 card-glass px-3.5 py-2.5 flex items-center gap-3 animate-float" style={{ animationDelay: '2s' }}>
+                <div className="hidden sm:flex absolute -bottom-4 left-6 z-20 card-glass px-3.5 py-2.5 items-center gap-3 animate-float" style={{ animationDelay: '2s' }}>
                   <div className="flex -space-x-2">
                     {['F2D2A8', 'FFA46B', 'FF8242', 'F26C2A'].map((c) => (
                       <span key={c} className="inline-block w-7 h-7 rounded-full ring-2 ring-white" style={{ backgroundColor: `#${c}` }} />
@@ -103,12 +116,27 @@ export default function HomePage() {
 
                 <Sparkles aria-hidden className="absolute -top-2 right-6 w-5 h-5 text-brand-400 animate-pulse" />
               </div>
+
+              {/* Mobile-only proof strip — replaces the floating cards on phones
+                  with a clean inline row that can't overflow. */}
+              <div className="sm:hidden mt-6 grid grid-cols-3 gap-2 text-center">
+                {[
+                  { v: '7 days', l: 'to hire' },
+                  { v: '77%', l: 'lower cost' },
+                  { v: '3,000+', l: 'hires' },
+                ].map((s) => (
+                  <div key={s.l} className="rounded-2xl border border-ink-100 bg-white/70 backdrop-blur px-2 py-3">
+                    <div className="font-display font-bold text-ink-900 text-lg leading-none tabular-nums">{s.v}</div>
+                    <div className="text-[11px] text-ink-500 mt-1">{s.l}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* HOW IT WORKS — ProofRail removed; hero now contains the motion */}
+      {/* HOW IT WORKS */}
       <section className="section bg-white">
         <div className="container-wide">
           <SectionHeading
@@ -118,7 +146,7 @@ export default function HomePage() {
           />
           <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { n: '01', t: 'Brief us',      d: 'A 15-minute call. Tell us what you need.',                     icon: Headphones },
+              { n: '01', t: 'Brief us',      d: 'A quick call. Tell us what you need.',                          icon: Headphones },
               { n: '02', t: 'We screen',     d: 'Hundreds apply. Four or five make the cut.',                   icon: ShieldCheck },
               { n: '03', t: 'You interview', d: 'See your 4 or 5 picks side by side. Decide on the call.',      icon: Briefcase },
               { n: '04', t: 'They start',    d: 'Set up and productive day one.',                                icon: Zap },
@@ -136,7 +164,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* INDUSTRIES */}
+      {/* INDUSTRIES — mobile-friendly: shorter cards, larger tap area, readable
+          labels. Switched from a tall aspect-[4/5] photo to a compact 16:10
+          thumbnail so cards aren't awkwardly tall on phones. */}
       <section className="section bg-ink-50/50 relative">
         <div aria-hidden className="absolute inset-0 grid-backdrop opacity-30" />
         <div className="container-wide relative">
@@ -145,7 +175,7 @@ export default function HomePage() {
             title={<>Talent for <span className="text-gradient">every role.</span></>}
             lead="Admin. Support. Dev. Sales. We&rsquo;ve placed all of it."
           />
-          <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {[
               { title: 'Real Estate',  sub: 'Listings, leasing, management',  image: assets.industryRealEstate },
               { title: 'E-Commerce',   sub: 'Listings, support, fulfillment', image: assets.industryEcommerce },
@@ -153,14 +183,14 @@ export default function HomePage() {
               { title: 'IT & Tech',    sub: 'Devs, helpdesk, ops',            image: assets.industryIT },
             ].map((c, i) => (
               <Link key={c.title} href="/industries" className="group relative rounded-3xl overflow-hidden bg-white shadow-card hover:shadow-lift transition-all duration-500 ease-out hover:-translate-y-1" data-reveal data-reveal-delay={i * 80}>
-                <div className="relative aspect-[4/5] overflow-hidden">
-                  <Image src={c.image} alt={c.title} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out" loading="lazy" />
-                  <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/40 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                    <h3 className="font-display font-bold text-lg">{c.title}</h3>
-                    <p className="text-xs text-white/80 mt-1">{c.sub}</p>
+                <div className="relative aspect-[16/10] sm:aspect-[4/3] overflow-hidden">
+                  <Image src={c.image} alt={c.title} fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out" loading="lazy" />
+                  <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/35 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-3.5 sm:p-5 text-white">
+                    <h3 className="font-display font-bold text-[15px] sm:text-lg leading-tight">{c.title}</h3>
+                    <p className="text-[11px] sm:text-xs text-white/85 mt-1 leading-snug">{c.sub}</p>
                   </div>
-                  <div className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur inline-flex items-center justify-center group-hover:bg-gradient-brand group-hover:text-white transition-all"><ArrowRight className="w-3.5 h-3.5" /></div>
+                  <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 backdrop-blur inline-flex items-center justify-center group-hover:bg-gradient-brand group-hover:text-white transition-all"><ArrowRight className="w-3.5 h-3.5" /></div>
                 </div>
               </Link>
             ))}
@@ -171,7 +201,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PRICING TEASER — "all-in" wording removed */}
+      {/* PRICING TEASER */}
       <section className="section relative overflow-hidden">
         <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-warm" />
         <div aria-hidden className="absolute -top-20 left-1/3 w-96 h-96 rounded-full bg-gradient-brand opacity-12 blur-3xl" />
@@ -231,56 +261,66 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
+      {/* TESTIMONIALS — text-first. No people photos, no videos. Monogram
+          initials + stars + role/company keep it credible and premium. */}
       <section id="testimonials" className="section bg-white relative overflow-hidden scroll-mt-24">
         <div aria-hidden className="absolute -top-20 right-1/4 w-96 h-96 rounded-full bg-brand-300/15 blur-3xl" />
         <div className="container-wide relative">
           <SectionHeading
             eyebrow="Customer stories"
             title={<><span className="handwritten-accent text-4xl sm:text-5xl mr-2">Real teams.</span> <span className="text-gradient">Real results.</span></>}
+            lead="What founders, brokers, and ops leads say after switching to PayLow."
             align="center"
           />
 
-          <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {reviews.map((t, i) => {
               const featured = i === 0;
-              const avatarSrc = assets[t.image as keyof typeof assets] as string;
               return (
-                <article key={t.name} className={`p-6 sm:p-7 flex flex-col relative overflow-hidden rounded-3xl ${featured ? 'bg-ink-900 text-white shadow-lift noise noise-strong' : 'bg-white border border-ink-100/60 shadow-card hover:shadow-lift hover:-translate-y-1 transition-all duration-500 ease-out'}`} data-reveal data-reveal-delay={i * 60}>
+                <article
+                  key={t.name}
+                  className={`p-6 sm:p-7 flex flex-col relative overflow-hidden rounded-3xl ${
+                    featured
+                      ? 'bg-ink-900 text-white shadow-lift noise noise-strong sm:col-span-2 lg:col-span-1'
+                      : 'bg-white border border-ink-100/60 shadow-card hover:shadow-lift hover:-translate-y-1 transition-all duration-500 ease-out'
+                  }`}
+                  data-reveal
+                  data-reveal-delay={i * 60}
+                >
                   {featured && <div aria-hidden className="absolute -top-14 -right-14 w-56 h-56 rounded-full bg-gradient-brand opacity-30 blur-3xl" />}
-                  <Quote className={`w-6 h-6 mb-4 relative ${featured ? 'text-brand-300' : 'text-brand-400'}`} strokeWidth={2} />
-                  <p className={`leading-relaxed flex-1 relative ${featured ? 'text-white/95 text-[1.05rem] font-display font-medium' : 'text-ink-700 text-[0.95rem]'}`}>&ldquo;{t.quote}&rdquo;</p>
+
+                  {/* Top row: quote mark + stars */}
+                  <div className="flex items-center justify-between relative">
+                    <Quote className={`w-6 h-6 ${featured ? 'text-brand-300' : 'text-brand-400'}`} strokeWidth={2} />
+                    <div className={`flex gap-0.5 ${featured ? 'text-brand-300' : 'text-brand-500'}`}>
+                      {Array.from({ length: 5 }).map((_, k) => (<Star key={k} className="w-3.5 h-3.5 fill-current" />))}
+                    </div>
+                  </div>
+
+                  <p className={`mt-4 leading-relaxed flex-1 relative ${featured ? 'text-white/95 text-[1.05rem] font-display font-medium' : 'text-ink-700 text-[0.95rem]'}`}>
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+
                   <div className={`mt-6 pt-5 border-t flex items-center gap-3 relative ${featured ? 'border-white/10' : 'border-ink-100'}`}>
-                    <div className="relative w-11 h-11 rounded-full overflow-hidden bg-ink-200 shrink-0"><Image src={avatarSrc} alt={t.name} fill sizes="44px" className="object-cover" /></div>
+                    {/* Monogram — replaces the old stock portrait */}
+                    <span
+                      aria-hidden="true"
+                      className={`inline-flex w-11 h-11 items-center justify-center rounded-full font-display font-bold text-sm shrink-0 ${
+                        featured
+                          ? 'bg-white/10 text-brand-200 border border-white/15'
+                          : 'bg-brand-50 text-brand-700 border border-brand-100'
+                      }`}
+                    >
+                      {initials(t.name)}
+                    </span>
                     <div className="flex-1 min-w-0">
                       <div className={`font-display font-semibold text-sm ${featured ? 'text-white' : 'text-ink-900'}`}>{t.name}</div>
-                      <div className={`text-xs truncate ${featured ? 'text-white/55' : 'text-ink-500'}`}>{t.role}</div>
-                    </div>
-                    <div className={`flex gap-0.5 shrink-0 ${featured ? 'text-brand-300' : 'text-brand-500'}`}>
-                      {Array.from({ length: 5 }).map((_, k) => (<Star key={k} className="w-3.5 h-3.5 fill-current" />))}
+                      <div className={`text-xs truncate ${featured ? 'text-white/55' : 'text-ink-500'}`}>{t.role} &middot; {t.company}</div>
                     </div>
                   </div>
                 </article>
               );
             })}
-          </div>
-
-          <div className="mt-20 pt-14 border-t border-ink-100/70">
-            <div className="text-center mb-10" data-reveal>
-              <p className="mb-3"><span className="eyebrow"><span className="eyebrow-dot" /> See &amp; hear it</span></p>
-              <h3 className="font-display font-bold text-ink-900 text-2xl sm:text-3xl tracking-tight" style={{ letterSpacing: '-0.022em' }}>
-                Customer stories, <span className="text-gradient">in their words.</span>
-              </h3>
-              <p className="text-ink-500 text-sm mt-3 max-w-md mx-auto">Three teams. Three reasons they switched.</p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {videoReviews.map((v, i) => (
-                <div key={v.youtubeId} data-reveal data-reveal-delay={i * 80}>
-                  <VideoCard youtubeId={v.youtubeId} title={v.title} />
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
